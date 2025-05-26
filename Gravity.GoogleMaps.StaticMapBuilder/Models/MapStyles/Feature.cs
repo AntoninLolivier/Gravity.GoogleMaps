@@ -4,7 +4,7 @@ public readonly record struct Feature
 {
     // Properties
     
-    public string Value { get; init; }
+    public string Value { get; }
     
     // Constructor
     

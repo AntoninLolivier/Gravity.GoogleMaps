@@ -10,5 +10,5 @@ public enum MarkerAnchor
     TopLeft,
     TopRight,
     BottomLeft,
-    BottomRight,
+    BottomRight
 }

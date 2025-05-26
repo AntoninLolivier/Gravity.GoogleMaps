@@ -90,20 +90,14 @@ public record Path
         {
             pathStyles.Add($"weight:{Weight}");
         }
-        
-        if (Color is not null)
-        {
-            Color.Value.Switch(
-                baseColor => pathStyles.Add($"color:{baseColor.ToString().ToLower()}"),
-                hexColor => pathStyles.Add($"color:{hexColor.ToString()}"));
-        }
-        
-        if (FillColor is not null)
-        {
-            FillColor.Value.Switch(
-                baseColor => pathStyles.Add($"fillcolor:{baseColor.ToString().ToLower()}"),
-                hexColor => pathStyles.Add($"fillcolor:{hexColor.ToString()}"));
-        }
+
+        Color?.Switch(
+            baseColor => pathStyles.Add($"color:{baseColor.ToString().ToLower()}"),
+            hexColor => pathStyles.Add($"color:{hexColor.ToString()}"));
+
+        FillColor?.Switch(
+            baseColor => pathStyles.Add($"fillcolor:{baseColor.ToString().ToLower()}"),
+            hexColor => pathStyles.Add($"fillcolor:{hexColor.ToString()}"));
 
         if (Geodesic)
         {

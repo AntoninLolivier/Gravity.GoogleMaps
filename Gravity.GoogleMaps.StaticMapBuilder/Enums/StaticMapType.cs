@@ -5,5 +5,5 @@ public enum StaticMapType
     Roadmap,
     Satellite,
     Terrain,
-    Hybrid,
+    Hybrid
 }

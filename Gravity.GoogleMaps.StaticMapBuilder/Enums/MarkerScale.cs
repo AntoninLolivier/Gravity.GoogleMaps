@@ -4,5 +4,5 @@ public enum MarkerScale
 {
     One = 1,
     Two = 2, 
-    Four = 4,
+    Four = 4
 }

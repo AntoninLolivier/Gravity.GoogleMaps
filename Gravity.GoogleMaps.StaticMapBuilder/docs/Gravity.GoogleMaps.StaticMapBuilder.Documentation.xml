@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Gravity.GoogleMaps.StaticMapBuilder</name>
+    </assembly>
+    <members>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.MapStyle.ToString">
+            <inheritdoc />
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Models.Path.ToString">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>

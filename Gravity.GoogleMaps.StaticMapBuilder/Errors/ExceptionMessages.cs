@@ -32,9 +32,9 @@ internal static class ExceptionMessages
     {
         internal const string PathCannotBeDefinedByPointsAndPolylineExceptionMessage = "Path cannot be defined by points and polyline simultaneously, see : " + ProjectConstants.StaticMapDocumentationLinks.SectionLinks.EncodedPolylines;
         internal const string PathNeedAtLeastTwoPointsExceptionMessage = "Path need at least two points ! Add 2 points or more to define a correct path !";
+        internal const string CombineMapIdAndMapStyleExceptionMessage = $"Don't combine map style and map id. Choose either one or the other, see : {ProjectConstants.StaticMapDocumentationLinks.MapStylingDocumentationLinks.MapStyling}";
         internal static readonly string TooMuchLocationsExceptionMessage = $"Too much location ! Only {ProjectConstants.LocationsCountLimit} locations are allowed per map (the paths and markers are not inclueded), see : {ProjectConstants.StaticMapDocumentationLinks.SectionLinks.Locations}";
         internal static readonly string TooMuchLocationMarkersExceptionMessage = $"Too much {nameof(LocationMarker)} ! Only {ProjectConstants.LocationMarkersCountLimit} {nameof(LocationMarker)} are allowed per map, see : {ProjectConstants.StaticMapDocumentationLinks.SectionLinks.MarkerLocations}";
         internal static readonly string TooMuchLocationPointsForPathsExceptionMessage = $"Too much geocoded locations in paths ! Only {ProjectConstants.LocationPointsForPathCountLimit} geocoded locations for paths are allowed per map.";
-        internal static readonly string CombineMapIdAndMapStyleExceptionMessage = $"Don't combine map style and map id. Choose either one or the other, see : {ProjectConstants.StaticMapDocumentationLinks.MapStylingDocumentationLinks.MapStyling}";
     }
 }

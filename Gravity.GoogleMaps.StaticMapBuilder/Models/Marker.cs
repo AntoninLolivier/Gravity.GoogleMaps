@@ -14,7 +14,7 @@ public abstract class Marker(
     
     // Properties
     
-    public MarkerSize Size { get; init; } = size;
+    public MarkerSize Size { get; } = size;
 
     public OneOf<StaticMapColor, HexColor>? Color
     {
@@ -29,13 +29,13 @@ public abstract class Marker(
         }
     }
 
-    public char? Label { get; init; } = label;
+    public char? Label { get; } = label;
     
-    public MarkerScale MarkerScale { get; init; } = markerScale;
+    public MarkerScale MarkerScale { get; } = markerScale;
     
-    public OneOf<MarkerAnchor, short>? Anchor { get; init; } = anchor;
+    public OneOf<MarkerAnchor, short>? Anchor { get; } = anchor;
     
-    public string? IconUrl { get; init; } = iconUrl;
+    public string? IconUrl { get; } = iconUrl;
 
     // Methods
     
@@ -48,13 +48,10 @@ public abstract class Marker(
             markerStyles.Add($"size:{Size.ToString().ToLower()}");
         }
 
-        if (Color is not null)
-        {
-            Color.Value.Switch(
-                baseColor => markerStyles.Add($"color:{baseColor.ToString().ToLower()}"),
-                hexColor => markerStyles.Add($"color:{hexColor.ToString()}"));
-        }
-        
+        Color?.Switch(
+            baseColor => markerStyles.Add($"color:{baseColor.ToString().ToLower()}"),
+            hexColor => markerStyles.Add($"color:{hexColor.ToString()}"));
+
         if (Label is not null)
         {
             if (Size is MarkerSize.Tiny or MarkerSize.Small) throw new ArgumentException(ExceptionMessages.LabelNotSupportedExceptionMessage);
@@ -65,14 +62,11 @@ public abstract class Marker(
         {
             markerStyles.Add($"scale:{MarkerScale}");
         }
-        
-        if (Anchor is not null)
-        {
-            Anchor.Value.Switch(
-                anchor => markerStyles.Add($"anchor:{anchor}"),
-                bitsAnchor => markerStyles.Add($"anchor:{bitsAnchor}"));
-        }
-        
+
+        Anchor?.Switch(
+            anchor => markerStyles.Add($"anchor:{anchor}"),
+            bitsAnchor => markerStyles.Add($"anchor:{bitsAnchor}"));
+
         if (IconUrl is not null)
         {
             markerStyles.Add($"icon:{IconUrl}");

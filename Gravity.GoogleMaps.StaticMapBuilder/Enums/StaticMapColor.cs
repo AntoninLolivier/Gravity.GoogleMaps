@@ -11,5 +11,5 @@ public enum StaticMapColor
     Gray,
     Orange,
     Red,
-    White,
+    White
 }

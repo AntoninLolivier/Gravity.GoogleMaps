@@ -14,8 +14,6 @@ public class LocationMarker(
     {
         string style = base.ToString();
 
-        return $"${style}|{Location}";
+        return $"${style}|{location}";
     }
-
-    public string Location { get; init; } = location;
 }
