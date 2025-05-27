@@ -4,6 +4,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gravity.GoogleMaps.StaticMa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gravity.GoogleMaps.StaticMapBuilder.Tests", "Gravity.GoogleMaps.StaticMapBuilder.Tests\Gravity.GoogleMaps.StaticMapBuilder.Tests.csproj", "{AB12B2CE-80B3-485B-B2CA-65342D6D1AAE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assets", "assets", "{0B38E617-0317-4123-8E7A-2D6F102C592D}"
+	ProjectSection(SolutionItems) = preProject
+		Logo_raw.png = Logo_raw.png
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +23,7 @@ Global
 		{AB12B2CE-80B3-485B-B2CA-65342D6D1AAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB12B2CE-80B3-485B-B2CA-65342D6D1AAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB12B2CE-80B3-485B-B2CA-65342D6D1AAE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection
 EndGlobal

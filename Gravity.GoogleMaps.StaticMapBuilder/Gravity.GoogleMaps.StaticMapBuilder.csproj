@@ -8,15 +8,15 @@
         
         <!-- Infos NuGet -->
         <PackageId>Gravity.GoogleMaps.StaticMapBuilder</PackageId>
-        <Version>1.0.0</Version>
+        <Version>1.0.2</Version>
         <Authors>GravityApps</Authors>
         <Company>GravityApps</Company>
         <Description>Fluent, type-safe URL builder for the Google Static Maps API with full support for markers, styles, paths, and more.</Description>
         <PackageTags>google;maps;static;builder;url;gravityapps</PackageTags>
-        <RepositoryUrl>https://github.com/your-org/Gravity.GoogleMaps</RepositoryUrl>
+        <RepositoryUrl>https://github.com/AntoninLolivier/Gravity.GoogleMaps/tree/master/Gravity.GoogleMaps.StaticMapBuilder</RepositoryUrl>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageReadmeFile>README.md</PackageReadmeFile>
-        <PackageProjectUrl>https://github.com/your-org/Gravity.GoogleMaps</PackageProjectUrl>
+        <PackageProjectUrl>https://github.com/AntoninLolivier/Gravity.GoogleMaps</PackageProjectUrl>
         <IncludeSymbols>true</IncludeSymbols>
     </PropertyGroup>
 
