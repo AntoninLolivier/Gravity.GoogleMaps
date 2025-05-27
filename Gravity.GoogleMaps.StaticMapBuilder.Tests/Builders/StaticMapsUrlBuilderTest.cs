@@ -559,7 +559,7 @@ public class StaticMapsUrlBuilderkey
     [Fact]
     public void AddMapStyle_AddsSingleStyleCorrectly()
     {
-        MapStyle style = new MapStyle(
+        MapStyle style = new(
             new StyleRule(Color: new HexColor("0xFF0000")),
             Features.Road.Local,
             Elements.Geometry.Fill
@@ -580,8 +580,8 @@ public class StaticMapsUrlBuilderkey
     [Fact]
     public void AddMapStyle_AddsMultipleStyles()
     {
-        MapStyle style1 = new MapStyle(new StyleRule(Visibility: Visibility.Simplified), new Feature("road.local"), null);
-        MapStyle style2 = new MapStyle(new StyleRule(Color: new HexColor("0x00FF00")), null, new Element("geometry"));
+        MapStyle style1 = new(new StyleRule(Visibility: Visibility.Simplified), new Feature("road.local"), null);
+        MapStyle style2 = new(new StyleRule(Color: new HexColor("0x00FF00")), null, new Element("geometry"));
 
         string url = new StaticMapsUrlBuilder()
             .AddMapStyle(style1, style2)
@@ -599,7 +599,7 @@ public class StaticMapsUrlBuilderkey
     [Fact]
     public void AddMapStyle_DisabledEncoding_UsesRaw()
     {
-        MapStyle style = new MapStyle(new StyleRule(Color: new HexColor("0x00FF00")), null, null);
+        MapStyle style = new(new StyleRule(Color: new HexColor("0x00FF00")), null, null);
 
         string url = new StaticMapsUrlBuilder()
             .DisableUrlEncoding()
@@ -653,7 +653,7 @@ public class StaticMapsUrlBuilderkey
     [Fact]
     public void Build_WithNoParameters_Throws()
     {
-        StaticMapsUrlBuilder builder = new StaticMapsUrlBuilder();
+        StaticMapsUrlBuilder builder = new();
         Assert.Throws<ArgumentException>(() => builder.Build());
     }
     
@@ -715,7 +715,7 @@ public class StaticMapsUrlBuilderkey
 
         for (int i = 0; i < ProjectConstants.LocationPointsForPathCountLimit/2 + 1; i++) 
         {
-            Path path = new Path();
+            Path path = new();
             path.AddPoint("A");
             path.AddPoint("B");
             paths[i] = path;
@@ -760,7 +760,7 @@ public class StaticMapsUrlBuilderkey
     [Fact]
     public void Build_WithMapIdAndStyle_Throws()
     {
-        MapStyle style = new MapStyle(new StyleRule(Color: new HexColor("0xFF0000")), null, null);
+        MapStyle style = new(new StyleRule(Color: new HexColor("0xFF0000")), null, null);
 
         StaticMapsUrlBuilder builder = new StaticMapsUrlBuilder()
             .AddMapId("1234567890123456")

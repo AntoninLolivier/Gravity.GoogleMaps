@@ -204,7 +204,12 @@ public class StaticMapsUrlBuilder
         
         List<string> icons = markerGroup
             .Where(mg => mg.IconUrl is not null)
-            .Select(mg => mg.IconUrl!)
+            .Select(mg =>
+            {
+                if (mg.IconUrl is null) throw new NullReferenceException();
+                
+                return mg.IconUrl;
+            })
             .ToList();
 
         if (icons.Count > 0) _markerIconUrls.AddRange(icons);
@@ -241,7 +246,12 @@ public class StaticMapsUrlBuilder
         
         List<string> icons = markers
             .Where(mg => mg.IconUrl is not null)
-            .Select(mg => mg.IconUrl!)
+            .Select(mg =>
+            {
+                if (mg.IconUrl is null) throw new NullReferenceException();
+                
+                return mg.IconUrl;
+            })
             .ToList();
 
         if (icons.Count > 0) _markerIconUrls.AddRange(icons);

@@ -8,9 +8,9 @@ public readonly record struct Feature
     
     // Constructor
     
-    internal Feature(string Value)
+    internal Feature(string value)
     {
-        this._value = Value;
+        _value = value;
     }
     
     // Methods
