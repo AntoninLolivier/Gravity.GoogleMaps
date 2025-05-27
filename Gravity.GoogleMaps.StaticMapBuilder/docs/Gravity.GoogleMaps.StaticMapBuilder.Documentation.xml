@@ -1,0 +1,1109 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Gravity.GoogleMaps.StaticMapBuilder</name>
+    </assembly>
+    <members>
+        <member name="T:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder">
+            <summary>
+            The main class used to build the static maps url.
+            </summary>
+            <example>
+            <code>
+            string url = new StaticMapsUrlBuilder()
+                .AddCenterWithLocation("New York, NY")
+                .AddZoom(12)
+                .AddSize(640, 480)
+                .AddScale(MapScale.One)
+                .AddFormat(MapFormats.Jpg)
+                .Build();
+            </code>
+            </example>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.AddCenterWithLocation(System.String)">
+            <summary>
+            Add the center parameter to the query using a location string.
+            </summary>
+            <remarks>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/start?#Locations">official documentation</see> for details.
+            </remarks>
+            <example>
+            The location string can be any location human readable string, like "1 Rue de la Paix, Paris, France"
+            </example>
+            <param name="location">The location string.</param>
+            <returns>The builder.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the <paramref name="location"/> is null, empty or white space</exception>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.AddCenterWithCoordinates(System.Double,System.Double)">
+            <summary>
+            Add the center parameter to the query using a latitude and longitude.
+            </summary>
+            <remarks>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/start?#Locations">official documentation</see> for details.
+            </remarks>
+            <param name="latitude">The latitude of the center.</param>
+            <param name="longitude">The longitude of the center</param>
+            <returns>The builder</returns>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.AddZoom(System.Int32)">
+            <summary>
+            Add the zoom parameter to the query.
+            </summary>
+            <remarks>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/start#Zoomlevels">official documentation</see> for details.
+            </remarks>
+            <param name="zoom">An integer between 0 and 22.</param>
+            <returns>The builder.</returns>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.AddSize(System.Int32,System.Int32)">
+            <summary>
+            Add the size parameter to the query.
+            </summary>
+            <remarks>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/start#Imagesizes">official documentation</see> for details.
+            </remarks>
+            <param name="width">The width of the resulting image.</param>
+            <param name="height">The height of the resulting image.</param>
+            <returns>The builder.</returns>
+            <exception cref="T:System.ArgumentException">Thrown when the width or height is null or less or equal than 0.</exception>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.AddScale(Gravity.GoogleMaps.StaticMapBuilder.Enums.MapScale)">
+            <summary>
+            Add the scale parameter to the query.
+            </summary>
+            <remarks>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/start#scale_values">official documentation</see> for details.
+            </remarks>
+            <param name="mapScale">The scale as an enum value.</param>
+            <returns>The builder.</returns>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.AddFormat(Gravity.GoogleMaps.StaticMapBuilder.Models.MapFormat)">
+            <summary>
+            Add the foormat parameter to the query.
+            </summary>
+            <example>
+            Use the <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Options.MapFormats"/> class to specify the format.
+            </example>
+            <remarks>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/start#ImageFormats">official documentation</see> for details.
+            </remarks>
+            <param name="format"></param>
+            <returns>The builder</returns>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.AddMapType(Gravity.GoogleMaps.StaticMapBuilder.Enums.StaticMapType)">
+            <summary>
+            Add the maptype parameter to the query.
+            </summary>
+            <remarks>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/start?#MapTypes">official documentation</see> for details.
+            </remarks>
+            <param name="mapType">The map type as an enum value.</param>
+            <returns>The builder.</returns>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.AddLanguage(System.String)">
+            <summary>
+            Add the language parameter to the query.
+            </summary>
+            <param name="language">The language as a 2 letter string.</param>
+            <remarks>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/start#map-parameters">official documentation</see> for details.
+            </remarks>
+            <returns>The builder.</returns>
+            <exception cref="T:System.ArgumentException">Thrown when the <paramref name="language"/> is more than 2 charaters long.</exception>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.AddRegion(System.String)">
+            <summary>
+            Add the region parameter to the query.
+            </summary>
+            <remarks>
+            See <see href="https://developers.google.com/maps/coverage">official documentation</see> for details.
+            </remarks>
+            <param name="region">The region as a 2 letter string. See available regions on <see href="https://developers.google.com/maps/coverage">google documentation</see></param>
+            <returns>The builder</returns>
+            <exception cref="T:System.ArgumentException">Thrown when the <paramref name="region"/> is more than 2 charaters long.</exception>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.AddMapId(System.String)">
+            <summary>
+            Add the mapid parameter to the query.
+            </summary>
+            <remarks>
+            See <see href="https://developers.google.com/maps/documentation/javascript/map-ids/mapid-over">official documentation</see> for details.
+            </remarks>
+            <param name="mapId">The 16 characters long map id.</param>
+            <returns>The builder.</returns>
+            <exception cref="T:System.ArgumentException">Thrown if the <paramref name="mapId"/> is more than 16 character.</exception>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.AddMarkerGroups(Gravity.GoogleMaps.StaticMapBuilder.Models.MarkerGroup[])">
+            <summary>
+            Add markers with the same style to the query.
+            </summary>
+            <remarks>
+            Use the <see cref="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.AddMarkers(Gravity.GoogleMaps.StaticMapBuilder.Models.Marker[])"/> method to add markers with unique style.
+            <br/>
+            This method allow to add multiple <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Models.MarkerGroup"/>.
+            <br/>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/start?#Markers">official documentation</see> for details.
+            </remarks>
+            <example>
+            If you want to add multiple <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Models.MarkerGroup"/> do not call the method multiples times. Do this instead :
+            <code>
+            var _ = new StaticMapsUrlBuilder().AddMarkerGroups(markerGroup1, markerGroup2, markerGroup3);
+            </code>
+            </example>
+            <param name="markerGroup">The groups of markers to add.</param>
+            <returns>The builder</returns>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.AddMarkers(Gravity.GoogleMaps.StaticMapBuilder.Models.Marker[])">
+            <summary>
+            Add markers with unique styles.
+            </summary>
+            <remarks>
+            Use the <see cref="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.AddMarkerGroups(Gravity.GoogleMaps.StaticMapBuilder.Models.MarkerGroup[])"/> method to add multiple markers with the same style.
+            <br/>
+            This method allow to add multiple <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Models.Marker"/>. 
+            <br/>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/start?#Markers">official documentation</see> for details.
+            </remarks>
+            <example>
+            If you want to add multiple <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Models.Marker"/> do not call the method multiples times. Do this instead :
+            <code>
+            var _ = new StaticMapsUrlBuilder().AddMarkers(marker1, marker2, marker3);
+            </code>
+            </example>
+            <param name="markers">The markers to add.</param>
+            <returns>The builder</returns>
+            <exception cref="T:System.InvalidOperationException">Thrown when one or more of the given <paramref name="markers"/> is a <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Models.MarkerGroup"/></exception>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.AddPaths(Gravity.GoogleMaps.StaticMapBuilder.Models.Path[])">
+            <summary>
+            Add paths to the query.
+            </summary>
+            <remarks>
+            This method allow to add multiple <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Models.Path"/>.
+            <br/>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/start#Paths">official documentation</see> for details.
+            </remarks>
+            <example>
+            If you want to add multiple <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Models.Path"/> do not call the method multiples times. Do this instead :
+            <code>
+            var _ = new StaticMapsUrlBuilder().AddPaths(path1, path2, path3);
+            </code>
+            </example>
+            <param name="paths">The paths to add.</param>
+            <returns>The builder.</returns>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.AddViewportWithLocation(System.String[])">
+            <summary>
+            Add viewports to the map
+            </summary>
+            <remarks>
+            This method allow to add multiple viewports with locations strings.
+            <br/>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/start#Viewports">official documentation</see> for details.
+            </remarks>
+            <example>
+            If you want to add multiple view ports do not call the method multiples times. Do this instead :
+            <code>
+            var _ = new StaticMapsUrlBuilder().AddViewportWithLocation(location1, location2, location3);
+            </code>
+            </example>
+            <param name="location">The location of the viewport as a human readable location.</param>
+            <returns>The builder.</returns>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.AddVisibleportWithCoordinates(System.ValueTuple{System.Double,System.Double}[])">
+            <summary>
+            Add viewports to the map
+            </summary>
+            <remarks>
+            This method allow to add multiple viewports with coordinates.
+            <br/>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/start#Viewports">official documentation</see> for details.
+            </remarks>
+            <example>
+            If you want to add multiple viewports do not call the method multiples times. Do this instead :
+            <code>
+            var _ = new StaticMapsUrlBuilder().AddVisibleportWithCoordinates(coordinates1, coordinates2, coordinates3);
+            </code>
+            </example>
+            <param name="coordinates">The coordinates of the viewport.</param>
+            <returns>The builder.</returns>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.AddMapStyle(Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.MapStyle[])">
+            <summary>
+            Add map styles to the query.
+            </summary>
+            <remarks>
+            This method allow to add multiple viewports with coordinates.
+            <br/>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/styling">official documentation</see> for details.
+            </remarks>
+            <example>
+            If you want to add multiple <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.MapStyle"/> do not call the method multiples times. Do this instead :
+            <code>
+            var _ = new StaticMapsUrlBuilder().AddMapStyle(mapStyle1, mapStyle2, mapStyle3);
+            </code>
+            </example>
+            <param name="mapStyles">The map style.</param>
+            <returns>The builder.</returns>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.AddKey(System.String)">
+            <summary>
+            Add the API key to the query.
+            </summary>
+            <remarks>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/get-api-key">official documentation</see> for details.
+            </remarks>
+            <param name="key">You API Key.</param>
+            <returns>The builder.</returns>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.UseHttp">
+            <summary>
+            Use the HTTP protocol instead of HTTPS.
+            </summary>
+            <returns>The builder.</returns>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.DisableUrlEncoding">
+            <summary>
+            Disable the url encoding. The url is, by default, url encoded.
+            </summary>
+            <remarks>
+            This method should be used before adding any parameters to the builder.
+            <br/>
+            See <see href="https://developers.google.com/maps/url-encoding">official documentation</see> for details.
+            </remarks>
+            <returns>The builder</returns>
+            <exception cref="T:System.InvalidOperationException">Thrown when a parameter was added in the query before calling this method.</exception>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.Build">
+            <summary>
+            Build the static map url.
+            </summary>
+            <remarks>
+            This method validate the parameters and build the url.
+            <br/>
+            The url is, by default, url encoded. Use <see cref="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.DisableUrlEncoding"/> to disable the url encoding.
+            <br/>
+            The url is, by default, built using the HTTPS protocol. Use <see cref="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.UseHttp"/> to use the HTTP protocol.
+            </remarks>
+            <returns></returns>
+            <exception cref="T:System.ArgumentException">Thrown when the API Key is missing.</exception>
+            <exception cref="T:System.ArgumentException">Thrown when no parameter was added to the builder.</exception>
+            <exception cref="T:System.InvalidOperationException">Thrown when the url exceed the maximum lenght.</exception>
+            <exception cref="T:System.InvalidOperationException">Thrown when a "positionning argument" is missing.</exception>
+            <exception cref="T:System.InvalidOperationException">Thrown when the size parameter is missing.</exception>
+            <exception cref="T:System.InvalidOperationException">Thrown when the url exceed the maximum lenght.</exception>
+            <exception cref="T:System.InvalidOperationException">Thrown when the number of marker with a location path exceed the limit. (15)</exception>
+            <exception cref="T:System.InvalidOperationException">Thrown when the number of path with a location path exceed the limit. (15 total)</exception>
+            <exception cref="T:System.InvalidOperationException">Thrown when the map id parameter is combined with a map style parameter.</exception>
+            <exception cref="T:System.InvalidOperationException">Thrown when the number of location path exceed the limit (excluding paths and markers, it's 3)</exception>
+        </member>
+        <member name="T:Gravity.GoogleMaps.StaticMapBuilder.Enums.MapScale">
+            <summary>
+            Scale of the static map.
+            </summary>
+            <remarks>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/start#scale_values">official documentation</see>
+            for details.
+            </remarks>
+        </member>
+        <member name="T:Gravity.GoogleMaps.StaticMapBuilder.Enums.MarkerAnchor">
+            <summary>
+            Pre-defined markers anchor for custom icons.
+            </summary>
+            <remarks>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/start#CustomIcons">official documentation</see>
+            for details.
+            </remarks>
+        </member>
+        <member name="T:Gravity.GoogleMaps.StaticMapBuilder.Enums.MarkerScale">
+            <summary>
+            Scale of the marker.
+            </summary>
+            <remarks>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/start#MarkerScale">official documentation</see>
+            for details.
+            </remarks>
+        </member>
+        <member name="T:Gravity.GoogleMaps.StaticMapBuilder.Enums.MarkerSize">
+            <summary>
+            Scale of the markers.
+            </summary>
+            <remarks>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/start#MarkerScale">official documentation</see>
+            for details.
+            </remarks>
+        </member>
+        <member name="T:Gravity.GoogleMaps.StaticMapBuilder.Enums.StaticMapColor">
+            <summary>
+            Pre-defined colors available for various elements of the static map such as <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Models.Marker"/> and <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Models.Path"/>.
+            </summary>
+            <remarks>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/start#MarkerStyles">official marker documentation</see> or
+            <see href="https://developers.google.com/maps/documentation/maps-static/start#PathStyles">official path documentation</see>
+            </remarks>
+        </member>
+        <member name="T:Gravity.GoogleMaps.StaticMapBuilder.Enums.StaticMapType">
+            <summary>
+            Type for the static map.
+            </summary>
+            <remarks>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/start#MapTypes">official documentation</see>
+            for details.
+            </remarks>
+        </member>
+        <member name="T:Gravity.GoogleMaps.StaticMapBuilder.Enums.Visibility">
+            <summary>
+            Visibility of an element of a <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.MapStyle"/>.
+            </summary>
+            <remarks>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/styling#style-rules">official documentation</see>
+            for details.
+            </remarks>
+        </member>
+        <member name="T:Gravity.GoogleMaps.StaticMapBuilder.Models.CoordinatesMarker">
+            <summary>
+            Represents a marker to be used in a static Google Maps image with defined geographical coordinates.
+            </summary>
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Models.CoordinatesMarker.Latitude">
+            <value>
+            The latitude of the marker location, ranging from -90 to 90 degrees.
+            </value>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown when the latitude is out of range. Should be between (-90 and 90)</exception>
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Models.CoordinatesMarker.Longitude">
+            <value>
+            The longitude of the marker location, ranging from -180 to 180 degrees.
+            </value>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown when the longitude is out of range. Should be between (-180 and 180).</exception>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Models.CoordinatesMarker.#ctor(System.Double,System.Double,Gravity.GoogleMaps.StaticMapBuilder.Enums.MarkerSize,System.Nullable{OneOf.OneOf{Gravity.GoogleMaps.StaticMapBuilder.Enums.StaticMapColor,Gravity.GoogleMaps.StaticMapBuilder.Types.HexColor}},System.Nullable{System.Char},Gravity.GoogleMaps.StaticMapBuilder.Enums.MarkerScale,System.Nullable{OneOf.OneOf{Gravity.GoogleMaps.StaticMapBuilder.Enums.MarkerAnchor,System.ValueTuple{System.Int32,System.Int32}}},System.String)">
+            <summary>
+            Represents a marker on a Google Static Map defined by latitude and longitude coordinates.
+            </summary>
+            <remarks>
+            This class supports all standard styling options and allows precise placement using geographic coordinates.
+            Inherits all rendering rules and validation from the base <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Models.Marker"/> class.
+            </remarks>
+            <param name="longitude">
+            The longitude of the marker location, ranging from -180 to 180 degrees.
+            </param>
+            <param name="latitude">
+            The latitude of the marker location, ranging from -90 to 90 degrees.
+            </param>
+            <param name="size">
+            Optional marker size (default is <see cref="F:Gravity.GoogleMaps.StaticMapBuilder.Enums.MarkerSize.Default"/>).
+            </param>
+            <param name="color">
+            Optional marker color. Can be a predefined <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Enums.StaticMapColor"/> or a custom <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Types.HexColor"/> (without alpha).
+            </param>
+            <param name="label">
+            Optional label (1 alphanumeric character). Cannot be used with <see cref="F:Gravity.GoogleMaps.StaticMapBuilder.Enums.MarkerSize.Tiny"/> or <see cref="F:Gravity.GoogleMaps.StaticMapBuilder.Enums.MarkerSize.Small"/>.
+            </param>
+            <param name="markerScale">
+            Optional scale factor. Use <see cref="F:Gravity.GoogleMaps.StaticMapBuilder.Enums.MarkerScale.Two"/> for high-DPI (retina) markers.
+            </param>
+            <param name="anchor">
+            Optional anchor for custom icon positioning, either a <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Enums.MarkerAnchor"/> value or pixel coordinates (x, y).
+            Only applicable when <paramref name="iconUrl"/> is set.
+            </param>
+            <param name="iconUrl">
+            Optional custom marker icon URL. Must be a fully qualified public URL.
+            </param>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Models.CoordinatesMarker.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Gravity.GoogleMaps.StaticMapBuilder.Models.LocationMarker">
+            <inheritdoc />
+            <remarks>
+            This class allows adding a styled marker using a human-readable place name.
+            It inherits all styling capabilities from <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Models.Marker"/>, including label, color, size, scale, anchor, and custom icons.
+            </remarks>
+            <param name="location">
+            The geocodable location string (e.g. city, address, place ID). Must be a valid input accepted by the Google Maps geocoder.
+            </param>
+            <param name="size">
+            Optional marker size (default is <see cref="F:Gravity.GoogleMaps.StaticMapBuilder.Enums.MarkerSize.Default"/>).
+            </param>
+            <param name="color">
+            Optional marker color. Can be a predefined <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Enums.StaticMapColor"/> or a custom <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Types.HexColor"/> (without alpha).
+            </param>
+            <param name="label">
+            Optional label (1 alphanumeric character). Cannot be used with <see cref="F:Gravity.GoogleMaps.StaticMapBuilder.Enums.MarkerSize.Tiny"/> or <see cref="F:Gravity.GoogleMaps.StaticMapBuilder.Enums.MarkerSize.Small"/>.
+            </param>
+            <param name="markerScale">
+            Optional scale factor. Use <see cref="F:Gravity.GoogleMaps.StaticMapBuilder.Enums.MarkerScale.Two"/> for high-DPI (retina) markers.
+            </param>
+            <param name="anchor">
+            Optional anchor for custom icon positioning, either a <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Enums.MarkerAnchor"/> value or pixel coordinates (x, y).
+            Only applicable when <paramref name="iconUrl"/> is set.
+            </param>
+            <param name="iconUrl">
+            Optional custom marker icon URL. Must be a fully qualified public URL.
+            </param>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Models.LocationMarker.#ctor(System.String,Gravity.GoogleMaps.StaticMapBuilder.Enums.MarkerSize,System.Nullable{OneOf.OneOf{Gravity.GoogleMaps.StaticMapBuilder.Enums.StaticMapColor,Gravity.GoogleMaps.StaticMapBuilder.Types.HexColor}},System.Nullable{System.Char},Gravity.GoogleMaps.StaticMapBuilder.Enums.MarkerScale,System.Nullable{OneOf.OneOf{Gravity.GoogleMaps.StaticMapBuilder.Enums.MarkerAnchor,System.ValueTuple{System.Int32,System.Int32}}},System.String)">
+            <inheritdoc />
+            <remarks>
+            This class allows adding a styled marker using a human-readable place name.
+            It inherits all styling capabilities from <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Models.Marker"/>, including label, color, size, scale, anchor, and custom icons.
+            </remarks>
+            <param name="location">
+            The geocodable location string (e.g. city, address, place ID). Must be a valid input accepted by the Google Maps geocoder.
+            </param>
+            <param name="size">
+            Optional marker size (default is <see cref="F:Gravity.GoogleMaps.StaticMapBuilder.Enums.MarkerSize.Default"/>).
+            </param>
+            <param name="color">
+            Optional marker color. Can be a predefined <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Enums.StaticMapColor"/> or a custom <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Types.HexColor"/> (without alpha).
+            </param>
+            <param name="label">
+            Optional label (1 alphanumeric character). Cannot be used with <see cref="F:Gravity.GoogleMaps.StaticMapBuilder.Enums.MarkerSize.Tiny"/> or <see cref="F:Gravity.GoogleMaps.StaticMapBuilder.Enums.MarkerSize.Small"/>.
+            </param>
+            <param name="markerScale">
+            Optional scale factor. Use <see cref="F:Gravity.GoogleMaps.StaticMapBuilder.Enums.MarkerScale.Two"/> for high-DPI (retina) markers.
+            </param>
+            <param name="anchor">
+            Optional anchor for custom icon positioning, either a <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Enums.MarkerAnchor"/> value or pixel coordinates (x, y).
+            Only applicable when <paramref name="iconUrl"/> is set.
+            </param>
+            <param name="iconUrl">
+            Optional custom marker icon URL. Must be a fully qualified public URL.
+            </param>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Models.LocationMarker.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Gravity.GoogleMaps.StaticMapBuilder.Models.MapFormat">
+            <summary>
+            Map format.
+            </summary>
+            <remarks>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/start#map-parameters">official documentation</see>
+            for details.
+            <br/>
+            Use the <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Options.MapFormats"/> to get the available formats.
+            </remarks>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Models.MapFormat.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.Element">
+            <summary>
+            The element of a <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.MapStyle"/>.
+            </summary>
+            <remarks>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/styling#elements">official documentation</see>
+            for details.
+            <br/>
+            Use the <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Options.Elements"/> to get the available elements.
+            </remarks>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.Element.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.Feature">
+            <summary>
+            The feature of a <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.MapStyle"/>.
+            </summary>
+            <remarks>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/styling#features">official documentation</see>
+            for details.
+            <br/>
+            Use the <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Options.Features"/> to get the available features.
+            </remarks>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.Feature.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.MapStyle">
+            <summary>
+            Represents a style specification for Google Maps Static API.
+            </summary>
+            <remarks>
+            A <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.MapStyle"/> is defined by a combination of <see cref="P:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.MapStyle.StyleRule"/>,
+            <see cref="P:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.MapStyle.Feature"/>, and <see cref="P:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.MapStyle.Element"/>, and is used to specify
+            how map features and elements are displayed. If only the style rule is specified, it is applied to the whole map.
+            </remarks>
+            <param name="StyleRule">The object containing the styling informations</param>
+            <param name="Feature">The feature that where the <see cref="P:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.MapStyle.StyleRule"/> is applied.</param>
+            <param name="Element">The element of the feature where the <see cref="P:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.MapStyle.StyleRule"/> is applied.</param>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.MapStyle.#ctor(Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.StyleRule,System.Nullable{Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.Feature},System.Nullable{Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.Element})">
+            <summary>
+            Represents a style specification for Google Maps Static API.
+            </summary>
+            <remarks>
+            A <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.MapStyle"/> is defined by a combination of <see cref="P:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.MapStyle.StyleRule"/>,
+            <see cref="P:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.MapStyle.Feature"/>, and <see cref="P:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.MapStyle.Element"/>, and is used to specify
+            how map features and elements are displayed. If only the style rule is specified, it is applied to the whole map.
+            </remarks>
+            <param name="StyleRule">The object containing the styling informations</param>
+            <param name="Feature">The feature that where the <see cref="P:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.MapStyle.StyleRule"/> is applied.</param>
+            <param name="Element">The element of the feature where the <see cref="P:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.MapStyle.StyleRule"/> is applied.</param>
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.MapStyle.StyleRule">
+            <summary>The object containing the styling informations</summary>
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.MapStyle.Feature">
+            <summary>The feature that where the <see cref="P:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.MapStyle.StyleRule"/> is applied.</summary>
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.MapStyle.Element">
+            <summary>The element of the feature where the <see cref="P:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.MapStyle.StyleRule"/> is applied.</summary>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.MapStyle.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.StyleRule">
+            <summary>
+            Represents a single style rule for a <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.MapStyle"/>.
+            </summary>
+            <remarks>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/styling#style-rules">official documentation</see>
+            for details.
+            </remarks>
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.StyleRule.Lightness">
+            <summary>
+            The lightness adjustment of a <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.StyleRule"/>.
+            </summary>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            Thrown when the value is outside the range of -100 to 100.
+            </exception>
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.StyleRule.Saturation">
+            <summary>
+            The saturation adjustment of a <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.StyleRule"/>.
+            </summary>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            Thrown when the value is outside the range of -100 to 100.
+            </exception>
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.StyleRule.Gamma">
+            <summary>
+            The gamma adjustment of a <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.StyleRule"/>.
+            </summary>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            Thrown when the value is outside the range of 0.01 to 10.0.
+            </exception>
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.StyleRule.Hue">
+            <summary>
+            Specifies the hue adjustment of a <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.StyleRule"/>.
+            </summary>
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.StyleRule.InvertLightness">
+            <summary>
+            Indicates whether the lightness of the element is inverted in a <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.StyleRule"/>.
+            </summary>
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.StyleRule.Visibility">
+            <summary>
+            The visibility adjustment of a <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.StyleRule"/>.
+            </summary>
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.StyleRule.Color">
+            <summary>
+            Specifies the color to be applied as part of a <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.StyleRule"/>.
+            </summary>
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.StyleRule.Weight">
+            <summary>
+            The weight of the visual effect applied by the <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.StyleRule"/>.
+            </summary>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.StyleRule.#ctor(System.Nullable{Gravity.GoogleMaps.StaticMapBuilder.Types.HexColor},System.Double,System.Double,System.Double,System.Boolean,Gravity.GoogleMaps.StaticMapBuilder.Enums.Visibility,System.Nullable{Gravity.GoogleMaps.StaticMapBuilder.Types.HexColor},System.Int32)">
+            <summary>
+            Represents a style rule, which defines visual modifications to specific map features or elements
+            using parameters such as color, lightness, saturation, and more.
+            </summary>
+            <param name="Hue">Defines the base color using a hex color code.</param>
+            <param name="Lightness">Adjusts the brightness level, with negative values decreasing brightness
+            and positive values increasing it.</param>
+            <param name="Saturation">Modifies the intensity of colors, where negative values desaturate
+            and positive values enhance saturation.</param>
+            <param name="Gamma">Controls the intensity of contrast, where default value is 1.0.</param>
+            <param name="InvertLightness">Indicates whether the lightness of the style should be inverted.</param>
+            <param name="Visibility">Determines the visibility of the map element. Possible values are
+            On, Off, or Simplified.</param>
+            <param name="Color">Specifies the color to apply using a hex color code.</param>
+            <param name="Weight">Sets the weight/thickness for map features like roads, expressed as an integer.</param>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.StyleRule.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Gravity.GoogleMaps.StaticMapBuilder.Models.Marker">
+            <summary>
+            Represents the abstract base for all Google Static Map markers.
+            </summary>
+            <remarks>
+            This class encapsulates common marker properties (color, label, icon, size, scale, and anchor).
+            Use <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Models.CoordinatesMarker"/>, <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Models.LocationMarker"/>, or <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Models.MarkerGroup"/> to instantiate specific marker types.
+            </remarks>
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Models.Marker.Label">
+            <summary>
+            Gets the single-character label to display on the marker.
+            </summary>
+            <remarks>
+            Labels are limited to alphanumeric characters (A-Z, 0-9).
+            Not allowed on <see cref="F:Gravity.GoogleMaps.StaticMapBuilder.Enums.MarkerSize.Tiny"/> or <see cref="F:Gravity.GoogleMaps.StaticMapBuilder.Enums.MarkerSize.Small"/> markers.
+            </remarks>
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Models.Marker.Scale">
+            <summary>
+            Gets the scale factor of the marker.
+            </summary>
+            <value>Defaults to <see cref="F:Gravity.GoogleMaps.StaticMapBuilder.Enums.MarkerScale.One"/>. Can be increased for high-DPI rendering.</value>
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Models.Marker.Size">
+            <summary>
+            Gets the size of the marker.
+            </summary>
+            <value>Can be <c>Default</c>, <c>Mid</c>, <c>Small</c>, or <c>Tiny</c>.</value>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Models.Marker.#ctor(Gravity.GoogleMaps.StaticMapBuilder.Enums.MarkerSize,System.Nullable{OneOf.OneOf{Gravity.GoogleMaps.StaticMapBuilder.Enums.StaticMapColor,Gravity.GoogleMaps.StaticMapBuilder.Types.HexColor}},System.Nullable{System.Char},Gravity.GoogleMaps.StaticMapBuilder.Enums.MarkerScale,System.Nullable{OneOf.OneOf{Gravity.GoogleMaps.StaticMapBuilder.Enums.MarkerAnchor,System.ValueTuple{System.Int32,System.Int32}}},System.String)">
+            <summary>
+            Initialize a new instance of the <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Models.Marker"/> class.
+            </summary>
+            <remarks>
+            The <paramref name="color"/> must not have an alpha value.
+            </remarks>
+            <param name="size">
+            Optional marker size (default is <see cref="F:Gravity.GoogleMaps.StaticMapBuilder.Enums.MarkerSize.Default"/>).
+            </param>
+            <param name="color">
+            Optional marker color. Can be a predefined <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Enums.StaticMapColor"/> or a custom <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Types.HexColor"/> (without alpha).
+            </param>
+            <param name="label">
+            Optional label (1 alphanumeric character). Cannot be used with <see cref="F:Gravity.GoogleMaps.StaticMapBuilder.Enums.MarkerSize.Tiny"/> or <see cref="F:Gravity.GoogleMaps.StaticMapBuilder.Enums.MarkerSize.Small"/>.
+            </param>
+            <param name="markerScale">
+            Optional scale factor. Use <see cref="F:Gravity.GoogleMaps.StaticMapBuilder.Enums.MarkerScale.Two"/> for high-DPI (retina) markers.
+            </param>
+            <param name="anchor">
+            Optional anchor for custom icon positioning, either a <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Enums.MarkerAnchor"/> value or pixel coordinates (x, y).
+            Only applicable when <paramref name="iconUrl"/> is set.
+            </param>
+            <param name="iconUrl">
+            Optional custom marker icon URL. Must be a fully qualified public URL.
+            </param>
+            <exception cref="T:System.InvalidOperationException">Thrown when the alpha is set in the color.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown when the anchor is set using x,y values and the x or y value is out of bound (must be between 0 and 64)</exception>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Models.Marker.ToString">
+            <summary>
+            Converts this marker to its query string representation, as expected by the Static Maps API.
+            </summary>
+            <returns>A properly formatted marker parameter string, such as <c>size:mid|color:blue|label:A|...</c>.</returns>
+            <exception cref="T:System.ArgumentException">
+            Thrown if the label is used with unsupported marker sizes.
+            </exception>
+            <exception cref="T:System.InvalidOperationException">
+            Thrown if an anchor is defined without a custom icon URL.
+            </exception> 
+        </member>
+        <member name="T:Gravity.GoogleMaps.StaticMapBuilder.Models.MarkerGroup">
+            <summary>
+            A class used to define a single style for multiple markers.
+            </summary>
+            <param name="size">The size of the markers.</param>
+            <param name="color">The color of the markers</param>
+            <param name="label">The label in the markers.</param>
+            <param name="markerScale">The scale of the markers.</param>
+            <param name="anchor">The anchor of the markers.</param>
+            <param name="iconUrl">The icon url of the markers.</param>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Models.MarkerGroup.#ctor(Gravity.GoogleMaps.StaticMapBuilder.Enums.MarkerSize,System.Nullable{OneOf.OneOf{Gravity.GoogleMaps.StaticMapBuilder.Enums.StaticMapColor,Gravity.GoogleMaps.StaticMapBuilder.Types.HexColor}},System.Nullable{System.Char},Gravity.GoogleMaps.StaticMapBuilder.Enums.MarkerScale,System.Nullable{OneOf.OneOf{Gravity.GoogleMaps.StaticMapBuilder.Enums.MarkerAnchor,System.ValueTuple{System.Int32,System.Int32}}},System.String)">
+            <summary>
+            A class used to define a single style for multiple markers.
+            </summary>
+            <param name="size">The size of the markers.</param>
+            <param name="color">The color of the markers</param>
+            <param name="label">The label in the markers.</param>
+            <param name="markerScale">The scale of the markers.</param>
+            <param name="anchor">The anchor of the markers.</param>
+            <param name="iconUrl">The icon url of the markers.</param>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Models.MarkerGroup.AddLocation(System.String)">
+            <summary>
+            Add a location to the group.
+            </summary>
+            <param name="location">A marker as a location string.</param>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Models.MarkerGroup.AddCoordiantes(System.Double,System.Double)">
+            <summary>
+            Add coordinates to the group.
+            </summary>
+            <param name="latitude">The latitude of the new maker in the group.</param>
+            <param name="longitude">The longitude of the new marker in the group.</param>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Models.MarkerGroup.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Gravity.GoogleMaps.StaticMapBuilder.Models.Path">
+            <summary>
+            Represents a path in a static map, which can be comprised of either polylines or points.
+            </summary>
+            <remarks>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/start#Paths">official documentation</see>
+            </remarks>
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Models.Path.Weight">
+            <value>
+            Specifies the thickness of the path in pixels. If no weight parameter is set, the path will appear in its default thickness (5 pixels).
+            </value>
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Models.Path.Color">
+            <value>
+            Specifies the color of the path. Can be a predefined <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Enums.StaticMapColor"/> or a custom <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Types.HexColor"/>.
+            </value> 
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Models.Path.FillColor">
+            <value>
+            Indicates both that the path marks off a polygonal area and specifies the fill color to use as an overlay within that area.
+            The set of locations following need not be a "closed" loop;
+            the Maps Static API server will automatically join the first and last points.
+            Note, however, that any stroke on the exterior of the filled area will not be closed unless you specifically provide the same beginning and end location.
+            </value>
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Models.Path.Geodesic">
+            <value>
+            ndicates that the requested path should be interpreted as a geodesic line that follows the curvature of the earth.
+            When false, the path is rendered as a straight line in screen space. Defaults to false.
+            </value>
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Models.Path.Points">
+            <value>
+            The list of points that define the path.
+            </value>
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Models.Path.Polyline">
+            <value>
+            An encoded polyline that defines the path. (Can't be combined with <see cref="P:Gravity.GoogleMaps.StaticMapBuilder.Models.Path.Points"/>)
+            </value>
+            <remarks>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/start#EncodedPolylines">official documentation</see> for more information.
+            </remarks>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Models.Path.#ctor(System.Int32,System.Nullable{OneOf.OneOf{Gravity.GoogleMaps.StaticMapBuilder.Enums.StaticMapColor,Gravity.GoogleMaps.StaticMapBuilder.Types.HexColor}},System.Nullable{OneOf.OneOf{Gravity.GoogleMaps.StaticMapBuilder.Enums.StaticMapColor,Gravity.GoogleMaps.StaticMapBuilder.Types.HexColor}},System.Boolean)">
+            <summary>
+            Represents a path on a static map with customizable properties such as weight, color, fill color, and geodesic.
+            </summary>
+            <remarks>
+            The weight of the path is defined in pixels and must be between 0 and 500. If an invalid weight is provided, a default value of 5 is used.
+            Geodesic determines if the path is drawn as the shortest path between points over the Earth's surface.
+            </remarks>
+            <param name="Weight">The stroke weight in pixels.</param>
+            <param name="Color">The color of the path, defined as either a predefined static map color or a hexadecimal color value.</param>
+            <param name="FillColor">The fill color for the path, specified as a static map color or a hexadecimal color value.</param>
+            <param name="Geodesic">Indicates whether the path is drawn as a geodesic.</param>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Models.Path.AddPoint(System.Double,System.Double)">
+            <summary>
+            Adds a geographic point to the path using the specified latitude and longitude.
+            </summary>
+            <remarks>
+            Latitude and longitude values must fall within their respective valid ranges. Adding points is incompatible with defining the path using a polyline.
+            </remarks>
+            <param name="latitude">The latitude of the point, which must be a value between -90 and 90 degrees inclusive.</param>
+            <param name="longitude">The longitude of the point, which must be a value between -180 and 180 degrees inclusive.</param>
+            <exception cref="T:System.ArgumentException">Thrown when the path is already defined by a polyline.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown when the latitude or longitude values are out of their valid ranges.</exception>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Models.Path.AddPoint(System.String)">
+            <summary>
+            Adds a point to the path, defined by its location name.
+            </summary>
+            <remarks>
+            When a point is added, the location count and internal point counter are incremented. This method cannot be used after a polyline has been added to the path.
+            </remarks>
+            <param name="location">The name of the location to add to the path.</param>
+            <exception cref="T:System.ArgumentException">Thrown if a polyline has already been added to the path.</exception>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Models.Path.AddPolyline(System.String)">
+            <summary>
+            Adds a polyline to the path represented by an encoded string.
+            </summary>
+            <remarks>
+            A path can either be defined by a polyline or a series of points, but not both. If points have already been added to the path, adding a polyline will throw an exception.
+            </remarks>
+            <param name="polyline">The encoded polyline string representing the path.</param>
+            <exception cref="T:System.ArgumentException">Thrown when a path already contains points and an attempt is made to add a polyline.</exception>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Models.Path.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Gravity.GoogleMaps.StaticMapBuilder.Options.Elements">
+            <summary>
+            The collection of available <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.Element"/>.
+            </summary>
+            <remarks>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/styling#elements">official documentation</see>
+            for details about the available elements.
+            </remarks>
+        </member>
+        <member name="F:Gravity.GoogleMaps.StaticMapBuilder.Options.Elements.All">
+            <summary>
+            Selects all elements of the specified feature.
+            </summary>
+        </member>
+        <member name="F:Gravity.GoogleMaps.StaticMapBuilder.Options.Elements.Geometry.AllGeometry">
+            <summary>
+            Selects all geometric elements of the specified feature.
+            </summary>
+        </member>
+        <member name="F:Gravity.GoogleMaps.StaticMapBuilder.Options.Elements.Geometry.Fill">
+            <summary>
+            Selects only the fill of the feature's geometry.
+            </summary>
+        </member>
+        <member name="F:Gravity.GoogleMaps.StaticMapBuilder.Options.Elements.Geometry.Stroke">
+            <summary>
+            Selects only the stroke of the feature's geometry.
+            </summary>
+        </member>
+        <member name="F:Gravity.GoogleMaps.StaticMapBuilder.Options.Elements.Labels.AllLabels">
+            <summary>
+            Selects the textual labels associated with the specified feature.
+            </summary>
+        </member>
+        <member name="F:Gravity.GoogleMaps.StaticMapBuilder.Options.Elements.Labels.Icon">
+            <summary>
+            Selects only the icon displayed within the feature's label.
+            </summary>
+        </member>
+        <member name="F:Gravity.GoogleMaps.StaticMapBuilder.Options.Elements.Labels.Text.AllText">
+            <summary>
+            Selects only the text of the label.
+            </summary>
+        </member>
+        <member name="F:Gravity.GoogleMaps.StaticMapBuilder.Options.Elements.Labels.Text.Fill">
+            <summary>
+            Selects only the fill of the label. The fill of a label is typically rendered as a colored outline that surrounds the label text.
+            </summary>
+        </member>
+        <member name="F:Gravity.GoogleMaps.StaticMapBuilder.Options.Elements.Labels.Text.Stroke">
+            <summary>
+            Selects only the stroke of the label's text.
+            </summary>
+        </member>
+        <member name="T:Gravity.GoogleMaps.StaticMapBuilder.Options.Features">
+            <summary>
+            The collection of available <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.Feature"/>.
+            </summary>
+            <remarks>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/styling#features">official documentation.</see>
+            for details about the available features.
+            </remarks>
+        </member>
+        <member name="F:Gravity.GoogleMaps.StaticMapBuilder.Options.Features.All">
+            <summary>
+            Selects all features of the map.
+            </summary>
+        </member>
+        <member name="F:Gravity.GoogleMaps.StaticMapBuilder.Options.Features.Administrative.AllAdministrative">
+            <summary>
+            Selects all administrative areas. Styling affects only the labels of administrative areas, not the geographical borders or fill
+            </summary>
+        </member>
+        <member name="F:Gravity.GoogleMaps.StaticMapBuilder.Options.Features.Administrative.Country">
+            <summary>
+            Selects countries.
+            </summary>
+        </member>
+        <member name="F:Gravity.GoogleMaps.StaticMapBuilder.Options.Features.Administrative.LandParcel">
+            <summary>
+            Selects land parcels.
+            </summary>
+        </member>
+        <member name="F:Gravity.GoogleMaps.StaticMapBuilder.Options.Features.Administrative.Locality">
+            <summary>
+            Selects localities.
+            </summary>
+        </member>
+        <member name="F:Gravity.GoogleMaps.StaticMapBuilder.Options.Features.Administrative.Neighborhood">
+            <summary>
+            Select neighborhoods.
+            </summary>
+        </member>
+        <member name="F:Gravity.GoogleMaps.StaticMapBuilder.Options.Features.Administrative.Province">
+            <summary>
+            Selects provinces.
+            </summary>
+        </member>
+        <member name="F:Gravity.GoogleMaps.StaticMapBuilder.Options.Features.Landscape.AllLandscape">
+            <summary>
+            Selects all landscapes.
+            </summary>
+        </member>
+        <member name="F:Gravity.GoogleMaps.StaticMapBuilder.Options.Features.Landscape.ManMade">
+            <summary>
+            Selects man-made features, such as buildings and other structures.
+            </summary>
+        </member>
+        <member name="F:Gravity.GoogleMaps.StaticMapBuilder.Options.Features.Landscape.Natural.AllLandscapeNatural">
+            <summary>
+            Selects natural features, such as mountains, rivers, deserts, and glaciers.
+            </summary>
+        </member>
+        <member name="F:Gravity.GoogleMaps.StaticMapBuilder.Options.Features.Landscape.Natural.Landcover">
+            <summary>
+            Selects land cover features, the physical material that covers the earth's surface, such as forests, grasslands, wetlands, and bare ground.
+            </summary>
+        </member>
+        <member name="F:Gravity.GoogleMaps.StaticMapBuilder.Options.Features.Landscape.Natural.Terrain">
+            <summary>
+            Selects terrain features of a land surface, such as elevation, slope, and orientation.
+            </summary>
+        </member>
+        <member name="F:Gravity.GoogleMaps.StaticMapBuilder.Options.Features.PointOfInterest.AllPointsOfInterest">
+            <summary>
+            Selects all points of interest.
+            </summary>
+        </member>
+        <member name="F:Gravity.GoogleMaps.StaticMapBuilder.Options.Features.PointOfInterest.Attraction">
+            <summary>
+            Selects tourist attractions.
+            </summary>
+        </member>
+        <member name="F:Gravity.GoogleMaps.StaticMapBuilder.Options.Features.PointOfInterest.Business">
+            <summary>
+            Selects businesses.
+            </summary>
+        </member>
+        <member name="F:Gravity.GoogleMaps.StaticMapBuilder.Options.Features.PointOfInterest.Governement">
+            <summary>
+            Selects government buildings.
+            </summary>
+        </member>
+        <member name="F:Gravity.GoogleMaps.StaticMapBuilder.Options.Features.PointOfInterest.Medical">
+            <summary>
+            Selects emergency services, including hospitals, pharmacies, police, doctors, and others.
+            </summary>
+        </member>
+        <member name="F:Gravity.GoogleMaps.StaticMapBuilder.Options.Features.PointOfInterest.Park">
+            <summary>
+            Selects parks.
+            </summary>
+        </member>
+        <member name="F:Gravity.GoogleMaps.StaticMapBuilder.Options.Features.PointOfInterest.PlaceOfWorship">
+            <summary>
+            Selects places of worship, including churches, temples, mosques, and others.
+            </summary>
+        </member>
+        <member name="F:Gravity.GoogleMaps.StaticMapBuilder.Options.Features.PointOfInterest.School">
+            <summary>
+            Selects schools.
+            </summary>
+        </member>
+        <member name="F:Gravity.GoogleMaps.StaticMapBuilder.Options.Features.PointOfInterest.SportComplex">
+            <summary>
+            Selects sports complexes.
+            </summary>
+        </member>
+        <member name="F:Gravity.GoogleMaps.StaticMapBuilder.Options.Features.Road.AllRoad">
+            <summary>
+            Selects all roads.
+            </summary>
+        </member>
+        <member name="F:Gravity.GoogleMaps.StaticMapBuilder.Options.Features.Road.Arterial">
+            <summary>
+            Selects arterial roads.
+            </summary>
+        </member>
+        <member name="F:Gravity.GoogleMaps.StaticMapBuilder.Options.Features.Road.Highway.AllHighway">
+            <summary>
+            Selects highways.
+            </summary>
+        </member>
+        <member name="F:Gravity.GoogleMaps.StaticMapBuilder.Options.Features.Road.Highway.ControlledAccessHighway">
+            <summary>
+            Selects highways with controlled access.
+            </summary>
+        </member>
+        <member name="F:Gravity.GoogleMaps.StaticMapBuilder.Options.Features.Road.Local">
+            <summary>
+            Selects highways with controlled access.
+            </summary>
+        </member>
+        <member name="F:Gravity.GoogleMaps.StaticMapBuilder.Options.Features.Transit.AllTransit">
+            <summary>
+            Selects all transit stations and lines.
+            </summary>
+        </member>
+        <member name="F:Gravity.GoogleMaps.StaticMapBuilder.Options.Features.Transit.Line">
+            <summary>
+            Selects transit lines.
+            </summary>
+        </member>
+        <member name="F:Gravity.GoogleMaps.StaticMapBuilder.Options.Features.Transit.Station.AllStation">
+            <summary>
+            Selects all transit stations.
+            </summary>
+        </member>
+        <member name="F:Gravity.GoogleMaps.StaticMapBuilder.Options.Features.Transit.Station.Airport">
+            <summary>
+            Selects airports.
+            </summary>
+        </member>
+        <member name="F:Gravity.GoogleMaps.StaticMapBuilder.Options.Features.Transit.Station.BusStation">
+            <summary>
+            Selects bus stops.
+            </summary>
+        </member>
+        <member name="F:Gravity.GoogleMaps.StaticMapBuilder.Options.Features.Transit.Station.RailStation">
+            <summary>
+            Selects rail stations.
+            </summary>
+        </member>
+        <member name="F:Gravity.GoogleMaps.StaticMapBuilder.Options.Features.Water">
+            <summary>
+            Selects bodies of water.
+            </summary>
+        </member>
+        <member name="T:Gravity.GoogleMaps.StaticMapBuilder.Options.MapFormats">
+            <summary>
+            Collection of available map formats.
+            </summary>
+        </member>
+        <member name="T:Gravity.GoogleMaps.StaticMapBuilder.Types.HexColor">
+            <summary>
+            Represents a HEX color used for specifying custom color values, primarily
+            formatted as 0xRRGGBB or 0xRRGGBBAA.
+            </summary>
+            <remarks>
+            - The HexColor struct allows flexible representation of both opaque and
+            semi-transparent HEX colors.
+            - Alpha transparency (AA) can be included as part of the HEX format.
+            - It performs validation to ensure proper formatting of the supplied
+            string value.
+            </remarks>
+            <example>
+            A valid HexColor value must follow the format 0xRRGGBB for fully opaque
+            colors or 0xRRGGBBAA for transparency.
+            </example>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Types.HexColor.#ctor(System.String)">
+            <summary>
+            Initialize a new instance of the <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Types.HexColor"/> struct.
+            </summary>
+            <remarks>
+            The color must be formatted as 0xRRGGBB or 0xRRGGBBAA.
+            </remarks>
+            <param name="value">The hexadecimal color as a string.</param>
+            <exception cref="T:System.ArgumentException">Thrown when the <paramref name="value"/> is in the wrong format.</exception>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Types.HexColor.op_Implicit(System.String)~Gravity.GoogleMaps.StaticMapBuilder.Types.HexColor">
+            <summary>
+            Implicitly convert a string to a HexColor.
+            </summary>
+            <param name="value">The hexadecimal color as a string.</param>
+            <returns>An instance new instance of the <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Types.HexColor"/> struct.</returns>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Types.HexColor.ToString">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>
