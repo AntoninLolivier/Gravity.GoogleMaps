@@ -18,6 +18,10 @@
       <PackageReference Include="OneOf" Version="3.0.271" />
     </ItemGroup>
 
+    <PropertyGroup>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    </PropertyGroup>
+
     <ItemGroup>
         <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
             <_Parameter1>Gravity.GoogleMaps.StaticMapBuilder.Tests</_Parameter1>
