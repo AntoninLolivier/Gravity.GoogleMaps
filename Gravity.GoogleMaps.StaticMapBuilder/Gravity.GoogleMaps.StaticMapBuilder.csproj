@@ -4,28 +4,34 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <DocumentationFile>./docs/Gravity.GoogleMaps.StaticMapBuilder.Documentation.xml</DocumentationFile>
+        
+        <!-- Infos NuGet -->
+        <PackageId>Gravity.GoogleMaps.StaticMapBuilder</PackageId>
+        <Version>1.0.0</Version>
+        <Authors>GravityApps</Authors>
+        <Company>GravityApps</Company>
+        <Description>Fluent, type-safe URL builder for the Google Static Maps API with full support for markers, styles, paths, and more.</Description>
+        <PackageTags>google;maps;static;builder;url;gravityapps</PackageTags>
+        <RepositoryUrl>https://github.com/your-org/Gravity.GoogleMaps</RepositoryUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageProjectUrl>https://github.com/your-org/Gravity.GoogleMaps</PackageProjectUrl>
+        <IncludeSymbols>true</IncludeSymbols>
     </PropertyGroup>
 
-    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-      <DocumentationFile>./docs/Gravity.GoogleMaps.StaticMapBuilder.Documentation.xml</DocumentationFile>
-    </PropertyGroup>
-
-    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <DocumentationFile>./docs/Gravity.GoogleMaps.StaticMapBuilder.Documentation.xml</DocumentationFile>
-    </PropertyGroup>
-    
     <ItemGroup>
       <PackageReference Include="OneOf" Version="3.0.271" />
     </ItemGroup>
-
-    <PropertyGroup>
-        <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    </PropertyGroup>
 
     <ItemGroup>
         <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
             <_Parameter1>Gravity.GoogleMaps.StaticMapBuilder.Tests</_Parameter1>
         </AssemblyAttribute>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="README.md" Pack="true" PackagePath="\"/>
     </ItemGroup>
 
 </Project>
