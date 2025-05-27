@@ -10,5 +10,8 @@
         <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Models.Path.ToString">
             <inheritdoc />
         </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Types.HexColor.ToString">
+            <inheritdoc />
+        </member>
     </members>
 </doc>

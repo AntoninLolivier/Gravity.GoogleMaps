@@ -29,6 +29,7 @@ internal static class ProjectConstants
             internal const string MarkerStyles = "https://developers.google.com/maps/documentation/maps-static/start?#MarkerStyles";
             internal const string PathStyles = "https://developers.google.com/maps/documentation/maps-static/start#PathStyles";
             internal const string EncodedPolylines = "https://developers.google.com/maps/documentation/maps-static/start#EncodedPolylines";
+            internal const string CustomIcons = "https://developers.google.com/maps/documentation/maps-static/start#CustomIcons";
         }
 
         internal static class MapStylingDocumentationLinks

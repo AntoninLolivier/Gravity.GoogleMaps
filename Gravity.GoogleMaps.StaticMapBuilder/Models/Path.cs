@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Globalization;
 
 namespace Gravity.GoogleMaps.StaticMapBuilder.Models;
 
@@ -7,6 +8,7 @@ public record Path
     // Fields
 
     private int _pointsCount;
+    private bool _hasPolyLine;
     
     // Properties
     
@@ -23,9 +25,7 @@ public record Path
     public string? Polyline { get; private set; }
 
     internal int LocationCount;
-    
-    internal bool HasPolyLine;
-    
+
     // Constructor
     
     public Path(
@@ -41,22 +41,22 @@ public record Path
                             $" See : {ProjectConstants.StaticMapDocumentationLinks.SectionLinks.PathStyles} for more information." +
                             $"Note that this range is not explicitly stated in the documentation, but was inferred from dev testing.");
         }
+        
         this.Weight = Weight;
         this.Color = Color;
         this.FillColor = FillColor;
         this.Geodesic = Geodesic;
     }
 
-    
     // Methods
 
     public void AddPoint(double latitude, double longitude)
     {
-        if (HasPolyLine) throw new ArgumentException(ExceptionMessages.UrlParametersExceptionMessages.PathCannotBeDefinedByPointsAndPolylineExceptionMessage);
+        if (_hasPolyLine) throw new ArgumentException(ExceptionMessages.UrlParametersExceptionMessages.PathCannotBeDefinedByPointsAndPolylineExceptionMessage);
         if (longitude is < -180 or > 180) throw new ArgumentOutOfRangeException(nameof(longitude), ExceptionMessages.MalformedParametersExceptionMessages.LongitudeOutOfRangeMessage);
         if (latitude is < -90 or > 90) throw new ArgumentOutOfRangeException(nameof(latitude), ExceptionMessages.MalformedParametersExceptionMessages.LatitudeOutOfRangeMessage);
         
-        string point = $"{latitude},{longitude}";
+        string point = $"{latitude.ToString(CultureInfo.InvariantCulture)},{longitude.ToString(CultureInfo.InvariantCulture)}";
 
         Points ??= [];
         Points.Add(point);
@@ -65,7 +65,7 @@ public record Path
 
     public void AddPoint(string location)
     {
-        if (HasPolyLine) throw new ArgumentException(ExceptionMessages.UrlParametersExceptionMessages.PathCannotBeDefinedByPointsAndPolylineExceptionMessage);
+        if (_hasPolyLine) throw new ArgumentException(ExceptionMessages.UrlParametersExceptionMessages.PathCannotBeDefinedByPointsAndPolylineExceptionMessage);
             
         Points ??= [];
         Points.Add(location);
@@ -78,7 +78,7 @@ public record Path
         if (_pointsCount > 0) throw new ArgumentException(ExceptionMessages.UrlParametersExceptionMessages.PathCannotBeDefinedByPointsAndPolylineExceptionMessage);
         
         Polyline = polyline;
-        HasPolyLine = true;
+        _hasPolyLine = true;
     }
 
     /// <inheritdoc />
@@ -106,13 +106,15 @@ public record Path
         
         string style = string.Join("|", pathStyles);
 
-        if (HasPolyLine)
+        if (_hasPolyLine)
         {
             return $"{style}|enc:{Polyline}";
         }
         
         if (Points is null || Points.Count < 2) throw new InvalidOperationException(ExceptionMessages.UrlParametersExceptionMessages.PathNeedAtLeastTwoPointsExceptionMessage);
         
-        return $"{style}|{string.Join("|", Points)}";
+        return string.IsNullOrEmpty(style) 
+            ? string.Join("|", Points) 
+            : $"{style}|{string.Join("|", Points)}";
     }
 }

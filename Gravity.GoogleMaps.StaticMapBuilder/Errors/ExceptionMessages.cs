@@ -26,6 +26,8 @@ internal static class ExceptionMessages
         internal const string SaturationOutOfRangeExceptionMessage = $"Saturation must be between -100 and 100, see {ProjectConstants.StaticMapDocumentationLinks.MapStylingDocumentationLinks.StyleRules}";
         internal const string GammaOutOfRangeExceptionMessage = $"Gamma must be between 0.01 and 10.0, see {ProjectConstants.StaticMapDocumentationLinks.MapStylingDocumentationLinks.StyleRules}";
         internal const string AlphaCannotBeSetForMarkers = $"Alpha cannot be set for markers !, see {ProjectConstants.StaticMapDocumentationLinks.SectionLinks.MarkerStyles}";
+        internal const string MarkerAnchorXOutOfRangeMessage = $"Marker anchor X must be between 0 and the width of the icon (max 64 pixels), see {ProjectConstants.StaticMapDocumentationLinks.SectionLinks.CustomIcons}";
+        internal const string MarkerAnchorYOutOfRangeMessage = $"Marker anchor Y must be between 0 and the height of the icon (max 64 pixels), see {ProjectConstants.StaticMapDocumentationLinks.SectionLinks.CustomIcons}";
     }
     
     internal static class UrlParametersExceptionMessages
@@ -36,5 +38,6 @@ internal static class ExceptionMessages
         internal static readonly string TooMuchLocationsExceptionMessage = $"Too much location ! Only {ProjectConstants.LocationsCountLimit} locations are allowed per map (the paths and markers are not inclueded), see : {ProjectConstants.StaticMapDocumentationLinks.SectionLinks.Locations}";
         internal static readonly string TooMuchLocationMarkersExceptionMessage = $"Too much {nameof(LocationMarker)} ! Only {ProjectConstants.LocationMarkersCountLimit} {nameof(LocationMarker)} are allowed per map, see : {ProjectConstants.StaticMapDocumentationLinks.SectionLinks.MarkerLocations}";
         internal static readonly string TooMuchLocationPointsForPathsExceptionMessage = $"Too much geocoded locations in paths ! Only {ProjectConstants.LocationPointsForPathCountLimit} geocoded locations for paths are allowed per map.";
+        public const string AnchorCanBeSetOnlyForCustomIconsExceptionMessage = "Anchor can be set only for custom icons !";
     }
 }

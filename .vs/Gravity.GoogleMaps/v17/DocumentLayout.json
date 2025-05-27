@@ -1,0 +1,86 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\anton\\RiderProjects\\Gravity.GoogleMaps\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{D4DD7F45-5084-45C9-A3E6-BE4102B5955A}|Gravity.GoogleMaps.StaticMapBuilder\\Gravity.GoogleMaps.StaticMapBuilder.csproj|c:\\users\\anton\\riderprojects\\gravity.googlemaps\\gravity.googlemaps.staticmapbuilder\\gravity.googlemaps.staticmapbuilder.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{D4DD7F45-5084-45C9-A3E6-BE4102B5955A}|Gravity.GoogleMaps.StaticMapBuilder\\Gravity.GoogleMaps.StaticMapBuilder.csproj|solutionrelative:gravity.googlemaps.staticmapbuilder\\gravity.googlemaps.staticmapbuilder.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AB12B2CE-80B3-485B-B2CA-65342D6D1AAE}|Gravity.GoogleMaps.StaticMapBuilder.Tests\\Gravity.GoogleMaps.StaticMapBuilder.Tests.csproj|c:\\users\\anton\\riderprojects\\gravity.googlemaps\\gravity.googlemaps.staticmapbuilder.tests\\types\\hexcolortest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AB12B2CE-80B3-485B-B2CA-65342D6D1AAE}|Gravity.GoogleMaps.StaticMapBuilder.Tests\\Gravity.GoogleMaps.StaticMapBuilder.Tests.csproj|solutionrelative:gravity.googlemaps.staticmapbuilder.tests\\types\\hexcolortest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 279,
+          "SelectedChildIndex": 8,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{ebac7c74-3b95-5b1e-b483-338a08cbadf2}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{fb410e0a-69d1-5071-ad02-9cfa5e05aff8}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Gravity.GoogleMaps.StaticMapBuilder",
+              "DocumentMoniker": "C:\\Users\\anton\\RiderProjects\\Gravity.GoogleMaps\\Gravity.GoogleMaps.StaticMapBuilder\\Gravity.GoogleMaps.StaticMapBuilder.csproj",
+              "RelativeDocumentMoniker": "Gravity.GoogleMaps.StaticMapBuilder\\Gravity.GoogleMaps.StaticMapBuilder.csproj",
+              "ToolTip": "C:\\Users\\anton\\RiderProjects\\Gravity.GoogleMaps\\Gravity.GoogleMaps.StaticMapBuilder\\Gravity.GoogleMaps.StaticMapBuilder.csproj",
+              "RelativeToolTip": "Gravity.GoogleMaps.StaticMapBuilder\\Gravity.GoogleMaps.StaticMapBuilder.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAABNAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-05-26T18:00:46.262Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "HexColorTest.cs",
+              "DocumentMoniker": "C:\\Users\\anton\\RiderProjects\\Gravity.GoogleMaps\\Gravity.GoogleMaps.StaticMapBuilder.Tests\\Types\\HexColorTest.cs",
+              "RelativeDocumentMoniker": "Gravity.GoogleMaps.StaticMapBuilder.Tests\\Types\\HexColorTest.cs",
+              "ToolTip": "C:\\Users\\anton\\RiderProjects\\Gravity.GoogleMaps\\Gravity.GoogleMaps.StaticMapBuilder.Tests\\Types\\HexColorTest.cs*",
+              "RelativeToolTip": "Gravity.GoogleMaps.StaticMapBuilder.Tests\\Types\\HexColorTest.cs*",
+              "ViewState": "AgIAABMAAAAAAAAAAAAQwCYAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-26T18:00:05.479Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

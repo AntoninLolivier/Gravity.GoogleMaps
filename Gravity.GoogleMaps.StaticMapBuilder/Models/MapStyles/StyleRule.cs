@@ -1,20 +1,14 @@
-﻿namespace Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles;
+﻿using System.Globalization;
 
-public record StyleRule(
-    HexColor? Hue = null,
-    double Lightness = 0d,
-    double Saturation = 0d,
-    double Gamma = 1d,
-    bool InvertLightness = false,
-    Visibility Visibility = Visibility.On,
-    HexColor? Color = null,
-    int Weight = 0)
+namespace Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles;
+
+public record StyleRule
 {
     // Backing Fields
     
-    private readonly double _lightness = Lightness;
-    private readonly double _saturation = Saturation;
-    private readonly double _gamma = Gamma;
+    private readonly double _lightness;
+    private readonly double _saturation;
+    private readonly double _gamma;
     
     // Properties
 
@@ -49,6 +43,37 @@ public record StyleRule(
             _gamma = value;
         }
     }
+
+    public HexColor? Hue { get; }
+    
+    public bool InvertLightness { get; }
+    
+    public Visibility Visibility { get; }
+    
+    public HexColor? Color { get; }
+    
+    public int Weight { get; }
+
+    // Constructor
+
+    public StyleRule(HexColor? Hue = null,
+        double Lightness = 0d,
+        double Saturation = 0d,
+        double Gamma = 1d,
+        bool InvertLightness = false,
+        Visibility Visibility = Visibility.On,
+        HexColor? Color = null,
+        int Weight = 0)
+    {
+        this.Hue = Hue;
+        this.InvertLightness = InvertLightness;
+        this.Visibility = Visibility;
+        this.Color = Color;
+        this.Weight = Weight;
+        this.Lightness = Lightness;
+        this.Saturation = Saturation;
+        this.Gamma = Gamma;
+    }
     
     // Methods
 
@@ -63,17 +88,17 @@ public record StyleRule(
 
         if (Lightness is not 0d)
         {
-            rules.Add($"lightness:{Lightness}");
+            rules.Add($"lightness:{Lightness.ToString(CultureInfo.InvariantCulture)}");
         }
         
         if (Saturation is not 0d)
         {
-            rules.Add($"saturation:{Saturation}");
+            rules.Add($"saturation:{Saturation.ToString(CultureInfo.InvariantCulture)}");
         }
         
         if (Gamma is not 1d)
         {
-            rules.Add($"gamma:{Gamma}");
+            rules.Add($"gamma:{Gamma.ToString(CultureInfo.InvariantCulture)}");
         }
 
         if (InvertLightness)
@@ -83,7 +108,7 @@ public record StyleRule(
         
         if (Visibility is not Visibility.On)
         {
-            rules.Add($"visibility:{Visibility}");
+            rules.Add($"visibility:{Visibility.ToString().ToLower()}");
         }
         
         if (Color is not null)
@@ -93,7 +118,7 @@ public record StyleRule(
 
         if (Weight != 0)
         {
-            rules.Add($"weight:{Weight}");
+            rules.Add($"weight:{Weight.ToString(CultureInfo.InvariantCulture)}");
         }
 
         return string.Join("|", rules);

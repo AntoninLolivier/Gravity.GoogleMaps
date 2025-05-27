@@ -1,22 +1,22 @@
 ﻿namespace Gravity.GoogleMaps.StaticMapBuilder.Models;
 
-public abstract class Marker(
-    MarkerSize size,
-    OneOf<StaticMapColor, HexColor>? color,
-    char? label,
-    MarkerScale markerScale,
-    OneOf<MarkerAnchor, short>? anchor,
-    string? iconUrl)
+public abstract class Marker
 {
     // Backing field
     
-    private readonly OneOf<StaticMapColor, HexColor>? _color = color;
-    
-    // Properties
-    
-    public MarkerSize Size { get; } = size;
+    private readonly OneOf<StaticMapColor, HexColor>? _color;
+    private readonly OneOf<MarkerAnchor, (int x, int y)>? _anchor;
 
-    public OneOf<StaticMapColor, HexColor>? Color
+    // Properties
+    public char? Label { get; }
+    
+    public MarkerScale Scale { get; }
+    
+    public MarkerSize Size { get; }
+    
+    internal string? IconUrl { get; }
+
+    private OneOf<StaticMapColor, HexColor>? Color
     {
         get => _color;
         init
@@ -29,14 +29,40 @@ public abstract class Marker(
         }
     }
 
-    public char? Label { get; } = label;
-    
-    public MarkerScale MarkerScale { get; } = markerScale;
-    
-    public OneOf<MarkerAnchor, short>? Anchor { get; } = anchor;
-    
-    public string? IconUrl { get; } = iconUrl;
+    private OneOf<MarkerAnchor, (int x, int y)>? Anchor
+    {
+        get => _anchor;
+        init
+        {
+            if (value is { IsT1: true})
+            {
+                (int x, int y) coordinates = value.Value.AsT1;
+                if (coordinates.x is > 64 or < 0) throw new ArgumentOutOfRangeException(nameof(Anchor), ExceptionMessages.MalformedParametersExceptionMessages.MarkerAnchorXOutOfRangeMessage);
+                if (coordinates.y is > 64 or < 0) throw new ArgumentOutOfRangeException(nameof(Anchor), ExceptionMessages.MalformedParametersExceptionMessages.MarkerAnchorYOutOfRangeMessage);
+            }
+            
+            _anchor = value;
+        }
+    }
 
+    // Constructor
+    
+    protected Marker(
+        MarkerSize size,
+        OneOf<StaticMapColor, HexColor>? color,
+        char? label,
+        MarkerScale markerScale,
+        OneOf<MarkerAnchor, (int, int)>? anchor,
+        string? iconUrl)
+    {
+        Color = color;
+        Size = size;
+        Label = label;
+        Scale = markerScale;
+        Anchor = anchor;
+        IconUrl = iconUrl;
+    }
+    
     // Methods
     
     public override string ToString()
@@ -58,18 +84,22 @@ public abstract class Marker(
             markerStyles.Add($"label:{char.ToUpper(Label.Value)}");
         }
         
-        if (MarkerScale is not MarkerScale.One)
+        if (Scale is not MarkerScale.One)
         {
-            markerStyles.Add($"scale:{MarkerScale}");
+            markerStyles.Add($"scale:{(int)Scale}");
         }
 
         Anchor?.Switch(
-            anchor => markerStyles.Add($"anchor:{anchor}"),
-            bitsAnchor => markerStyles.Add($"anchor:{bitsAnchor}"));
-
+            anchor => markerStyles.Add($"anchor:{anchor.ToString().ToLower()}"),
+            tupleAnchor => markerStyles.Add($"anchor:{tupleAnchor.ToString().Trim('(', ')').Replace(" ", "")}"));
+        
         if (IconUrl is not null)
         {
             markerStyles.Add($"icon:{IconUrl}");
+        }
+        else if (Anchor is not null)
+        {
+            throw new InvalidOperationException(ExceptionMessages.UrlParametersExceptionMessages.AnchorCanBeSetOnlyForCustomIconsExceptionMessage);
         }
         
         return string.Join("|", markerStyles);

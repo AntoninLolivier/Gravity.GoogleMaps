@@ -6,7 +6,7 @@ public class LocationMarker(
     OneOf<StaticMapColor, HexColor>? color = null,
     char? label = null,
     MarkerScale markerScale = MarkerScale.One,
-    OneOf<MarkerAnchor, short>? anchor = null,
+    OneOf<MarkerAnchor, (int, int)>? anchor = null,
     string? iconUrl = null) : Marker(size, color, label, markerScale, anchor, iconUrl)
 {
     
@@ -14,6 +14,6 @@ public class LocationMarker(
     {
         string style = base.ToString();
 
-        return $"${style}|{location}";
+        return $"{style}|{location}";
     }
 }

@@ -2,10 +2,10 @@
 
 public readonly record struct Element
 {
-    // Properties
+    // Fields
 
     private readonly string _value;
-    
+
     // Constructor
     
     internal Element(string value)

@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Globalization;
 using Path = Gravity.GoogleMaps.StaticMapBuilder.Models.Path;
 
 namespace Gravity.GoogleMaps.StaticMapBuilder.Builders;
@@ -25,16 +26,16 @@ public class StaticMapsUrlBuilder
 
     public StaticMapsUrlBuilder AddCenterWithLocation(string location)
     {
-        ArgumentException.ThrowIfNullOrEmpty(location);
+        if (string.IsNullOrEmpty(location) || string.IsNullOrWhiteSpace(location)) throw new ArgumentNullException(nameof(location), "Location cannot be null or empty");
 
         CheckIfParameterIsAlreadyAdded(StaticMapRequestParameters.Center);
 
         location = _encodeToUrl ? Uri.EscapeDataString(location) : location;
         
-        _requestParameters.Add(StaticMapRequestParameters.Center,
-            $"center={location}");
+        _requestParameters.Add(StaticMapRequestParameters.Center, $"center={location}");
         
         _locationsCount++;
+        _isCenterOrZoomMandatory = false;
         
         return this;
     }
@@ -50,8 +51,9 @@ public class StaticMapsUrlBuilder
         
         coordinates = _encodeToUrl ? Uri.EscapeDataString(coordinates) : coordinates;
         
-        _requestParameters.Add(StaticMapRequestParameters.Center,
-            $"center={coordinates}");
+        _requestParameters.Add(StaticMapRequestParameters.Center, $"center={coordinates}");
+        
+        _isCenterOrZoomMandatory = false;
         
         return this;
     }
@@ -73,6 +75,9 @@ public class StaticMapsUrlBuilder
         zoomString = _encodeToUrl ? Uri.EscapeDataString(zoomString) : zoomString; 
         
         _requestParameters.Add(StaticMapRequestParameters.Zoom, $"zoom={zoomString}");
+        
+        _isCenterOrZoomMandatory = false;
+        
         return this;
     }
     
@@ -80,6 +85,9 @@ public class StaticMapsUrlBuilder
     {
         ArgumentNullException.ThrowIfNull(width);
         ArgumentNullException.ThrowIfNull(height);
+        
+        if (width <= 0) throw new ArgumentException("Width shoul not be less than or equal to 0");
+        if (height <= 0) throw new ArgumentException("Height shoul not be less than or equal to 0");
         
         CheckIfParameterIsAlreadyAdded(StaticMapRequestParameters.Size);
         
@@ -96,11 +104,10 @@ public class StaticMapsUrlBuilder
         ArgumentNullException.ThrowIfNull(mapScale);
         
         CheckIfParameterIsAlreadyAdded(StaticMapRequestParameters.Scale);
+
+        int mapScaleInt = (int)mapScale;
         
-        string mapScaleString = mapScale.ToString().ToLower();
-        mapScaleString = _encodeToUrl ? Uri.EscapeDataString(mapScaleString) : mapScaleString;
-        
-        _requestParameters.Add(StaticMapRequestParameters.Scale, $"scale={mapScaleString}");
+        _requestParameters.Add(StaticMapRequestParameters.Scale, $"scale={mapScaleInt}");
         return this;
     }
 
@@ -186,7 +193,7 @@ public class StaticMapsUrlBuilder
         
         if (_requestParameters.TryGetValue(StaticMapRequestParameters.Marker, out string? existingMarkers))
         {
-            _requestParameters.Add(StaticMapRequestParameters.Marker, existingMarkers + "&" + markers);
+            _requestParameters[StaticMapRequestParameters.Marker] = existingMarkers + "&" + markers;
         }
         else
         {
@@ -223,7 +230,7 @@ public class StaticMapsUrlBuilder
 
         if (_requestParameters.TryGetValue(StaticMapRequestParameters.Marker, out string? existingMarkers))
         {
-            _requestParameters.Add(StaticMapRequestParameters.Marker, existingMarkers + "&" + markersString);
+            _requestParameters[StaticMapRequestParameters.Marker] = existingMarkers + "&" + markersString;
         }
         else
         {
@@ -278,11 +285,11 @@ public class StaticMapsUrlBuilder
 
         if (_requestParameters.TryGetValue(StaticMapRequestParameters.Visible, out string? value))
         {
-            _requestParameters.Add(StaticMapRequestParameters.Visible, value + Uri.EscapeDataString("|") + locations);
+            _requestParameters[StaticMapRequestParameters.Visible] = value + Uri.EscapeDataString("|") + locations;
         }
         else
         {
-            _requestParameters.Add(StaticMapRequestParameters.Visible, $"visible={location}");
+            _requestParameters.Add(StaticMapRequestParameters.Visible, $"visible={locations}");
         }
 
         _isCenterOrZoomMandatory = false;
@@ -294,13 +301,14 @@ public class StaticMapsUrlBuilder
     {
         ArgumentNullException.ThrowIfNull(coordinates);
         
-        string locations = string.Join("|", coordinates.Select(coordinate => $"{coordinate.Item1},{coordinate.Item2}"));
+        string locations = string.Join("|", coordinates.Select(coordinate => 
+            $"{coordinate.Item1.ToString(CultureInfo.InvariantCulture)},{coordinate.Item2.ToString(CultureInfo.InvariantCulture)}"));
         
         locations = _encodeToUrl ? Uri.EscapeDataString(locations) : locations;
         
         if (_requestParameters.TryGetValue(StaticMapRequestParameters.Visible, out string? value))
         {
-            _requestParameters.Add(StaticMapRequestParameters.Visible, value + Uri.EscapeDataString("|") + locations);
+            _requestParameters[StaticMapRequestParameters.Visible] = value + Uri.EscapeDataString("|") + locations;
         }
         else
         {
@@ -329,7 +337,7 @@ public class StaticMapsUrlBuilder
     
     public StaticMapsUrlBuilder AddKey(string key)
     {
-        ArgumentNullException.ThrowIfNull(key);
+        if (string.IsNullOrEmpty(key) || string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(nameof(key), "Key cannot be null or empty");
         
         _requestParameters.Add(StaticMapRequestParameters.Key, $"key={key}");
         return this;
@@ -368,8 +376,7 @@ public class StaticMapsUrlBuilder
     {
         if (_requestParameters.Count == 0) throw new ArgumentException(ExceptionMessages.NoParametersAddedExceptionMessage);
         
-        ValidateCenter();
-        ValidateZoom();
+        ValidateCenterAndZoom();
         ValidateSize();
         ValidateMarkers();
         ValidatePaths();
@@ -377,25 +384,17 @@ public class StaticMapsUrlBuilder
         ValidateMapStyle();
     }
 
-    private void ValidateCenter()
+    private void ValidateCenterAndZoom()
     {
-        if (_isCenterOrZoomMandatory && !_requestParameters.ContainsKey(StaticMapRequestParameters.Center))
+        if (_isCenterOrZoomMandatory && !_requestParameters.ContainsKey(StaticMapRequestParameters.Center) && !_requestParameters.ContainsKey(StaticMapRequestParameters.Zoom))
         {
-            throw new ArgumentException(ExceptionMessages.ParametersMissingExceptionMessages.CenterParameterMissingMessage);
+            throw new InvalidOperationException(ExceptionMessages.ParametersMissingExceptionMessages.CenterParameterMissingMessage);
         }
     }
     
-    private void ValidateZoom()
-    {
-        if (_isCenterOrZoomMandatory && !_requestParameters.ContainsKey(StaticMapRequestParameters.Zoom))
-        {
-            throw new ArgumentException(ExceptionMessages.ParametersMissingExceptionMessages.ZoomParameterMissingMessage);
-        }
-    }
-
     private void ValidateSize()
     {
-        if (!_requestParameters.ContainsKey(StaticMapRequestParameters.Size)) throw new ArgumentException(ExceptionMessages.ParametersMissingExceptionMessages.SizeParameterMissingMessage);
+        if (!_requestParameters.ContainsKey(StaticMapRequestParameters.Size)) throw new InvalidOperationException(ExceptionMessages.ParametersMissingExceptionMessages.SizeParameterMissingMessage);
     }
 
     private void ValidateMarkers()

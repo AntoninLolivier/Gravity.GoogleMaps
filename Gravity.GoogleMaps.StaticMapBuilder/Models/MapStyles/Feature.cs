@@ -2,18 +2,18 @@
 
 public readonly record struct Feature
 {
-    // Properties
-    
-    public string Value { get; }
+    // Fields
+
+    private readonly string _value;
     
     // Constructor
     
     internal Feature(string Value)
     {
-        this.Value = Value;
+        this._value = Value;
     }
     
     // Methods
 
-    public override string ToString() => Value;
+    public override string ToString() => _value;
 }

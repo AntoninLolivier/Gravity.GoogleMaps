@@ -2,9 +2,11 @@
 
 public readonly struct HexColor
 {
-    // Properties
+    // Fields
+
+    private readonly string _value;
     
-    public string Value { get; }
+    // Properties
     
     internal bool IsAlphaSet { get; }
     
@@ -13,9 +15,15 @@ public readonly struct HexColor
     public HexColor(string value)
     {
         if (!IsValidHex(value)) throw new ArgumentException("Invalid hex color format. Expected format: 0xRRGGBB or 0xRRGGBBAA.", nameof(value));
-        if (value.Length is 8) IsAlphaSet = true;
+        if (value.Length is 10)
+        {
+            if (!string.Equals(value.Substring(8, 2).ToUpper(), "FF"))
+            {
+                IsAlphaSet = true;
+            }
+        }
         
-        Value = value;
+        _value = value;
     }
     
     // Operators
@@ -24,7 +32,8 @@ public readonly struct HexColor
     
     // Methods
 
-    public override string ToString() => Value;
+    /// <inheritdoc />
+    public override string ToString() => _value;
 
     private static bool IsValidHex(string input)
     {

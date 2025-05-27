@@ -1,11 +1,13 @@
-﻿namespace Gravity.GoogleMaps.StaticMapBuilder.Models;
+﻿using System.Globalization;
+
+namespace Gravity.GoogleMaps.StaticMapBuilder.Models;
 
 public class MarkerGroup(
     MarkerSize size,
     OneOf<StaticMapColor, HexColor>? color = null,
     char? label = null,
     MarkerScale markerScale = MarkerScale.One,
-    OneOf<MarkerAnchor, short>? anchor = null,
+    OneOf<MarkerAnchor, (int, int)>? anchor = null,
     string? iconUrl = null)
     : Marker(size, color, label, markerScale, anchor, iconUrl)
 {
@@ -27,13 +29,13 @@ public class MarkerGroup(
     
     public void AddCoordiantes(double latitude, double longitude)
     {
-        _locations.Add($"{latitude},{longitude}");
+        _locations.Add($"{latitude.ToString(CultureInfo.InvariantCulture)},{longitude.ToString(CultureInfo.InvariantCulture)}");
     }
     
     public override string ToString()
     {
         string style = base.ToString();
         
-        return $"${style}|{string.Join("|", _locations)}";
+        return $"{style}|{string.Join("|", _locations)}";
     }
 }
