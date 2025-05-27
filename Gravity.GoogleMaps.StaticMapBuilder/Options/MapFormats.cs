@@ -1,5 +1,9 @@
-﻿namespace Gravity.GoogleMaps.StaticMapBuilder.Options;
+﻿#pragma warning disable CS1591 
+namespace Gravity.GoogleMaps.StaticMapBuilder.Options;
 
+/// <summary>
+/// Collection of available map formats.
+/// </summary>
 public static class MapFormats
 {
     public static readonly MapFormat Png = new("png");

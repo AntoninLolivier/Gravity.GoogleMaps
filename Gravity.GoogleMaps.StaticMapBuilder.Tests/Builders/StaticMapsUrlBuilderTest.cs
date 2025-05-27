@@ -428,7 +428,7 @@ public class StaticMapsUrlBuilderkey
     {
         StaticMapsUrlBuilder builder = new();
         string url = builder
-            .AddVisiblePlaceWithLocation("Paris")
+            .AddViewportWithLocation("Paris")
             .AddSize(1, 1)
             .AddKey("key")
             .Build();
@@ -441,7 +441,7 @@ public class StaticMapsUrlBuilderkey
     {
         StaticMapsUrlBuilder builder = new();
         string url = builder
-            .AddVisiblePlaceWithLocation("Paris", "Lyon", "Marseille")
+            .AddViewportWithLocation("Paris", "Lyon", "Marseille")
             .AddSize(1, 1)
             .AddKey("key")
             .Build();
@@ -455,8 +455,8 @@ public class StaticMapsUrlBuilderkey
     {
         StaticMapsUrlBuilder builder = new();
         string url = builder
-            .AddVisiblePlaceWithLocation("Paris")
-            .AddVisiblePlaceWithLocation("Nice")
+            .AddViewportWithLocation("Paris")
+            .AddViewportWithLocation("Nice")
             .AddSize(1, 1)
             .AddKey("key")
             .Build();
@@ -472,7 +472,7 @@ public class StaticMapsUrlBuilderkey
 
         for (int i = 0; i < ProjectConstants.LocationsCountLimit + 1; i++) 
         {
-            builder.AddVisiblePlaceWithLocation($"City{i}");
+            builder.AddViewportWithLocation($"City{i}");
         }
 
         builder.AddSize(1, 1)
@@ -487,7 +487,7 @@ public class StaticMapsUrlBuilderkey
         StaticMapsUrlBuilder builder = new();
         string url = builder
             .DisableUrlEncoding()
-            .AddVisiblePlaceWithLocation("Champs Elysées")
+            .AddViewportWithLocation("Champs Elysées")
             .AddSize(1, 1)
             .AddKey("key")
             .Build();
@@ -501,7 +501,7 @@ public class StaticMapsUrlBuilderkey
         StaticMapsUrlBuilder builder = new();
 
         string url = builder
-            .AddVisiblePlaceWithCoordinates((48.85, 2.35))
+            .AddVisibleportWithCoordinates((48.85, 2.35))
             .AddSize(1, 1)
             .AddKey("key")
             .Build();
@@ -516,7 +516,7 @@ public class StaticMapsUrlBuilderkey
         StaticMapsUrlBuilder builder = new();
 
         string url = builder
-            .AddVisiblePlaceWithCoordinates((48.85, 2.35), (45.75, 4.85))
+            .AddVisibleportWithCoordinates((48.85, 2.35), (45.75, 4.85))
             .AddSize(1, 1)
             .AddKey("key")
             .Build();
@@ -530,8 +530,8 @@ public class StaticMapsUrlBuilderkey
     {
         StaticMapsUrlBuilder builder = new();
 
-        builder.AddVisiblePlaceWithCoordinates((48.85, 2.35));
-        builder.AddVisiblePlaceWithCoordinates((43.6, 1.43));
+        builder.AddVisibleportWithCoordinates((48.85, 2.35));
+        builder.AddVisibleportWithCoordinates((43.6, 1.43));
 
         string url = builder.AddSize(1, 1)
             .AddKey("key")
@@ -548,7 +548,7 @@ public class StaticMapsUrlBuilderkey
 
         string url = builder
             .DisableUrlEncoding()
-            .AddVisiblePlaceWithCoordinates((48.85, 2.35), (45.75, 4.85))
+            .AddVisibleportWithCoordinates((48.85, 2.35), (45.75, 4.85))
             .AddSize(1, 1)
             .AddKey("key")
             .Build();
@@ -735,7 +735,7 @@ public class StaticMapsUrlBuilderkey
 
         for (int i = 0; i < ProjectConstants.LocationsCountLimit + 1; i++)
         {
-            builder.AddVisiblePlaceWithLocation($"City{i}");
+            builder.AddViewportWithLocation($"City{i}");
         }
 
         Assert.Throws<InvalidOperationException>(() => builder.Build());
@@ -751,7 +751,7 @@ public class StaticMapsUrlBuilderkey
 
         for (int i = 0; i < ProjectConstants.LocationsCountLimit; i++)
         {
-            builder.AddVisiblePlaceWithLocation($"City{i}");
+            builder.AddViewportWithLocation($"City{i}");
         }
 
         Assert.Throws<InvalidOperationException>(() => builder.Build());

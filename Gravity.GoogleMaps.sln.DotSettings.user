@@ -18,6 +18,7 @@
 	
 	
 	
+	
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestProjectMapping/=D4DD7F45_002D5084_002D45C9_002DA3E6_002DBE4102B5955A/@EntryIndexedValue">AB12B2CE-80B3-485B-B2CA-65342D6D1AAE</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestTemplateMapping/=xUnit/@EntryIndexedValue">33ff99d8-b1ad-4ed5-a4fd-376b97c2c841</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=1547fea0_002D8de9_002D467b_002D8e7d_002D53f0b7ae45bf/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="HexColorTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;

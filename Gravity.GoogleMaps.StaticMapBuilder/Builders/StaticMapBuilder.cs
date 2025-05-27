@@ -1,9 +1,24 @@
 ﻿using System.Diagnostics;
 using System.Globalization;
+using Gravity.GoogleMaps.StaticMapBuilder.Options;
 using Path = Gravity.GoogleMaps.StaticMapBuilder.Models.Path;
 
 namespace Gravity.GoogleMaps.StaticMapBuilder.Builders;
 
+/// <summary>
+/// The main class used to build the static maps url.
+/// </summary>
+/// <example>
+/// <code>
+/// string url = new StaticMapsUrlBuilder()
+///     .AddCenterWithLocation("New York, NY")
+///     .AddZoom(12)
+///     .AddSize(640, 480)
+///     .AddScale(MapScale.One)
+///     .AddFormat(MapFormats.Jpg)
+///     .Build();
+/// </code>
+/// </example>
 public class StaticMapsUrlBuilder
 {
     // Exception messages
@@ -24,6 +39,18 @@ public class StaticMapsUrlBuilder
     
     // Methods
 
+    /// <summary>
+    /// Add the center parameter to the query using a location string.
+    /// </summary>
+    /// <remarks>
+    /// See <see href="https://developers.google.com/maps/documentation/maps-static/start?#Locations">official documentation</see> for details.
+    /// </remarks>
+    /// <example>
+    /// The location string can be any location human readable string, like "1 Rue de la Paix, Paris, France"
+    /// </example>
+    /// <param name="location">The location string.</param>
+    /// <returns>The builder.</returns>
+    /// <exception cref="ArgumentNullException">Thrown when the <paramref name="location"/> is null, empty or white space</exception>
     public StaticMapsUrlBuilder AddCenterWithLocation(string location)
     {
         if (string.IsNullOrEmpty(location) || string.IsNullOrWhiteSpace(location)) throw new ArgumentNullException(nameof(location), "Location cannot be null or empty");
@@ -40,6 +67,15 @@ public class StaticMapsUrlBuilder
         return this;
     }
 
+    /// <summary>
+    /// Add the center parameter to the query using a latitude and longitude.
+    /// </summary>
+    /// <remarks>
+    /// See <see href="https://developers.google.com/maps/documentation/maps-static/start?#Locations">official documentation</see> for details.
+    /// </remarks>
+    /// <param name="latitude">The latitude of the center.</param>
+    /// <param name="longitude">The longitude of the center</param>
+    /// <returns>The builder</returns>
     public StaticMapsUrlBuilder AddCenterWithCoordinates(double latitude, double longitude)
     {
         ArgumentNullException.ThrowIfNull(latitude);
@@ -58,6 +94,14 @@ public class StaticMapsUrlBuilder
         return this;
     }
 
+    /// <summary>
+    /// Add the zoom parameter to the query.
+    /// </summary>
+    /// <remarks>
+    /// See <see href="https://developers.google.com/maps/documentation/maps-static/start#Zoomlevels">official documentation</see> for details.
+    /// </remarks>
+    /// <param name="zoom">An integer between 0 and 22.</param>
+    /// <returns>The builder.</returns>
     public StaticMapsUrlBuilder AddZoom(int zoom)
     {
         ArgumentNullException.ThrowIfNull(zoom);
@@ -81,6 +125,16 @@ public class StaticMapsUrlBuilder
         return this;
     }
     
+    /// <summary>
+    /// Add the size parameter to the query.
+    /// </summary>
+    /// <remarks>
+    /// See <see href="https://developers.google.com/maps/documentation/maps-static/start#Imagesizes">official documentation</see> for details.
+    /// </remarks>
+    /// <param name="width">The width of the resulting image.</param>
+    /// <param name="height">The height of the resulting image.</param>
+    /// <returns>The builder.</returns>
+    /// <exception cref="ArgumentException">Thrown when the width or height is null or less or equal than 0.</exception>
     public StaticMapsUrlBuilder AddSize(int width, int height)
     {
         ArgumentNullException.ThrowIfNull(width);
@@ -99,6 +153,14 @@ public class StaticMapsUrlBuilder
         return this;
     }
     
+    /// <summary>
+    /// Add the scale parameter to the query.
+    /// </summary>
+    /// <remarks>
+    /// See <see href="https://developers.google.com/maps/documentation/maps-static/start#scale_values">official documentation</see> for details.
+    /// </remarks>
+    /// <param name="mapScale">The scale as an enum value.</param>
+    /// <returns>The builder.</returns>
     public StaticMapsUrlBuilder AddScale(MapScale mapScale)
     {
         ArgumentNullException.ThrowIfNull(mapScale);
@@ -111,6 +173,17 @@ public class StaticMapsUrlBuilder
         return this;
     }
 
+    /// <summary>
+    /// Add the foormat parameter to the query.
+    /// </summary>
+    /// <example>
+    /// Use the <see cref="MapFormats"/> class to specify the format.
+    /// </example>
+    /// <remarks>
+    /// See <see href="https://developers.google.com/maps/documentation/maps-static/start#ImageFormats">official documentation</see> for details.
+    /// </remarks>
+    /// <param name="format"></param>
+    /// <returns>The builder</returns>
     public StaticMapsUrlBuilder AddFormat(MapFormat format)
     {
         ArgumentNullException.ThrowIfNull(format);
@@ -124,6 +197,14 @@ public class StaticMapsUrlBuilder
         return this;
     }
     
+    /// <summary>
+    /// Add the maptype parameter to the query.
+    /// </summary>
+    /// <remarks>
+    /// See <see href="https://developers.google.com/maps/documentation/maps-static/start?#MapTypes">official documentation</see> for details.
+    /// </remarks>
+    /// <param name="mapType">The map type as an enum value.</param>
+    /// <returns>The builder.</returns>
     public StaticMapsUrlBuilder AddMapType(StaticMapType mapType)
     {
         ArgumentNullException.ThrowIfNull(mapType);
@@ -137,6 +218,15 @@ public class StaticMapsUrlBuilder
         return this;
     }
 
+    /// <summary>
+    /// Add the language parameter to the query.
+    /// </summary>
+    /// <param name="language">The language as a 2 letter string.</param>
+    /// <remarks>
+    /// See <see href="https://developers.google.com/maps/documentation/maps-static/start#map-parameters">official documentation</see> for details.
+    /// </remarks>
+    /// <returns>The builder.</returns>
+    /// <exception cref="ArgumentException">Thrown when the <paramref name="language"/> is more than 2 charaters long.</exception>
     public StaticMapsUrlBuilder AddLanguage(string language)
     {
         ArgumentNullException.ThrowIfNull(language);
@@ -151,6 +241,15 @@ public class StaticMapsUrlBuilder
         return this;
     }
 
+    /// <summary>
+    /// Add the region parameter to the query.
+    /// </summary>
+    /// <remarks>
+    /// See <see href="https://developers.google.com/maps/coverage">official documentation</see> for details.
+    /// </remarks>
+    /// <param name="region">The region as a 2 letter string. See available regions on <see href="https://developers.google.com/maps/coverage">google documentation</see></param>
+    /// <returns>The builder</returns>
+    /// <exception cref="ArgumentException">Thrown when the <paramref name="region"/> is more than 2 charaters long.</exception>
     public StaticMapsUrlBuilder AddRegion(string region)
     {
         ArgumentNullException.ThrowIfNull(region);
@@ -165,6 +264,15 @@ public class StaticMapsUrlBuilder
         return this;
     }
 
+    /// <summary>
+    /// Add the mapid parameter to the query.
+    /// </summary>
+    /// <remarks>
+    /// See <see href="https://developers.google.com/maps/documentation/javascript/map-ids/mapid-over">official documentation</see> for details.
+    /// </remarks>
+    /// <param name="mapId">The 16 characters long map id.</param>
+    /// <returns>The builder.</returns>
+    /// <exception cref="ArgumentException">Thrown if the <paramref name="mapId"/> is more than 16 character.</exception>
     public StaticMapsUrlBuilder AddMapId(string mapId)
     {
         ArgumentNullException.ThrowIfNull(mapId);
@@ -179,6 +287,24 @@ public class StaticMapsUrlBuilder
         return this;
     }
 
+    /// <summary>
+    /// Add markers with the same style to the query.
+    /// </summary>
+    /// <remarks>
+    /// Use the <see cref="AddMarkers"/> method to add markers with unique style.
+    /// <br/>
+    /// This method allow to add multiple <see cref="MarkerGroup"/>.
+    /// <br/>
+    /// See <see href="https://developers.google.com/maps/documentation/maps-static/start?#Markers">official documentation</see> for details.
+    /// </remarks>
+    /// <example>
+    /// If you want to add multiple <see cref="MarkerGroup"/> do not call the method multiples times. Do this instead :
+    /// <code>
+    /// var _ = new StaticMapsUrlBuilder().AddMarkerGroups(markerGroup1, markerGroup2, markerGroup3);
+    /// </code>
+    /// </example>
+    /// <param name="markerGroup">The groups of markers to add.</param>
+    /// <returns>The builder</returns>
     public StaticMapsUrlBuilder AddMarkerGroups(params MarkerGroup[] markerGroup)
     {
         ArgumentNullException.ThrowIfNull(markerGroup);
@@ -219,6 +345,25 @@ public class StaticMapsUrlBuilder
         return this;
     }
 
+    /// <summary>
+    /// Add markers with unique styles.
+    /// </summary>
+    /// <remarks>
+    /// Use the <see cref="AddMarkerGroups"/> method to add multiple markers with the same style.
+    /// <br/>
+    /// This method allow to add multiple <see cref="Marker"/>. 
+    /// <br/>
+    /// See <see href="https://developers.google.com/maps/documentation/maps-static/start?#Markers">official documentation</see> for details.
+    /// </remarks>
+    /// <example>
+    /// If you want to add multiple <see cref="Marker"/> do not call the method multiples times. Do this instead :
+    /// <code>
+    /// var _ = new StaticMapsUrlBuilder().AddMarkers(marker1, marker2, marker3);
+    /// </code>
+    /// </example>
+    /// <param name="markers">The markers to add.</param>
+    /// <returns>The builder</returns>
+    /// <exception cref="InvalidOperationException">Thrown when one or more of the given <paramref name="markers"/> is a <see cref="MarkerGroup"/></exception>
     public StaticMapsUrlBuilder AddMarkers(params Marker[] markers)
     {
         ArgumentNullException.ThrowIfNull(markers);
@@ -261,6 +406,22 @@ public class StaticMapsUrlBuilder
         return this;
     }
 
+    /// <summary>
+    /// Add paths to the query.
+    /// </summary>
+    /// <remarks>
+    /// This method allow to add multiple <see cref="Path"/>.
+    /// <br/>
+    /// See <see href="https://developers.google.com/maps/documentation/maps-static/start#Paths">official documentation</see> for details.
+    /// </remarks>
+    /// <example>
+    /// If you want to add multiple <see cref="Path"/> do not call the method multiples times. Do this instead :
+    /// <code>
+    /// var _ = new StaticMapsUrlBuilder().AddPaths(path1, path2, path3);
+    /// </code>
+    /// </example>
+    /// <param name="paths">The paths to add.</param>
+    /// <returns>The builder.</returns>
     public StaticMapsUrlBuilder AddPaths(params Path[] paths)
     {
         ArgumentNullException.ThrowIfNull(paths);
@@ -284,7 +445,23 @@ public class StaticMapsUrlBuilder
         return this;
     }
     
-    public StaticMapsUrlBuilder AddVisiblePlaceWithLocation(params string[] location)
+    /// <summary>
+    /// Add viewports to the map
+    /// </summary>
+    /// <remarks>
+    /// This method allow to add multiple viewports with locations strings.
+    /// <br/>
+    /// See <see href="https://developers.google.com/maps/documentation/maps-static/start#Viewports">official documentation</see> for details.
+    /// </remarks>
+    /// <example>
+    /// If you want to add multiple view ports do not call the method multiples times. Do this instead :
+    /// <code>
+    /// var _ = new StaticMapsUrlBuilder().AddViewportWithLocation(location1, location2, location3);
+    /// </code>
+    /// </example>
+    /// <param name="location">The location of the viewport as a human readable location.</param>
+    /// <returns>The builder.</returns>
+    public StaticMapsUrlBuilder AddViewportWithLocation(params string[] location)
     {
         ArgumentNullException.ThrowIfNull(location);
         
@@ -307,7 +484,23 @@ public class StaticMapsUrlBuilder
         return this;
     }
 
-    public StaticMapsUrlBuilder AddVisiblePlaceWithCoordinates(params (double, double)[] coordinates)
+    /// <summary>
+    /// Add viewports to the map
+    /// </summary>
+    /// <remarks>
+    /// This method allow to add multiple viewports with coordinates.
+    /// <br/>
+    /// See <see href="https://developers.google.com/maps/documentation/maps-static/start#Viewports">official documentation</see> for details.
+    /// </remarks>
+    /// <example>
+    /// If you want to add multiple viewports do not call the method multiples times. Do this instead :
+    /// <code>
+    /// var _ = new StaticMapsUrlBuilder().AddVisibleportWithCoordinates(coordinates1, coordinates2, coordinates3);
+    /// </code>
+    /// </example>
+    /// <param name="coordinates">The coordinates of the viewport.</param>
+    /// <returns>The builder.</returns>
+    public StaticMapsUrlBuilder AddVisibleportWithCoordinates(params (double, double)[] coordinates)
     {
         ArgumentNullException.ThrowIfNull(coordinates);
         
@@ -330,6 +523,22 @@ public class StaticMapsUrlBuilder
         return this;
     }
 
+    /// <summary>
+    /// Add map styles to the query.
+    /// </summary>
+    /// <remarks>
+    /// This method allow to add multiple viewports with coordinates.
+    /// <br/>
+    /// See <see href="https://developers.google.com/maps/documentation/maps-static/styling">official documentation</see> for details.
+    /// </remarks>
+    /// <example>
+    /// If you want to add multiple <see cref="MapStyle"/> do not call the method multiples times. Do this instead :
+    /// <code>
+    /// var _ = new StaticMapsUrlBuilder().AddMapStyle(mapStyle1, mapStyle2, mapStyle3);
+    /// </code>
+    /// </example>
+    /// <param name="mapStyles">The map style.</param>
+    /// <returns>The builder.</returns>
     public StaticMapsUrlBuilder AddMapStyle(params MapStyle[] mapStyles)
     {
         ArgumentNullException.ThrowIfNull(mapStyles);
@@ -345,6 +554,14 @@ public class StaticMapsUrlBuilder
         return this;
     }
     
+    /// <summary>
+    /// Add the API key to the query.
+    /// </summary>
+    /// <remarks>
+    /// See <see href="https://developers.google.com/maps/documentation/maps-static/get-api-key">official documentation</see> for details.
+    /// </remarks>
+    /// <param name="key">You API Key.</param>
+    /// <returns>The builder.</returns>
     public StaticMapsUrlBuilder AddKey(string key)
     {
         if (string.IsNullOrEmpty(key) || string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(nameof(key), "Key cannot be null or empty");
@@ -353,12 +570,26 @@ public class StaticMapsUrlBuilder
         return this;
     }
 
+    /// <summary>
+    /// Use the HTTP protocol instead of HTTPS.
+    /// </summary>
+    /// <returns>The builder.</returns>
     public StaticMapsUrlBuilder UseHttp()
     {
         _useHttp = true;
         return this;
     }
 
+    /// <summary>
+    /// Disable the url encoding. The url is, by default, url encoded.
+    /// </summary>
+    /// <remarks>
+    /// This method should be used before adding any parameters to the builder.
+    /// <br/>
+    /// See <see href="https://developers.google.com/maps/url-encoding">official documentation</see> for details.
+    /// </remarks>
+    /// <returns>The builder</returns>
+    /// <exception cref="InvalidOperationException">Thrown when a parameter was added in the query before calling this method.</exception>
     public StaticMapsUrlBuilder DisableUrlEncoding()
     {
         if (_requestParameters.Count > 0) throw new InvalidOperationException(DisableEncodingBeforeAddingParametersExceptionMessage);
@@ -366,6 +597,27 @@ public class StaticMapsUrlBuilder
         return this;
     }
 
+    /// <summary>
+    /// Build the static map url.
+    /// </summary>
+    /// <remarks>
+    /// This method validate the parameters and build the url.
+    /// <br/>
+    /// The url is, by default, url encoded. Use <see cref="DisableUrlEncoding"/> to disable the url encoding.
+    /// <br/>
+    /// The url is, by default, built using the HTTPS protocol. Use <see cref="UseHttp"/> to use the HTTP protocol.
+    /// </remarks>
+    /// <returns></returns>
+    /// <exception cref="ArgumentException">Thrown when the API Key is missing.</exception>
+    /// <exception cref="ArgumentException">Thrown when no parameter was added to the builder.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when the url exceed the maximum lenght.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when a "positionning argument" is missing.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when the size parameter is missing.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when the url exceed the maximum lenght.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when the number of marker with a location path exceed the limit. (15)</exception>
+    /// <exception cref="InvalidOperationException">Thrown when the number of path with a location path exceed the limit. (15 total)</exception>
+    /// <exception cref="InvalidOperationException">Thrown when the map id parameter is combined with a map style parameter.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when the number of location path exceed the limit (excluding paths and markers, it's 3)</exception>
     public string Build()
     {
         ValidateParameters();
@@ -390,7 +642,7 @@ public class StaticMapsUrlBuilder
         ValidateSize();
         ValidateMarkers();
         ValidatePaths();
-        ValidateVisible();
+        ValidateViewports();
         ValidateMapStyle();
     }
 
@@ -432,7 +684,7 @@ public class StaticMapsUrlBuilder
         }
     }
 
-    private void ValidateVisible()
+    private void ValidateViewports()
     {
         if (_locationsCount > ProjectConstants.LocationsCountLimit)
         {
