@@ -20,7 +20,7 @@ public static class Elements
         /// <summary>
         /// Selects all geometric elements of the specified feature.
         /// </summary>
-        public static readonly Feature AllGeometry = new("geometry");
+        public static readonly Element AllGeometry = new("geometry");
         
         /// <summary>
         /// Selects only the fill of the feature's geometry.
@@ -38,7 +38,7 @@ public static class Elements
         /// <summary>
         /// Selects the textual labels associated with the specified feature.
         /// </summary>
-        public static readonly Feature AllLabels = new("labels");
+        public static readonly Element AllLabels = new("labels");
         
         /// <summary>
         /// Selects only the icon displayed within the feature's label.

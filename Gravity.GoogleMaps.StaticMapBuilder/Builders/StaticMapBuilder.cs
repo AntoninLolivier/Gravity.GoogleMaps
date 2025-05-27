@@ -83,7 +83,7 @@ public class StaticMapsUrlBuilder
         
         CheckIfParameterIsAlreadyAdded(StaticMapRequestParameters.Center);
         
-        string coordinates = $"{latitude},{longitude}";
+        string coordinates = $"{latitude.ToString(CultureInfo.InvariantCulture)},{longitude.ToString(CultureInfo.InvariantCulture)}";
         
         coordinates = _encodeToUrl ? Uri.EscapeDataString(coordinates) : coordinates;
         

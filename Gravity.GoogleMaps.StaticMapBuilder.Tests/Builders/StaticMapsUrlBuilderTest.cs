@@ -33,19 +33,18 @@ public class StaticMapsUrlBuilderkey
         Assert.Throws<ArgumentNullException>(() => builder.AddCenterWithLocation(location));
     }
 
-    [Theory]
-    [InlineData(40.7128, -74.0060)] 
-    public void AddCenterWithCoordinates_ValidCoordinates_ShouldAddParameter(double latitude, double longitude)
+    [Fact]
+    public void AddCenterWithCoordinates_ValidCoordinates_ShouldAddParameter()
     {
         StaticMapsUrlBuilder builder = new();
 
-        builder.AddCenterWithCoordinates(latitude, longitude)
+        builder.AddCenterWithCoordinates(40.712, -74.0060)
             .AddZoom(0)
             .AddSize(1, 1)
             .AddKey("key");
 
         string result = builder.Build();
-        Assert.Contains($"center={Uri.EscapeDataString(latitude + "," + longitude)}", result);
+        Assert.Contains("center=40.712%2C-74.006", result);
     }
 
     [Theory]
@@ -796,4 +795,56 @@ public class StaticMapsUrlBuilderkey
 
         Assert.Throws<InvalidOperationException>(() => builder.Build());
     }
+    
+    [Fact]
+    public void Build_WithMinimalValidConfiguration_ReturnsCorrectUrl()
+    {
+        string url = new StaticMapsUrlBuilder()
+            .AddCenterWithCoordinates(48.8566, 2.3522)
+            .AddZoom(12)
+            .AddSize(600, 400)
+            .AddKey("test-api-key")
+            .Build();
+
+        Assert.StartsWith("https://", url);
+        Assert.Contains("center=48.8566%2C2.3522", url);
+        Assert.Contains("zoom=12", url);
+        Assert.Contains("size=600x400", url);
+        Assert.Contains("key=test-api-key", url);
+    }
+
+    
+    [Fact]
+    public void Build_WithAllMajorParameters_ReturnsFullUrl()
+    {
+        CoordinatesMarker marker = new(48.8584, 2.2945, label: 'E');
+    
+        MapStyle style = new MapStyle(
+            new StyleRule(Color: new HexColor("0xFF0000"), Visibility: Visibility.Simplified),
+            Features.Road.AllRoad,
+            Elements.Geometry.AllGeometry
+        );
+    
+        Path path = new Path(Color: new HexColor("0x00FF00"));
+        path.AddPoint(48.85, 2.35);
+        path.AddPoint(48.86, 2.36);
+
+        string url = new StaticMapsUrlBuilder()
+            .AddCenterWithCoordinates(48.8566, 2.3522)
+            .AddZoom(13)
+            .AddSize(640, 480)
+            .AddMarkers(marker)
+            .AddMapStyle(style)
+            .AddPaths(path)
+            .AddKey("test-api-key")
+            .Build();
+
+        Assert.Contains("markers=", url);
+        Assert.Contains("style=", url);
+        Assert.Contains("path=", url);
+        Assert.Contains("center=48.8566%2C2.3522", url);
+        Assert.Contains("key=test-api-key", url);
+    }
+
+
 }

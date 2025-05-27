@@ -46,6 +46,8 @@ var url = new StaticMapsUrlBuilder()
     .Build();
 ```
 
+Please not that the url is not signed, see the [official google documentation](https://developers.google.com/maps/documentation/maps-static/digital-signature) for details.
+
 ---
 
 ## 🧱 Fluent Builders
