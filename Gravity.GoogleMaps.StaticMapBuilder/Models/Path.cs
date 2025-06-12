@@ -4,7 +4,7 @@ using System.Globalization;
 namespace Gravity.GoogleMaps.StaticMapBuilder.Models;
 
 /// <summary>
-/// Represents a path in a static map, which can be comprised of either polylines or points.
+/// Represents a path in a static map, which can be composed of either polylines or points.
 /// </summary>
 /// <remarks>
 /// See <see href="https://developers.google.com/maps/documentation/maps-static/start#Paths">official documentation</see>
@@ -37,7 +37,7 @@ public record Path
     public OneOf<StaticMapColor, HexColor>? FillColor { get; }
     
     /// <value>
-    /// ndicates that the requested path should be interpreted as a geodesic line that follows the curvature of the earth.
+    /// Indicates that the requested path should be interpreted as a geodesic line that follows the curvature of the earth.
     /// When false, the path is rendered as a straight line in screen space. Defaults to false.
     /// </value>
     public bool Geodesic { get; }
@@ -121,7 +121,7 @@ public record Path
     /// Adds a point to the path, defined by its location name.
     /// </summary>
     /// <remarks>
-    /// When a point is added, the location count and internal point counter are incremented. This method cannot be used after a polyline has been added to the path.
+    /// When a point is added, the location count and internal point counter is incremented. This method cannot be used after a polyline has been added to the path.
     /// </remarks>
     /// <param name="location">The name of the location to add to the path.</param>
     /// <exception cref="ArgumentException">Thrown if a polyline has already been added to the path.</exception>

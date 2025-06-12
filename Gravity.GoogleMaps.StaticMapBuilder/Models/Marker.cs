@@ -96,7 +96,7 @@ public abstract class Marker
     /// Optional custom marker icon URL. Must be a fully qualified public URL.
     /// </param>
     /// <exception cref="InvalidOperationException">Thrown when the alpha is set in the color.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">Thrown when the anchor is set using x,y values and the x or y value is out of bound (must be between 0 and 64)</exception>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when the anchor is set using x,y values, and the x or y value is out of bound (must be between 0 and 64)</exception>
     protected Marker(
         MarkerSize size,
         OneOf<StaticMapColor, HexColor>? color,

@@ -9,10 +9,10 @@ It provides high-level builders and utilities to generate valid requests, with a
 
 ## 📦 Available Packages
 
-| Package                                                                                                     | Description                                                                                                           |
-| ----------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| Package                                                                                                     | Description                                            |
+| ----------------------------------------------------------------------------------------------------------- |--------------------------------------------------------|
 | [`Gravity.GoogleMaps.StaticMapBuilder`](https://www.nuget.org/packages/Gravity.GoogleMaps.StaticMapBuilder) | Fluent URL builder for the **Google Static Maps API**, with full support for styling, markers, paths, and validation. |
-| *(Coming soon)* `Gravity.GoogleMaps.TimeZone`                                                               | Fluent SDK **Google Time Zone API**                                                                |
+| *(Coming soon)* `Gravity.GoogleMaps.TimeZone`                                                               | Fluent SDK **Google Time Zone API**                    |
 
 ---
 
@@ -51,7 +51,7 @@ It provides high-level builders and utilities to generate valid requests, with a
 ## 🙌 Contributing
 
 Want to help or report an issue?
-Feel free to [open a discussion or PR](https://github.com/your-org/Gravity.GoogleMaps)!
+Feel free to [open a discussion or PR](https://github.com/AntoninLolivier/Gravity.GoogleMaps)!
 
 ---
 

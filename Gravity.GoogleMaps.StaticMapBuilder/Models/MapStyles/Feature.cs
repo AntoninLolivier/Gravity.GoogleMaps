@@ -11,7 +11,7 @@ namespace Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles;
 /// <br/>
 /// Use the <see cref="Features"/> to get the available features.
 /// </remarks>
-public readonly record struct Feature
+public readonly record struct Feature // TODO : Ici un constructeur public est sous-entendu
 {
     // Fields
 
@@ -23,7 +23,7 @@ public readonly record struct Feature
     {
         _value = value;
     }
-    
+
     // Methods
 
     /// <inheritdoc />

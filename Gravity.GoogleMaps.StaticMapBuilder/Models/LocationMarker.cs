@@ -6,7 +6,7 @@
 /// It inherits all styling capabilities from <see cref="Marker"/>, including label, color, size, scale, anchor, and custom icons.
 /// </remarks>
 /// <param name="location">
-/// The geocodable location string (e.g. city, address, place ID). Must be a valid input accepted by the Google Maps geocoder.
+/// The geocodable location string (e.g., city, address, place ID). Must be a valid input accepted by the Google Maps geocoder.
 /// </param>
 /// <param name="size">
 /// Optional marker size (default is <see cref="MarkerSize.Default"/>).

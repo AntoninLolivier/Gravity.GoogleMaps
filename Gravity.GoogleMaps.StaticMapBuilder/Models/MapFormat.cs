@@ -11,7 +11,7 @@ namespace Gravity.GoogleMaps.StaticMapBuilder.Models;
 /// <br/>
 /// Use the <see cref="MapFormats"/> to get the available formats.
 /// </remarks>
-public readonly record struct MapFormat
+public readonly record struct MapFormat // TODO : Ici un constructeur public est sous-entendu
 {
     // Properties
     

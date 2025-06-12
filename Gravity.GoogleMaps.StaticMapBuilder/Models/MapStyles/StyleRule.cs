@@ -105,7 +105,7 @@ public record StyleRule
     /// and positive values increasing it.</param>
     /// <param name="Saturation">Modifies the intensity of colors, where negative values desaturate
     /// and positive values enhance saturation.</param>
-    /// <param name="Gamma">Controls the intensity of contrast, where default value is 1.0.</param>
+    /// <param name="Gamma">Controls the intensity of contrast, where the default value is 1.0.</param>
     /// <param name="InvertLightness">Indicates whether the lightness of the style should be inverted.</param>
     /// <param name="Visibility">Determines the visibility of the map element. Possible values are
     /// On, Off, or Simplified.</param>
