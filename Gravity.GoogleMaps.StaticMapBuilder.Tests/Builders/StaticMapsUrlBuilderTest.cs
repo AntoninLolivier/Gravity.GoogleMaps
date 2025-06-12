@@ -9,7 +9,7 @@ using Gravity.GoogleMaps.StaticMapBuilder.Types;
 namespace Gravity.GoogleMaps.StaticMapBuilder.Tests.Builders;
 
 [TestSubject(typeof(StaticMapsUrlBuilder))]
-public class StaticMapsUrlBuilderkey
+public class StaticMapsUrlBuilderTest
 {
     [Fact]
     public void AddCenterWithLocation_ValidLocation_ShouldAddParameter()
@@ -73,7 +73,7 @@ public class StaticMapsUrlBuilderkey
             .AddSize(1, 1)
             .AddKey("key");
 
-        // No exception for now, but log should be triggered (ensure fail gracefully)
+        // No exception for now, but the log should be triggered (ensure fail gracefully)
         string result = builder.Build();
         Assert.Contains($"zoom={Uri.EscapeDataString(zoom.ToString())}", result);
     }
@@ -226,7 +226,7 @@ public class StaticMapsUrlBuilderkey
         string url = builder
             .AddMarkerGroups(group)
             .AddSize(1, 1)
-            .AddKey("tkey")
+            .AddKey("key")
             .Build();
 
         Assert.Contains("markers=", url);
@@ -500,7 +500,7 @@ public class StaticMapsUrlBuilderkey
         StaticMapsUrlBuilder builder = new();
 
         string url = builder
-            .AddVisibleportWithCoordinates((48.85, 2.35))
+            .AddVisiblePortWithCoordinates((48.85, 2.35))
             .AddSize(1, 1)
             .AddKey("key")
             .Build();
@@ -515,7 +515,7 @@ public class StaticMapsUrlBuilderkey
         StaticMapsUrlBuilder builder = new();
 
         string url = builder
-            .AddVisibleportWithCoordinates((48.85, 2.35), (45.75, 4.85))
+            .AddVisiblePortWithCoordinates((48.85, 2.35), (45.75, 4.85))
             .AddSize(1, 1)
             .AddKey("key")
             .Build();
@@ -529,8 +529,8 @@ public class StaticMapsUrlBuilderkey
     {
         StaticMapsUrlBuilder builder = new();
 
-        builder.AddVisibleportWithCoordinates((48.85, 2.35));
-        builder.AddVisibleportWithCoordinates((43.6, 1.43));
+        builder.AddVisiblePortWithCoordinates((48.85, 2.35));
+        builder.AddVisiblePortWithCoordinates((43.6, 1.43));
 
         string url = builder.AddSize(1, 1)
             .AddKey("key")
@@ -547,7 +547,7 @@ public class StaticMapsUrlBuilderkey
 
         string url = builder
             .DisableUrlEncoding()
-            .AddVisibleportWithCoordinates((48.85, 2.35), (45.75, 4.85))
+            .AddVisiblePortWithCoordinates((48.85, 2.35), (45.75, 4.85))
             .AddSize(1, 1)
             .AddKey("key")
             .Build();
@@ -768,6 +768,43 @@ public class StaticMapsUrlBuilderkey
             .AddKey("key");
 
         Assert.Throws<InvalidOperationException>(() => builder.Build());
+    }
+    
+    
+    [Fact]
+    public void Build_WithoutKeyDisabledChecking_Success()
+    {
+        string url = new StaticMapsUrlBuilder()
+            .AddCenterWithLocation("Paris")
+            .AddZoom(10)
+            .AddSize(1, 1)
+            .DisableApiKeyCheck()
+            .Build();
+
+        Assert.StartsWith("https://", url);
+        Assert.Contains("center=Paris", url);
+        Assert.Contains("zoom=10", url);
+        Assert.Contains("size=1x1", url);
+    }
+
+    [Fact]
+    public void Build_RelativeUrlOnly_DoesNotContainHost()
+    {
+        string url = new StaticMapsUrlBuilder()
+            .AddCenterWithLocation("Paris")
+            .AddZoom(10)
+            .AddSize(1, 1)
+            .AddKey("key")
+            .ReturnRelativeUrlOnly()
+            .Build();
+        
+        Assert.DoesNotContain(ProjectConstants.StaticMapBaseUrlHttps, url);
+        Assert.DoesNotContain(ProjectConstants.StaticMapBaseUrlHttp, url);
+        Assert.StartsWith("center", url);
+        Assert.Contains("center=Paris", url);
+        Assert.Contains("zoom=10", url);
+        Assert.Contains("size=1x1", url);
+        Assert.Contains("key=key", url);
     }
     
     [Fact]
