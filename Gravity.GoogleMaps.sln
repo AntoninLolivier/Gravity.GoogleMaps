@@ -6,7 +6,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gravity.GoogleMaps.StaticMa
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assets", "assets", "{0B38E617-0317-4123-8E7A-2D6F102C592D}"
 	ProjectSection(SolutionItems) = preProject
-		Logo_raw.png = Logo_raw.png
+		Gravity.GoogleMaps.png = Gravity.GoogleMaps.png
 	EndProjectSection
 EndProject
 Global

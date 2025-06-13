@@ -99,7 +99,7 @@ public static class Features
         /// <summary>
         /// Selects government buildings.
         /// </summary>
-        public static readonly Feature Governement = new("poi.government");
+        public static readonly Feature Government = new("poi.government");
         
         /// <summary>
         /// Selects emergency services, including hospitals, pharmacies, police, doctors, and others.

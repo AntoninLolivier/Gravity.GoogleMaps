@@ -8,7 +8,7 @@
 /// <see cref="Feature"/>, and <see cref="Element"/>, and is used to specify
 /// how map features and elements are displayed. If only the style rule is specified, it is applied to the whole map.
 /// </remarks>
-/// <param name="StyleRule">The object containing the styling informations</param>
+/// <param name="StyleRule">The object containing the styling information</param>
 /// <param name="Feature">The feature that where the <see cref="StyleRule"/> is applied.</param>
 /// <param name="Element">The element of the feature where the <see cref="StyleRule"/> is applied.</param>
 public record MapStyle(
@@ -23,12 +23,12 @@ public record MapStyle(
         
         if (Feature is not null)
         {
-            styleValues.Add($"feature:{Feature.Value}");
+            styleValues.Add($"feature:{Feature}");
         }
 
         if (Element is not null)
         {
-            styleValues.Add($"element:{Element.Value}");
+            styleValues.Add($"element:{Element}");
         }
         
         styleValues.Add(StyleRule.ToString());

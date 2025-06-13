@@ -25,8 +25,8 @@ public class MarkerGroupTest
     public void ToString_ContainsAllCoordinates_AddedAsLatLng()
     {
         MarkerGroup group = new(MarkerSize.Small);
-        group.AddCoordiantes(48.85, 2.35);
-        group.AddCoordiantes(52.52, 13.40);
+        group.AddCoordinates(48.85, 2.35);
+        group.AddCoordinates(52.52, 13.40);
 
         string result = group.ToString();
 
@@ -39,7 +39,7 @@ public class MarkerGroupTest
     {
         MarkerGroup group = new(MarkerSize.Small);
         group.AddLocation("A");
-        group.AddCoordiantes(1, 2);
+        group.AddCoordinates(1, 2);
         group.AddLocation("B");
 
         string result = group.ToString();
@@ -53,7 +53,7 @@ public class MarkerGroupTest
         MarkerGroup group = new(MarkerSize.Default);
         group.AddLocation("Paris");
         group.AddLocation("Rome");
-        group.AddCoordiantes(10, 20);
+        group.AddCoordinates(10, 20);
 
         Assert.Equal(2, group.LocationCount);
     }

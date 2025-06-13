@@ -12,7 +12,7 @@ It helps you generate valid, optimized static map URLs effortlessly — with ful
 * 🎨 Full support for **styles**, **map types**, and **custom markers**
 * 🧭 Handles edge cases (map ID conflicts, marker limits, etc.)
 * 🔐 Built with test coverage in mind (96%+)
-* 🧪 Easy to unit test & extend
+* 🧪 Easy to unit test and extend
 
 ---
 
@@ -46,7 +46,7 @@ var url = new StaticMapsUrlBuilder()
     .Build();
 ```
 
-Please not that the url is not signed, see the [official google documentation](https://developers.google.com/maps/documentation/maps-static/digital-signature) for details.
+Please note that the url is not signed, see the [official Google documentation](https://developers.google.com/maps/documentation/maps-static/digital-signature) for details.
 
 ---
 
@@ -96,7 +96,7 @@ group.AddCoordinates(45.75, 4.85);
 
 ## 🛡️ License
 
-[MIT License](LICENSE)
+[MIT License](../LICENSE)
 
 ---
 
@@ -108,4 +108,4 @@ Developed & maintained by freelance developer https://github.com/AntoninLolivier
 ---
 
 Want to contribute or suggest an improvement?
-👉 [Open an issue or pull request on GitHub](https://github.com/your-org/Gravity.GoogleMaps)
+👉 [Open an issue or pull request on GitHub](https://github.com/AntoninLolivier/Gravity.GoogleMaps)

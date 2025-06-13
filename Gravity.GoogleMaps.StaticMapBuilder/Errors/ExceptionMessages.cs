@@ -5,7 +5,7 @@ internal static class ExceptionMessages
     internal const string LabelNotSupportedExceptionMessage = "Label is not supported for Tiny or Small markers";
     internal const string NoParametersAddedExceptionMessage = "No parameters have been added";
     internal const string ParameterCanOnlyBeAddedOnceExceptionMessage = "The {0} parameter can only be added once";
-    internal static readonly string StaticMapUrlExceeededLengthExceptionMessage = $"Static map url exceeded max allowed length of {ProjectConstants.StaticMapsApiUrlMaxSize}, see" + ProjectConstants.StaticMapDocumentationLinks.UrlSizeRestrictionLink + " for more information";
+    internal static readonly string StaticMapUrlExceededLengthExceptionMessage = $"Static map url exceeded max allowed length of {ProjectConstants.StaticMapsApiUrlMaxSize}, see" + ProjectConstants.StaticMapDocumentationLinks.UrlSizeRestrictionLink + " for more information";
 
     internal static class ParametersMissingExceptionMessages
     {
@@ -35,9 +35,11 @@ internal static class ExceptionMessages
         internal const string PathCannotBeDefinedByPointsAndPolylineExceptionMessage = "Path cannot be defined by points and polyline simultaneously, see : " + ProjectConstants.StaticMapDocumentationLinks.SectionLinks.EncodedPolylines;
         internal const string PathNeedAtLeastTwoPointsExceptionMessage = "Path need at least two points ! Add 2 points or more to define a correct path !";
         internal const string CombineMapIdAndMapStyleExceptionMessage = $"Don't combine map style and map id. Choose either one or the other, see : {ProjectConstants.StaticMapDocumentationLinks.MapStylingDocumentationLinks.MapStyling}";
-        internal static readonly string TooMuchLocationsExceptionMessage = $"Too much location ! Only {ProjectConstants.LocationsCountLimit} locations are allowed per map (the paths and markers are not inclueded but the center is), see : {ProjectConstants.StaticMapDocumentationLinks.SectionLinks.Locations}";
+        internal static readonly string TooMuchLocationsExceptionMessage = $"Too much location ! Only {ProjectConstants.LocationsCountLimit} locations are allowed per map (the paths and markers are not included but the center is), see : {ProjectConstants.StaticMapDocumentationLinks.SectionLinks.Locations}";
         internal static readonly string TooMuchLocationMarkersExceptionMessage = $"Too much {nameof(LocationMarker)} ! Only {ProjectConstants.LocationMarkersCountLimit} {nameof(LocationMarker)} are allowed per map, see : {ProjectConstants.StaticMapDocumentationLinks.SectionLinks.MarkerLocations}";
         internal static readonly string TooMuchLocationPointsForPathsExceptionMessage = $"Too much geocoded locations in paths ! Only {ProjectConstants.LocationPointsForPathCountLimit} geocoded locations for paths are allowed per map.";
-        public const string AnchorCanBeSetOnlyForCustomIconsExceptionMessage = "Anchor can be set only for custom icons !";
+        internal const string AnchorCanBeSetOnlyForCustomIconsExceptionMessage = "Anchor can be set only for custom icons !";
+        internal static readonly string TooMuchDistinctCustomMarkerIcons = $"Too much custom marker icons ! Only {ProjectConstants.CustomMakerIconsCountLimit} distinct custom marker icons are allowed per map, see : {ProjectConstants.StaticMapDocumentationLinks.SectionLinks.CustomIcons}";
+        
     }
 }

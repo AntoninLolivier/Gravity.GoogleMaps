@@ -45,7 +45,7 @@ public class MarkerGroup(
     /// </summary>
     /// <param name="latitude">The latitude of the new maker in the group.</param>
     /// <param name="longitude">The longitude of the new marker in the group.</param>
-    public void AddCoordiantes(double latitude, double longitude)
+    public void AddCoordinates(double latitude, double longitude)
     {
         _locations.Add($"{latitude.ToString(CultureInfo.InvariantCulture)},{longitude.ToString(CultureInfo.InvariantCulture)}");
     }

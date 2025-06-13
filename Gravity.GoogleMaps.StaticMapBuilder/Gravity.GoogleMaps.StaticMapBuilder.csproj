@@ -7,6 +7,7 @@
         <DocumentationFile>./docs/Gravity.GoogleMaps.StaticMapBuilder.Documentation.xml</DocumentationFile>
         
         <!-- Infos NuGet -->
+        <PackageIcon>../Gravity.GoogleMaps.png</PackageIcon>
         <PackageId>Gravity.GoogleMaps.StaticMapBuilder</PackageId>
         <Version>1.0.2</Version>
         <Authors>GravityApps</Authors>
