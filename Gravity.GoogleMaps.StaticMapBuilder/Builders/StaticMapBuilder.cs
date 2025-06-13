@@ -713,6 +713,11 @@ public class StaticMapsUrlBuilder
         {
             throw new InvalidOperationException(ExceptionMessages.UrlParametersExceptionMessages.TooMuchLocationMarkersExceptionMessage);
         }
+
+        if (_markerIconUrls.Distinct().Count() > ProjectConstants.CustomMakerIconsCountLimit)
+        {
+            throw new InvalidOperationException(ExceptionMessages.UrlParametersExceptionMessages.TooMuchDistinctCustomMarkerIcons);
+        }
     }
 
     private void ValidatePaths()

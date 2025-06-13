@@ -38,6 +38,8 @@ internal static class ExceptionMessages
         internal static readonly string TooMuchLocationsExceptionMessage = $"Too much location ! Only {ProjectConstants.LocationsCountLimit} locations are allowed per map (the paths and markers are not included but the center is), see : {ProjectConstants.StaticMapDocumentationLinks.SectionLinks.Locations}";
         internal static readonly string TooMuchLocationMarkersExceptionMessage = $"Too much {nameof(LocationMarker)} ! Only {ProjectConstants.LocationMarkersCountLimit} {nameof(LocationMarker)} are allowed per map, see : {ProjectConstants.StaticMapDocumentationLinks.SectionLinks.MarkerLocations}";
         internal static readonly string TooMuchLocationPointsForPathsExceptionMessage = $"Too much geocoded locations in paths ! Only {ProjectConstants.LocationPointsForPathCountLimit} geocoded locations for paths are allowed per map.";
-        public const string AnchorCanBeSetOnlyForCustomIconsExceptionMessage = "Anchor can be set only for custom icons !";
+        internal const string AnchorCanBeSetOnlyForCustomIconsExceptionMessage = "Anchor can be set only for custom icons !";
+        internal static readonly string TooMuchDistinctCustomMarkerIcons = $"Too much custom marker icons ! Only {ProjectConstants.CustomMakerIconsCountLimit} distinct custom marker icons are allowed per map, see : {ProjectConstants.StaticMapDocumentationLinks.SectionLinks.CustomIcons}";
+        
     }
 }

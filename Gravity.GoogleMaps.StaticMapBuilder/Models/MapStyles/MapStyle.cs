@@ -23,12 +23,12 @@ public record MapStyle(
         
         if (Feature is not null)
         {
-            styleValues.Add($"feature:{Feature.Value}");
+            styleValues.Add($"feature:{Feature}");
         }
 
         if (Element is not null)
         {
-            styleValues.Add($"element:{Element.Value}");
+            styleValues.Add($"element:{Element}");
         }
         
         styleValues.Add(StyleRule.ToString());

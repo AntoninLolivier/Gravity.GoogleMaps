@@ -10,6 +10,7 @@ internal static class ProjectConstants
     internal const int LocationMarkersCountLimit = 15;
     internal const int LocationPointsForPathCountLimit = 15;
     internal const int MapIdMaxLength = 16;
+    internal const int CustomMakerIconsCountLimit = 5;
 
     internal static class StaticMapDocumentationLinks
     {
