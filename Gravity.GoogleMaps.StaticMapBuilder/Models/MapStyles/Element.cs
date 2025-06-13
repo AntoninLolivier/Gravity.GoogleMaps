@@ -11,7 +11,7 @@ namespace Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles;
 /// <br/>
 /// Use the <see cref="Elements"/> to get the available elements.
 /// </remarks>
-public readonly record struct Element // TODO : Ici un constructeur public est sous-entendu
+public sealed class Element 
 {
     // Fields
 
