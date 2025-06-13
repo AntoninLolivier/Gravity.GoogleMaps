@@ -551,7 +551,7 @@
             <param name="Feature">The feature that where the <see cref="P:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.MapStyle.StyleRule"/> is applied.</param>
             <param name="Element">The element of the feature where the <see cref="P:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.MapStyle.StyleRule"/> is applied.</param>
         </member>
-        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.MapStyle.#ctor(Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.StyleRule,System.Nullable{Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.Feature},System.Nullable{Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.Element})">
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.MapStyle.#ctor(Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.StyleRule,Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.Feature,Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.Element)">
             <summary>
             Represents a style specification for Google Maps Static API.
             </summary>
