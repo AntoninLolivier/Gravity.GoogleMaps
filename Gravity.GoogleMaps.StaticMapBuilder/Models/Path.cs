@@ -178,7 +178,7 @@ public record Path
 
         if (_hasPolyLine)
         {
-            return $"{style}|enc:{Polyline}";
+            return string.IsNullOrEmpty(style) ? $"enc:{Polyline}" : $"{style}|enc:{Polyline}";
         }
         
         if (Points is null || Points.Count < 2) throw new InvalidOperationException(ExceptionMessages.UrlParametersExceptionMessages.PathNeedAtLeastTwoPointsExceptionMessage);
