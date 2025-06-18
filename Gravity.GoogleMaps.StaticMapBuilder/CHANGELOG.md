@@ -7,6 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.1.0] - 2025-06-13
+
+### ✨ Added
+
+- `MapStyle` now supports styles without explicitly specifying a `Feature` or `Element`.
+  - Example: `new MapStyle(new StyleRule(Color: ...))`
+- Added documentation files:
+  - [`Markers.md`](docs/Markers.md)
+  - [`Paths.md`](docs/Paths.md)
+  - [`MapStyles.md`](docs/MapStyles.md)
+
+### 🐛 Fixed
+
+- Fixed `Path.ToString()` when only a polyline is used and no style is defined:
+  - Prevents malformed output like `path=|enc:...`
+- Improved test coverage for polyline support and path validation
+
+### 🧪 Internal
+
+- Added new test cases for:
+  - `AddPaths` with polylines
+  - optional parameters in `MapStyle`
+  - URL encoding validation
+- Refactored `MarkerGroup` to have default constructor values
+- Internal TODO added on coordinates precision in markers
+
+---
+
 ## [2.0.0] - 2025-06-13
 
 ### ⚠️ Breaking Changes
