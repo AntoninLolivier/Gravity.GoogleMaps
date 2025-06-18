@@ -14,17 +14,21 @@ public class MapStyleTest
         "0x00FF00")]
 
     [InlineData(
-        "feature:road.local|color:0xFF0000",
+        "feature:road.local|color:0xFF00AA",
         "road.local",
         null,
-        "0xFF0000")]
+        "0xFF00AA")]
 
     [InlineData(
-        "element:geometry|color:0xFF0000",
+        "element:geometry|color:0xFF00BB",
         null,
         "geometry",
-        "0xFF0000")]
-
+        "0xFF00BB")]
+    [InlineData(
+        "color:0xFF00EE",
+        null, 
+        null,
+        "0xFF00EE")]
     public void ToString_ProducesExpectedOutput(
         string expected,
         string? featureValue,
@@ -55,7 +59,7 @@ public class MapStyleTest
     public void ToString_WithOnlyStyleRule_ReturnsStyleOnly()
     {
         StyleRule style = new(Color: new HexColor("0xFFCC00"));
-        MapStyle mapStyle = new(style, null, null);
+        MapStyle mapStyle = new(style);
 
         string result = mapStyle.ToString();
 

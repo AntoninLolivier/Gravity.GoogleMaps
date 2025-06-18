@@ -13,8 +13,8 @@
 /// <param name="Element">The element of the feature where the <see cref="StyleRule"/> is applied.</param>
 public record MapStyle(
     StyleRule StyleRule,
-    Feature? Feature,
-    Element? Element)
+    Feature? Feature = null,
+    Element? Element = null)
 {
     /// <inheritdoc />
     public override string ToString()

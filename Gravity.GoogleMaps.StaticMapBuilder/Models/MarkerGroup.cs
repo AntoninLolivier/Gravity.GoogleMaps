@@ -12,7 +12,7 @@ namespace Gravity.GoogleMaps.StaticMapBuilder.Models;
 /// <param name="anchor">The anchor of the markers.</param>
 /// <param name="iconUrl">The icon url of the markers.</param>
 public class MarkerGroup(
-    MarkerSize size,
+    MarkerSize size = MarkerSize.Default,
     OneOf<StaticMapColor, HexColor>? color = null,
     char? label = null,
     MarkerScale markerScale = MarkerScale.One,
@@ -47,6 +47,7 @@ public class MarkerGroup(
     /// <param name="longitude">The longitude of the new marker in the group.</param>
     public void AddCoordinates(double latitude, double longitude)
     {
+        // TODO : Manage the "Precision beyond the 6 decimal places is ignored"
         _locations.Add($"{latitude.ToString(CultureInfo.InvariantCulture)},{longitude.ToString(CultureInfo.InvariantCulture)}");
     }
     
