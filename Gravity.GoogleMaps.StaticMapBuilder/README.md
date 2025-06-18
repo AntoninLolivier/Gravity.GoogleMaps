@@ -24,6 +24,18 @@ dotnet add package Gravity.GoogleMaps.StaticMapBuilder
 
 ---
 
+## 📚 Documentation
+
+Explore detailed usage guides for key features:
+
+- [`Markers`](./docs/Markers.md) → Standalone vs grouped markers, icons, limits, examples
+- [`Map Styles`](./docs/MapStyles.md) → Hue, lightness, feature types
+- [`Paths`](./docs/Paths.md) → Lines, polylines, geodesic options
+
+> 🧭 See the official [Google Maps Static API](https://developers.google.com/maps/documentation/maps-static/start) for complete reference.
+
+---
+
 ## ⚡ Quick Start
 
 ```csharp
@@ -70,7 +82,7 @@ Every parameter of the API is covered through intuitive, self-documenting builde
 var style = new MapStyle(
     new StyleRule(Hue: new HexColor("0x00FF00"), Visibility: Visibility.Simplified),
     Feature.Administrative.Country,
-    Element.Labels.Text
+    Elements.Labels.Text
 );
 ```
 
