@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Drawing;
 using System.Globalization;
 using Gravity.GoogleMaps.StaticMapBuilder.Options;
 using Path = Gravity.GoogleMaps.StaticMapBuilder.Models.Path;
@@ -80,6 +81,7 @@ public class StaticMapsUrlBuilder
     /// <returns>The builder</returns>
     public StaticMapsUrlBuilder AddCenterWithCoordinates(double latitude, double longitude)
     {
+        // TODO : Manage the "Precision beyond the 6 decimal places is ignored"
         ArgumentNullException.ThrowIfNull(latitude);
         ArgumentNullException.ThrowIfNull(longitude);
         

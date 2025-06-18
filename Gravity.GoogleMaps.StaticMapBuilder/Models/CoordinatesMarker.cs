@@ -24,6 +24,7 @@ public class CoordinatesMarker : Marker
         get => _latitude;
         init
         {
+            // TODO : Manage the "Precision beyond the 6 decimal places is ignored"
             if (value is < -90 or > 90) throw new ArgumentOutOfRangeException(nameof(Latitude), ExceptionMessages.MalformedParametersExceptionMessages.LatitudeOutOfRangeMessage);
             
             _latitude = value;
@@ -39,6 +40,7 @@ public class CoordinatesMarker : Marker
         get => _longitude;
         init
         {
+            // TODO : Manage the "Precision beyond the 6 decimal places is ignored"
             if (value is < -180 or > 180) throw new ArgumentOutOfRangeException(nameof(Longitude), ExceptionMessages.MalformedParametersExceptionMessages.LongitudeOutOfRangeMessage);
             
             _longitude = value;
