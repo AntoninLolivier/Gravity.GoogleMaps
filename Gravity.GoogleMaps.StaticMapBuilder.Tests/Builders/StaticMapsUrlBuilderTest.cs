@@ -369,9 +369,9 @@ public class StaticMapsUrlBuilderTest
     [Fact]
     public void AddPaths_AddsPathCorrectly()
     {
-        Path path = new();
-        path.AddPoint("Paris");
-        path.AddPoint("Lyon");
+        Path path = new(Color:new HexColor("0xFFFFFF"));
+        path.AddPoint("8th Avenue & 34th St,New York,NY");
+        path.AddPoint("8th Avenue & 42nd St,New York,NY");
 
         string url = new StaticMapsUrlBuilder()
             .AddPaths(path)
@@ -380,8 +380,10 @@ public class StaticMapsUrlBuilderTest
             .Build();
 
         Assert.Contains("path=", url);
-        Assert.Contains("Paris", url);
-        Assert.Contains("Lyon", url);
+        Assert.DoesNotContain("path=|", url);
+        Assert.Contains("color%3A0xFFFFFF", url);
+        Assert.Contains("8th%20Avenue%20%26%2034th%20St%2CNew%20York%2CNY", url);
+        Assert.Contains("8th%20Avenue%20%26%2042nd%20St%2CNew%20York%2CNY", url);
     }
     
     [Fact]
@@ -401,8 +403,26 @@ public class StaticMapsUrlBuilderTest
             .AddKey("key")
             .Build();
 
+        Assert.DoesNotContain("path=|", url);
         Assert.Contains("Paris", url);
         Assert.Contains("Nice", url);
+    }
+    
+    [Fact]
+    public void AddPaths_AddsPolylineCorrectly()
+    {
+        Path path = new();
+        path.AddPolyline("_fisIp~u|U}|a@pytA_~b@hhCyhS~hResU||x@oig@rwg@amUfbjA}f[roaAynd@|vXxiAt{ZwdUfbjAewYrqGchH~vXkqnAria@c_o@inc@k{g@i`]o|F}vXaj\\h`]ovs@?yi_@rcAgtO|j_AyaJren@nzQrst@zuYh`]v|GbldEuzd@||x@spD|trAzwP|d_@yiB~vXmlWhdPez\\_{Km_`@~re@ew^rcAeu_@zhyByjPrst@ttGren@aeNhoFemKrvdAuvVidPwbVr~j@or@f_z@ftHr{ZlwBrvdAmtHrmT{rOt{Zz}E|c|@o|Lpn~AgfRpxqBfoVz_iAocAhrVjr@rh~@jzKhjp@``NrfQpcHrb^k|Dh_z@nwB|kb@a{R|yh@uyZ|llByuZpzw@wbd@rh~@||Fhqs@teTztrAupHhyY}t]huf@e|Fria@o}GfezAkdW|}[ocMt_Neq@ren@e~Ika@pgE|i|AfiQ|`l@uoJrvdAgq@fppAsjGhg`@|hQpg{Ai_V||x@mkHhyYsdP|xeA~gF|}[mv`@t_NitSfjp@c}Mhg`@sbChyYq}e@rwg@atFff}@ghN~zKybk@fl}A}cPftcAite@tmT__Lha@u~DrfQi}MhkSqyWivIumCria@ciO_tHifm@fl}A{rc@fbjAqvg@rrqAcjCf|i@mqJtb^s|@fbjA{wDfs`BmvEfqs@umWt_Nwn^pen@qiBr`xAcvMr{Zidg@dtjDkbM|d_@");
+
+        string url = new StaticMapsUrlBuilder()
+            .AddPaths(path)
+            .AddSize(1, 1)
+            .AddKey("key")
+            .Build();
+
+        Assert.Contains("path=", url);
+        Assert.DoesNotContain("path=|", url);
+        Assert.Contains("enc%3A_fisIp~u%7CU%7D%7Ca%40pytA_~b%40hhCyhS~hResU%7C%7Cx%40oig%40rwg%40amUfbjA%7Df%5BroaAynd%40%7CvXxiAt%7BZwdUfbjAewYrqGchH~vXkqnAria%40c_o%40inc%40k%7Bg%40i%60%5Do%7CF%7DvXaj%5Ch%60%5Dovs%40%3Fyi_%40rcAgtO%7Cj_AyaJren%40nzQrst%40zuYh%60%5Dv%7CGbldEuzd%40%7C%7Cx%40spD%7CtrAzwP%7Cd_%40yiB~vXmlWhdPez%5C_%7BKm_%60%40~re%40ew%5ErcAeu_%40zhyByjPrst%40ttGren%40aeNhoFemKrvdAuvVidPwbVr~j%40or%40f_z%40ftHr%7BZlwBrvdAmtHrmT%7BrOt%7BZz%7DE%7Cc%7C%40o%7CLpn~AgfRpxqBfoVz_iAocAhrVjr%40rh~%40jzKhjp%40%60%60NrfQpcHrb%5Ek%7CDh_z%40nwB%7Ckb%40a%7BR%7Cyh%40uyZ%7CllByuZpzw%40wbd%40rh~%40%7C%7CFhqs%40teTztrAupHhyY%7Dt%5Dhuf%40e%7CFria%40o%7DGfezAkdW%7C%7D%5BocMt_Neq%40ren%40e~Ika%40pgE%7Ci%7CAfiQ%7C%60l%40uoJrvdAgq%40fppAsjGhg%60%40%7ChQpg%7BAi_V%7C%7Cx%40mkHhyYsdP%7CxeA~gF%7C%7D%5Bmv%60%40t_NitSfjp%40c%7DMhg%60%40sbChyYq%7De%40rwg%40atFff%7D%40ghN~zKybk%40fl%7DA%7DcPftcAite%40tmT__Lha%40u~DrfQi%7DMhkSqyWivIumCria%40ciO_tHifm%40fl%7DA%7Brc%40fbjAqvg%40rrqAcjCf%7Ci%40mqJtb%5Es%7C%40fbjA%7BwDfs%60BmvEfqs%40umWt_Nwn%5Epen%40qiBr%60xAcvMr%7BZidg%40dtjDkbM%7Cd_%40", url);
     }
     
     [Fact]
@@ -419,6 +439,7 @@ public class StaticMapsUrlBuilderTest
             .AddKey("key")
             .Build();
 
+        Assert.DoesNotContain("path=|", url);
         Assert.Contains("Champs Elysées", url); 
     }
     
