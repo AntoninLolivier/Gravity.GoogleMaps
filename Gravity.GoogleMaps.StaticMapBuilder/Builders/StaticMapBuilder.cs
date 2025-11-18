@@ -1,7 +1,5 @@
 ﻿using System.Diagnostics;
-using System.Drawing;
 using System.Globalization;
-using Gravity.GoogleMaps.StaticMapBuilder.Options;
 using Path = Gravity.GoogleMaps.StaticMapBuilder.Models.Path;
 
 namespace Gravity.GoogleMaps.StaticMapBuilder.Builders;
@@ -38,7 +36,7 @@ public class StaticMapsUrlBuilder
     private bool _encodeToUrl = true;
     private bool _isCenterOrZoomMandatory = true;
     private bool _checkApiKey = true;
-    private bool _returnRelativeUrlOnly;
+    private bool _returnParametersOnly;
 
     // Methods
 
@@ -578,6 +576,7 @@ public class StaticMapsUrlBuilder
     /// Use the HTTP protocol instead of HTTPS.
     /// </summary>
     /// <returns>The builder.</returns>
+    [Obsolete($"Use {nameof(WithOptions)} method and {nameof(StaticMapBuilderOptions)}.{nameof(StaticMapBuilderOptions.UseHttp)} instead.")]
     public StaticMapsUrlBuilder UseHttp()
     {
         _useHttp = true;
@@ -594,6 +593,7 @@ public class StaticMapsUrlBuilder
     /// </remarks>
     /// <returns>The builder.</returns>
     /// <exception cref="InvalidOperationException">Thrown when a parameter was added in the query before calling this method.</exception>
+    [Obsolete($"Use {nameof(WithOptions)} method and {nameof(StaticMapBuilderOptions)}.{nameof(StaticMapBuilderOptions.DisableUrlEncoding)} instead.")]
     public StaticMapsUrlBuilder DisableUrlEncoding()
     {
         if (_requestParameters.Count > 0) throw new InvalidOperationException(DisableEncodingBeforeAddingParametersExceptionMessage);
@@ -608,6 +608,7 @@ public class StaticMapsUrlBuilder
     /// Disable the api key check allowing to have a "raw" request url.
     /// </remarks>
     /// <returns>The builder.</returns>
+    [Obsolete($"Use {nameof(WithOptions)} method and {nameof(StaticMapBuilderOptions)}.{nameof(StaticMapBuilderOptions.DisableApiKeyCheck)} instead.")]
     public StaticMapsUrlBuilder DisableApiKeyCheck()
     {
         _checkApiKey = false;
@@ -624,9 +625,22 @@ public class StaticMapsUrlBuilder
     /// composition of the full request URL using only the relevant parameters.
     /// </remarks>
     /// <returns>The builder.</returns>
+    [Obsolete($"Use {nameof(WithOptions)} method and {nameof(StaticMapBuilderOptions)}.{nameof(StaticMapBuilderOptions.ReturnParametersOnly)} instead.")]
     public StaticMapsUrlBuilder ReturnRelativeUrlOnly()
     {
-        _returnRelativeUrlOnly = true;
+        _returnParametersOnly = true;
+        return this;
+    }
+
+    public StaticMapsUrlBuilder WithOptions(StaticMapBuilderOptions options)
+    {
+        ArgumentNullException.ThrowIfNull(options);
+
+        _checkApiKey = !options.DisableApiKeyCheck;
+        _useHttp = options.UseHttp;
+        _returnParametersOnly = options.ReturnParametersOnly;
+        _encodeToUrl = !options.DisableUrlEncoding;
+
         return this;
     }
 
@@ -658,7 +672,7 @@ public class StaticMapsUrlBuilder
         
         string url;
 
-        if (_returnRelativeUrlOnly)
+        if (_returnParametersOnly)
         {
             url = string.Empty;
         }
