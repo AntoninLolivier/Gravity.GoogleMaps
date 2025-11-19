@@ -50,8 +50,8 @@ var url = new StaticMapsUrlBuilder()
     .AddMapStyle(
         new MapStyle(
             new StyleRule(Color: new HexColor("0xFF0000")),
-            Feature.Roads,
-            Element.Geometry
+            Features.Road.AllRoad,
+            Elements.Geometry.AllGeometry
         )
     )
     .AddKey("YOUR_API_KEY")
@@ -81,8 +81,8 @@ Every parameter of the API is covered through intuitive, self-documenting builde
 ```csharp
 var style = new MapStyle(
     new StyleRule(Hue: new HexColor("0x00FF00"), Visibility: Visibility.Simplified),
-    Feature.Administrative.Country,
-    Elements.Labels.Text
+    Features.Administrative.Country,
+    Elements.Labels.Text.AllText
 );
 ```
 

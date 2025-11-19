@@ -7,6 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## **[2.2.0] – 2025-11-19**
+
+### ✨ Added
+
+* Introduced the new method `WithOptions(StaticMapBuilderOptions options)` to centralize and simplify builder configuration.
+* Added the new type [`StaticMapBuilderOptions`](Builders/StaticMapBuilderOptions.cs), which replaces several individual configuration methods.
+
+### ⚠️ Deprecated
+
+The following methods are now obsolete and will be removed in a future release.
+They are fully replaced by the corresponding properties in `StaticMapBuilderOptions`:
+
+* `UseHttp()` → replaced by `StaticMapBuilderOptions.UseHttp`
+* `DisableUrlEncoding()` → replaced by `StaticMapBuilderOptions.DisableUrlEncoding`
+* `ReturnRelativeUrlOnly()` → replaced by `StaticMapBuilderOptions.ReturnParametersOnly`
+* (**Note:** You had a duplicated line in your version—corrected here)
+
+### 🔧 Changed
+
+* Calling `DisableUrlEncoding` (either via the old method or via `StaticMapBuilderOptions`) **before adding parameters no longer throws an exception**.
+  URL encoding is now applied when calling `.Build()`, not during parameter registration.
+
+### 🧪 Internal
+
+* `Feature`, `Element`, and `MapFormat` have been migrated from `sealed class` to `readonly record struct`, improving immutability, value semantics, and performance.
+
 ## [2.1.0] - 2025-06-13
 
 ### ✨ Added

@@ -571,6 +571,11 @@ public class StaticMapsUrlBuilder
         return this;
     }
 
+    /// <summary>
+    /// Add builder option to custom the result of the <see cref="Build"/> method.
+    /// </summary>
+    /// <param name="options">The builder options</param>
+    /// <returns>The builder.</returns>
     public StaticMapsUrlBuilder WithOptions(StaticMapBuilderOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
