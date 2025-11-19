@@ -11,6 +11,15 @@ namespace Gravity.GoogleMaps.StaticMapBuilder.Tests.Builders;
 [TestSubject(typeof(StaticMapsUrlBuilder))]
 public class StaticMapsUrlBuilderTest
 {
+    // Options
+    
+    private static readonly StaticMapBuilderOptions DisableUrlEncodingOptions = new()
+    {
+        DisableUrlEncoding = true
+    };
+    
+    // Tests
+    
     [Fact]
     public void AddCenterWithLocation_ValidLocation_ShouldAddParameter()
     {
@@ -433,10 +442,10 @@ public class StaticMapsUrlBuilderTest
         path.AddPoint("Place de la République");
 
         string url = new StaticMapsUrlBuilder()
-            .DisableUrlEncoding()
             .AddPaths(path)
             .AddSize(1, 1)
             .AddKey("key")
+            .WithOptions(DisableUrlEncodingOptions)
             .Build();
 
         Assert.DoesNotContain("path=|", url);
@@ -506,10 +515,10 @@ public class StaticMapsUrlBuilderTest
     {
         StaticMapsUrlBuilder builder = new();
         string url = builder
-            .DisableUrlEncoding()
             .AddViewportWithLocation("Champs Elysées")
             .AddSize(1, 1)
             .AddKey("key")
+            .WithOptions(DisableUrlEncodingOptions)
             .Build();
 
         Assert.Contains("Champs Elysées", url);
@@ -567,10 +576,10 @@ public class StaticMapsUrlBuilderTest
         StaticMapsUrlBuilder builder = new();
 
         string url = builder
-            .DisableUrlEncoding()
             .AddVisiblePortWithCoordinates((48.85, 2.35), (45.75, 4.85))
             .AddSize(1, 1)
             .AddKey("key")
+            .WithOptions(DisableUrlEncodingOptions)
             .Build();
 
         Assert.Contains("48.85,2.35|45.75,4.85", url);
@@ -600,7 +609,7 @@ public class StaticMapsUrlBuilderTest
     [Fact]
     public void AddMapStyle_AddsMultipleStyles()
     {
-        MapStyle style1 = new(new StyleRule(Visibility: Visibility.Simplified), new Feature("road.local"), null);
+        MapStyle style1 = new(new StyleRule(Visibility: Visibility.Simplified), new Feature("road.local"));
         MapStyle style2 = new(new StyleRule(Color: new HexColor("0x00FF00")), null, new Element("geometry"));
 
         string url = new StaticMapsUrlBuilder()
@@ -619,15 +628,15 @@ public class StaticMapsUrlBuilderTest
     [Fact]
     public void AddMapStyle_DisabledEncoding_UsesRaw()
     {
-        MapStyle style = new(new StyleRule(Color: new HexColor("0x00FF00")), null, null);
+        MapStyle style = new(new StyleRule(Color: new HexColor("0x00FF00")));
 
         string url = new StaticMapsUrlBuilder()
-            .DisableUrlEncoding()
             .AddMapStyle(style)
             .AddCenterWithLocation("Paris")
             .AddZoom(10)
             .AddSize(400, 400)
             .AddKey("key")
+            .WithOptions(DisableUrlEncodingOptions)
             .Build();
 
         Assert.Contains("color:0x00FF00", url);
@@ -637,11 +646,14 @@ public class StaticMapsUrlBuilderTest
     public void UseHttp_SetsHttpSchemeInUrl()
     {
         string url = new StaticMapsUrlBuilder()
-            .UseHttp()
             .AddCenterWithLocation("Paris")
             .AddZoom(0)
             .AddSize(1, 1)
             .AddKey("key")
+            .WithOptions(new StaticMapBuilderOptions
+            {
+                UseHttp = true
+            })
             .Build();
 
         Assert.StartsWith(ProjectConstants.StaticMapBaseUrlHttp, url);
@@ -651,23 +663,14 @@ public class StaticMapsUrlBuilderTest
     public void DisableUrlEncoding_DisablesEncoding_WhenCalledBeforeParameters()
     {
         string url = new StaticMapsUrlBuilder()
-            .DisableUrlEncoding()
             .AddCenterWithLocation("Champs Elysées")
             .AddZoom(0)
             .AddSize(1, 1)
             .AddKey("key")
+            .WithOptions(DisableUrlEncodingOptions)
             .Build();
 
         Assert.Contains("Champs Elysées", url); 
-    }
-    
-    [Fact]
-    public void DisableUrlEncoding_ThrowsIfCalledAfterAddingParameters()
-    {
-        StaticMapsUrlBuilder builder = new StaticMapsUrlBuilder()
-            .AddCenterWithLocation("Paris");
-
-        Assert.Throws<InvalidOperationException>(() => builder.DisableUrlEncoding());
     }
     
     [Fact]
@@ -780,7 +783,7 @@ public class StaticMapsUrlBuilderTest
     [Fact]
     public void Build_WithMapIdAndStyle_Throws()
     {
-        MapStyle style = new(new StyleRule(Color: new HexColor("0xFF0000")), null, null);
+        MapStyle style = new(new StyleRule(Color: new HexColor("0xFF0000")));
 
         StaticMapsUrlBuilder builder = new StaticMapsUrlBuilder()
             .AddMapId("1234567890123456")
@@ -799,7 +802,10 @@ public class StaticMapsUrlBuilderTest
             .AddCenterWithLocation("Paris")
             .AddZoom(10)
             .AddSize(1, 1)
-            .DisableApiKeyCheck()
+            .WithOptions(new StaticMapBuilderOptions
+            {
+                DisableApiKeyCheck = true
+            })
             .Build();
 
         Assert.StartsWith("https://", url);
@@ -816,7 +822,10 @@ public class StaticMapsUrlBuilderTest
             .AddZoom(10)
             .AddSize(1, 1)
             .AddKey("key")
-            .ReturnRelativeUrlOnly()
+            .WithOptions(new StaticMapBuilderOptions
+            {
+                ReturnParametersOnly = true
+            })
             .Build();
         
         Assert.DoesNotContain(ProjectConstants.StaticMapBaseUrlHttps, url);
@@ -903,6 +912,4 @@ public class StaticMapsUrlBuilderTest
         Assert.Contains("center=48.8566%2C2.3522", url);
         Assert.Contains("key=test-api-key", url);
     }
-
-
 }
