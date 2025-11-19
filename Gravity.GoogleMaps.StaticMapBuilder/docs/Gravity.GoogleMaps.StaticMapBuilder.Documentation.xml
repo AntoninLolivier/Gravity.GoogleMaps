@@ -150,7 +150,7 @@
             var _ = new StaticMapsUrlBuilder().AddMarkerGroups(markerGroup1, markerGroup2, markerGroup3);
             </code>
             </example>
-            <param name="markerGroup">The groups of markers to add.</param>
+            <param name="markerGroups">The groups of markers to add.</param>
             <returns>The builder</returns>
         </member>
         <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.AddMarkers(Gravity.GoogleMaps.StaticMapBuilder.Models.Marker[])">
@@ -207,7 +207,7 @@
             var _ = new StaticMapsUrlBuilder().AddViewportWithLocation(location1, location2, location3);
             </code>
             </example>
-            <param name="location">The location of the viewport as a human-readable location.</param>
+            <param name="locations">The location of the viewport as a human-readable location.</param>
             <returns>The builder.</returns>
         </member>
         <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.AddVisiblePortWithCoordinates(System.ValueTuple{System.Double,System.Double}[])">
@@ -233,8 +233,6 @@
             Add map styles to the query.
             </summary>
             <remarks>
-            This method allows adding multiple viewports with coordinates.
-            <br/>
             See <see href="https://developers.google.com/maps/documentation/maps-static/styling">official documentation</see> for details.
             </remarks>
             <example>
@@ -260,6 +258,10 @@
             <summary>
             Use the HTTP protocol instead of HTTPS.
             </summary>
+            <remarks>
+            This method is obsolete and will be removed soon. Use <see cref="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.WithOptions(Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapBuilderOptions)"/> method and
+            <see cref="P:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapBuilderOptions.UseHttp"/>.
+            </remarks>
             <returns>The builder.</returns>
         </member>
         <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.DisableUrlEncoding">
@@ -267,12 +269,12 @@
             Disable the url encoding. The url is, by default, url encoded.
             </summary>
             <remarks>
-            This method should be used before adding any parameters to the builder.
+            This method is obsolete and will be removed soon. Use <see cref="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.WithOptions(Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapBuilderOptions)"/> method and
+            <see cref="P:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapBuilderOptions.DisableUrlEncoding"/>.
             <br/>
             See <see href="https://developers.google.com/maps/url-encoding">official documentation</see> for details.
             </remarks>
             <returns>The builder.</returns>
-            <exception cref="T:System.InvalidOperationException">Thrown when a parameter was added in the query before calling this method.</exception>
         </member>
         <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.DisableApiKeyCheck">
             <summary>
@@ -293,6 +295,13 @@
             the Google Static Maps base address. It prevents overriding the base URI and allows clean 
             composition of the full request URL using only the relevant parameters.
             </remarks>
+            <returns>The builder.</returns>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.WithOptions(Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapBuilderOptions)">
+            <summary>
+            Add builder option to custom the result of the <see cref="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.Build"/> method.
+            </summary>
+            <param name="options">The builder options</param>
             <returns>The builder.</returns>
         </member>
         <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.Build">
@@ -317,6 +326,57 @@
             <exception cref="T:System.InvalidOperationException">Thrown when the number of paths with a location path exceeds the limit. (15 in total)</exception>
             <exception cref="T:System.InvalidOperationException">Thrown when the map id parameter is combined with a map style parameter.</exception>
             <exception cref="T:System.InvalidOperationException">Thrown when the number of location paths exceeds the limit (excluding paths and markers, it's 3)</exception>
+        </member>
+        <member name="T:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapBuilderOptions">
+            <summary>
+            Represents configuration options that control how the <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder"/>
+            generates a Google Static Maps request URL.
+            </summary>
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapBuilderOptions.DisableApiKeyCheck">
+            <value>
+            When set to <c>true</c>, disables enforcement of the API key requirement.
+            </value>
+            <remarks>
+            Normally, the builder validates that an API key is provided before generating the final URL.
+            Enable this option only when you explicitly need to bypass this validation, such as when
+            generating a mock or placeholder URL for testing purposes.
+            </remarks>
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapBuilderOptions.ReturnParametersOnly">
+            <summary>
+            Instructs the builder to return only the query parameters,
+            without including the full base address
+            (e.g. <c>"center=Paris&amp;zoom=10&amp;size=1x1&amp;key=YOUR_API_KEY"</c>).
+            </summary>
+            <remarks>
+            This is useful when working with a preconfigured <see cref="T:System.Net.Http.HttpClient"/> that already contains
+            the Google Static Maps endpoint as its <see cref="P:System.Net.Http.HttpClient.BaseAddress"/>, or when composing
+            the final URL externally.  
+            It ensures that the builder does not prepend the protocol and base path.
+            </remarks>
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapBuilderOptions.DisableUrlEncoding">
+            <value>
+            When set to <c>true</c>, disables URL encoding of parameter values.
+            </value>
+            <remarks>
+            URL encoding is enabled by default and recommended in accordance with 
+            the <see href="https://developers.google.com/maps/url-encoding">official Google Maps encoding guidelines</see>.  
+            Disabling encoding should be done with caution and only when you are certain
+            that the values are already safely encoded or when constructing URLs for debugging.
+            </remarks>
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapBuilderOptions.UseHttp">
+            <value>
+            When set to <c>true</c>, instructs the builder to generate URLs using the HTTP protocol
+            instead of HTTPS.
+            </value>
+            <remarks>
+            HTTPS is used by default for security and compliance reasons.  
+            This option should be enabled only for development scenarios,
+            legacy systems, or controlled network environments where HTTP is required.
+            </remarks>
         </member>
         <member name="T:Gravity.GoogleMaps.StaticMapBuilder.Enums.MapScale">
             <summary>
@@ -551,7 +611,7 @@
             <param name="Feature">The feature that where the <see cref="P:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.MapStyle.StyleRule"/> is applied.</param>
             <param name="Element">The element of the feature where the <see cref="P:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.MapStyle.StyleRule"/> is applied.</param>
         </member>
-        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.MapStyle.#ctor(Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.StyleRule,Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.Feature,Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.Element)">
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.MapStyle.#ctor(Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.StyleRule,System.Nullable{Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.Feature},System.Nullable{Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.Element})">
             <summary>
             Represents a style specification for Google Maps Static API.
             </summary>

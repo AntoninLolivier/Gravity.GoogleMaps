@@ -1,7 +1,5 @@
 ﻿using System.Diagnostics;
-using System.Drawing;
 using System.Globalization;
-using Gravity.GoogleMaps.StaticMapBuilder.Options;
 using Path = Gravity.GoogleMaps.StaticMapBuilder.Models.Path;
 
 namespace Gravity.GoogleMaps.StaticMapBuilder.Builders;
@@ -25,20 +23,16 @@ public class StaticMapsUrlBuilder
     // Exception messages
 
     private const string WrongMethodForMarkerGroupExceptionMessage = $"This method should not be used for {nameof(MarkerGroup)} objects. Use {nameof(AddMarkerGroups)} instead.";
-    private const string DisableEncodingBeforeAddingParametersExceptionMessage = $"Use the {nameof(DisableUrlEncoding)} method after adding any paramters to the query.";
     
     // Fields
 
-    private readonly Dictionary<StaticMapRequestParameters, string?> _requestParameters = new();
+    private readonly Dictionary<StaticMapRequestParameters, List<string>> _requestParameters = new();
     private readonly List<string> _markerIconUrls = [];
     private int _locationsCount;
     private int _locationMarkersCount;
     private int _locationPointsForPathsCount;
-    private bool _useHttp;
-    private bool _encodeToUrl = true;
     private bool _isCenterOrZoomMandatory = true;
-    private bool _checkApiKey = true;
-    private bool _returnRelativeUrlOnly;
+    private StaticMapBuilderOptions _options = new();
 
     // Methods
 
@@ -60,9 +54,7 @@ public class StaticMapsUrlBuilder
 
         CheckIfParameterIsAlreadyAdded(StaticMapRequestParameters.Center);
 
-        location = _encodeToUrl ? Uri.EscapeDataString(location) : location;
-        
-        _requestParameters.Add(StaticMapRequestParameters.Center, $"center={location}");
+        _requestParameters.Add(StaticMapRequestParameters.Center, [location]);
         
         _locationsCount++;
         _isCenterOrZoomMandatory = false;
@@ -89,9 +81,7 @@ public class StaticMapsUrlBuilder
         
         string coordinates = $"{latitude.ToString(CultureInfo.InvariantCulture)},{longitude.ToString(CultureInfo.InvariantCulture)}";
         
-        coordinates = _encodeToUrl ? Uri.EscapeDataString(coordinates) : coordinates;
-        
-        _requestParameters.Add(StaticMapRequestParameters.Center, $"center={coordinates}");
+        _requestParameters.Add(StaticMapRequestParameters.Center, [coordinates]);
         
         _isCenterOrZoomMandatory = false;
         
@@ -120,9 +110,8 @@ public class StaticMapsUrlBuilder
         }
         
         string zoomString = zoom.ToString();
-        zoomString = _encodeToUrl ? Uri.EscapeDataString(zoomString) : zoomString; 
         
-        _requestParameters.Add(StaticMapRequestParameters.Zoom, $"zoom={zoomString}");
+        _requestParameters.Add(StaticMapRequestParameters.Zoom, [zoomString]);
         
         _isCenterOrZoomMandatory = false;
         
@@ -151,9 +140,7 @@ public class StaticMapsUrlBuilder
         
         string size = $"{width}x{height}";
         
-        size = _encodeToUrl ? Uri.EscapeDataString(size) : size;
-        
-        _requestParameters.Add(StaticMapRequestParameters.Size, $"size={size}");
+        _requestParameters.Add(StaticMapRequestParameters.Size, [size]);
         return this;
     }
     
@@ -173,7 +160,7 @@ public class StaticMapsUrlBuilder
 
         int mapScaleInt = (int)mapScale;
         
-        _requestParameters.Add(StaticMapRequestParameters.Scale, $"scale={mapScaleInt}");
+        _requestParameters.Add(StaticMapRequestParameters.Scale, [mapScaleInt.ToString()]);
         return this;
     }
 
@@ -194,10 +181,7 @@ public class StaticMapsUrlBuilder
         
         CheckIfParameterIsAlreadyAdded(StaticMapRequestParameters.Format);
         
-        string formatString = format.ToString().ToLower();
-        formatString = _encodeToUrl ? Uri.EscapeDataString(formatString) : formatString;
-        
-        _requestParameters.Add(StaticMapRequestParameters.Format, $"format={formatString}");
+        _requestParameters.Add(StaticMapRequestParameters.Format, [format.ToString().ToLower()]);
         return this;
     }
     
@@ -215,10 +199,7 @@ public class StaticMapsUrlBuilder
         
         CheckIfParameterIsAlreadyAdded(StaticMapRequestParameters.MapType);
         
-        string mapTypeString = mapType.ToString().ToLower();
-        mapTypeString = _encodeToUrl ? Uri.EscapeDataString(mapTypeString) : mapTypeString;
-        
-        _requestParameters.Add(StaticMapRequestParameters.MapType, $"maptype={mapTypeString}");
+        _requestParameters.Add(StaticMapRequestParameters.MapType, [mapType.ToString().ToLower()]);
         return this;
     }
 
@@ -239,9 +220,7 @@ public class StaticMapsUrlBuilder
 
         if (language.Length > 2) throw new ArgumentException(ExceptionMessages.MalformedParametersExceptionMessages.LanguageMustBeInTwoLettersExceptionMessage);
         
-        language = _encodeToUrl ? Uri.EscapeDataString(language) : language;
-        
-        _requestParameters.Add(StaticMapRequestParameters.Language, $"language={language}");
+        _requestParameters.Add(StaticMapRequestParameters.Language, [language]);
         return this;
     }
 
@@ -262,9 +241,7 @@ public class StaticMapsUrlBuilder
         
         if (region.Length > 2) throw new ArgumentException(ExceptionMessages.MalformedParametersExceptionMessages.RegionMustBeInTwoLettersExceptionMessage);
         
-        region = _encodeToUrl ? Uri.EscapeDataString(region) : region;
-        
-        _requestParameters.Add(StaticMapRequestParameters.Region, $"region={region}");
+        _requestParameters.Add(StaticMapRequestParameters.Region, [region]);
         return this;
     }
 
@@ -285,9 +262,7 @@ public class StaticMapsUrlBuilder
         
         if (mapId.Length > ProjectConstants.MapIdMaxLength) throw new ArgumentException(ExceptionMessages.MalformedParametersExceptionMessages.MapIdMustBeSixteenCharactersMax);
         
-        mapId = _encodeToUrl ? Uri.EscapeDataString(mapId) : mapId;
-        
-        _requestParameters.Add(StaticMapRequestParameters.MapId, $"map_id={mapId}");
+        _requestParameters.Add(StaticMapRequestParameters.MapId, [mapId]);
         return this;
     }
 
@@ -307,45 +282,27 @@ public class StaticMapsUrlBuilder
     /// var _ = new StaticMapsUrlBuilder().AddMarkerGroups(markerGroup1, markerGroup2, markerGroup3);
     /// </code>
     /// </example>
-    /// <param name="markerGroup">The groups of markers to add.</param>
+    /// <param name="markerGroups">The groups of markers to add.</param>
     /// <returns>The builder</returns>
-    public StaticMapsUrlBuilder AddMarkerGroups(params MarkerGroup[] markerGroup)
+    public StaticMapsUrlBuilder AddMarkerGroups(params MarkerGroup[] markerGroups)
     {
-        ArgumentNullException.ThrowIfNull(markerGroup);
+        ArgumentNullException.ThrowIfNull(markerGroups);
         
-        List<string> markerGroupsStrings = [];
-        markerGroupsStrings.AddRange(markerGroup.Select(mg =>
+        if (!_requestParameters.TryGetValue(StaticMapRequestParameters.Marker, out List<string>? list))
         {
-            string markerGroupString = _encodeToUrl ? Uri.EscapeDataString(mg.ToString()) : mg.ToString();
-            return $"markers={markerGroupString}";
-        }));
-        string markers = string.Join("&", markerGroupsStrings);
-        
-        if (_requestParameters.TryGetValue(StaticMapRequestParameters.Marker, out string? existingMarkers))
-        {
-            _requestParameters[StaticMapRequestParameters.Marker] = existingMarkers + "&" + markers;
+            list = [];
+            _requestParameters[StaticMapRequestParameters.Marker] = list;
         }
-        else
-        {
-            _requestParameters.Add(StaticMapRequestParameters.Marker, markers);
-        }
-        
-        _locationMarkersCount += markerGroup.Sum(mg => mg.LocationCount);
-        
-        List<string> icons = markerGroup
-            .Where(mg => mg.IconUrl is not null)
-            .Select(mg =>
-            {
-                if (mg.IconUrl is null) throw new NullReferenceException();
-                
-                return mg.IconUrl;
-            })
-            .ToList();
 
-        if (icons.Count > 0) _markerIconUrls.AddRange(icons);
+        foreach (MarkerGroup group in markerGroups)
+        {
+            list.Add(group.ToString());
+            _locationMarkersCount += group.LocationCount;
+
+            if (group.IconUrl is not null) _markerIconUrls.Add(group.IconUrl);
+        }
 
         _isCenterOrZoomMandatory = false;
-        
         return this;
     }
 
@@ -371,42 +328,23 @@ public class StaticMapsUrlBuilder
     public StaticMapsUrlBuilder AddMarkers(params Marker[] markers)
     {
         ArgumentNullException.ThrowIfNull(markers);
-
         if (markers.Any(marker => marker is MarkerGroup)) throw new InvalidOperationException(WrongMethodForMarkerGroupExceptionMessage);
 
-        List<string> markerStrings = [];
-        markerStrings.AddRange(markers.Select(marker =>
+        if (!_requestParameters.TryGetValue(StaticMapRequestParameters.Marker, out List<string>? list))
         {
-            string markerString = _encodeToUrl ? Uri.EscapeDataString(marker.ToString()) :  marker.ToString();
-            return $"markers={markerString}";
-        }));
-        string markersString = string.Join("&", markerStrings);
-
-        if (_requestParameters.TryGetValue(StaticMapRequestParameters.Marker, out string? existingMarkers))
-        {
-            _requestParameters[StaticMapRequestParameters.Marker] = existingMarkers + "&" + markersString;
+            list = [];
+            _requestParameters[StaticMapRequestParameters.Marker] = list;
         }
-        else
-        {
-            _requestParameters.Add(StaticMapRequestParameters.Marker, string.Join("&", markerStrings));
-        }
-        
-        _locationMarkersCount += markers.Count(marker => marker is LocationMarker);
-        
-        List<string> icons = markers
-            .Where(mg => mg.IconUrl is not null)
-            .Select(mg =>
-            {
-                if (mg.IconUrl is null) throw new NullReferenceException();
-                
-                return mg.IconUrl;
-            })
-            .ToList();
 
-        if (icons.Count > 0) _markerIconUrls.AddRange(icons);
+        foreach (Marker marker in markers)
+        {
+            list.Add(marker.ToString());
+            _locationMarkersCount += marker is LocationMarker ? 1 : 0;
+
+            if (marker.IconUrl is not null) _markerIconUrls.Add(marker.IconUrl);
+        }
 
         _isCenterOrZoomMandatory = false;
-        
         return this;
     }
 
@@ -430,22 +368,19 @@ public class StaticMapsUrlBuilder
     {
         ArgumentNullException.ThrowIfNull(paths);
         
-        List<string> pathsStrings = [];
-        pathsStrings.AddRange(paths.Select(path =>
+        if (!_requestParameters.TryGetValue(StaticMapRequestParameters.Path, out List<string>? list))
         {
-            string pathString = _encodeToUrl ? Uri.EscapeDataString(path.ToString()) :  path.ToString();
-            return $"path={pathString}";
-        }));
-        
-        _requestParameters.Add(StaticMapRequestParameters.Path, string.Join("&", pathsStrings));
+            list = [];
+            _requestParameters[StaticMapRequestParameters.Path] = list;
+        }
 
         foreach (Path path in paths)
         {
+            list.Add(path.ToString());
             _locationPointsForPathsCount += path.LocationCount;
         }
 
         _isCenterOrZoomMandatory = false;
-        
         return this;
     }
     
@@ -463,28 +398,28 @@ public class StaticMapsUrlBuilder
     /// var _ = new StaticMapsUrlBuilder().AddViewportWithLocation(location1, location2, location3);
     /// </code>
     /// </example>
-    /// <param name="location">The location of the viewport as a human-readable location.</param>
+    /// <param name="locations">The location of the viewport as a human-readable location.</param>
     /// <returns>The builder.</returns>
-    public StaticMapsUrlBuilder AddViewportWithLocation(params string[] location)
+    public StaticMapsUrlBuilder AddViewportWithLocation(params string[] locations)
     {
-        ArgumentNullException.ThrowIfNull(location);
-        
-        _locationsCount += location.Length;
-        string locations = string.Join("|", location);
-        
-        locations = _encodeToUrl ? Uri.EscapeDataString(locations) : locations;
+        ArgumentNullException.ThrowIfNull(locations);
 
-        if (_requestParameters.TryGetValue(StaticMapRequestParameters.Visible, out string? value))
+        _locationsCount += locations.Length;
+
+        if (!_requestParameters.TryGetValue(StaticMapRequestParameters.Visible, out List<string>? list))
         {
-            _requestParameters[StaticMapRequestParameters.Visible] = value + Uri.EscapeDataString("|") + locations;
+            list = [];
+            _requestParameters[StaticMapRequestParameters.Visible] = list;
         }
-        else
+
+        foreach (string location in locations)
         {
-            _requestParameters.Add(StaticMapRequestParameters.Visible, $"visible={locations}");
+            if (string.IsNullOrWhiteSpace(location)) throw new ArgumentException("Location cannot be null or empty.", nameof(locations));
+
+            list.Add(location);
         }
 
         _isCenterOrZoomMandatory = false;
-        
         return this;
     }
 
@@ -507,23 +442,21 @@ public class StaticMapsUrlBuilder
     public StaticMapsUrlBuilder AddVisiblePortWithCoordinates(params (double, double)[] coordinates)
     {
         ArgumentNullException.ThrowIfNull(coordinates);
-        
-        string locations = string.Join("|", coordinates.Select(coordinate => 
-            $"{coordinate.Item1.ToString(CultureInfo.InvariantCulture)},{coordinate.Item2.ToString(CultureInfo.InvariantCulture)}"));
-        
-        locations = _encodeToUrl ? Uri.EscapeDataString(locations) : locations;
-        
-        if (_requestParameters.TryGetValue(StaticMapRequestParameters.Visible, out string? value))
+
+        if (!_requestParameters.TryGetValue(StaticMapRequestParameters.Visible, out List<string>? list))
         {
-            _requestParameters[StaticMapRequestParameters.Visible] = value + Uri.EscapeDataString("|") + locations;
+            list = [];
+            _requestParameters[StaticMapRequestParameters.Visible] = list;
         }
-        else
+
+        foreach ((double lat, double lng) in coordinates)
         {
-            _requestParameters.Add(StaticMapRequestParameters.Visible, $"visible={locations}");
+            string combined = $"{lat.ToString(CultureInfo.InvariantCulture)},{lng.ToString(CultureInfo.InvariantCulture)}";
+
+            list.Add(combined); 
         }
 
         _isCenterOrZoomMandatory = false;
-        
         return this;
     }
 
@@ -531,8 +464,6 @@ public class StaticMapsUrlBuilder
     /// Add map styles to the query.
     /// </summary>
     /// <remarks>
-    /// This method allows adding multiple viewports with coordinates.
-    /// <br/>
     /// See <see href="https://developers.google.com/maps/documentation/maps-static/styling">official documentation</see> for details.
     /// </remarks>
     /// <example>
@@ -547,13 +478,16 @@ public class StaticMapsUrlBuilder
     {
         ArgumentNullException.ThrowIfNull(mapStyles);
         
-        List<string> stylesStrings = mapStyles.Select(style =>
+        if (!_requestParameters.TryGetValue(StaticMapRequestParameters.Style, out List<string>? list))
         {
-            string styleString = _encodeToUrl ? Uri.EscapeDataString(style.ToString()) :  style.ToString();
-            return $"style={styleString}";
-        }).ToList();
+            list = [];
+            _requestParameters[StaticMapRequestParameters.Style] = list;
+        }
 
-        _requestParameters.Add(StaticMapRequestParameters.Style, string.Join("&", stylesStrings));
+        foreach (MapStyle mapStyle in mapStyles)
+        {
+            list.Add(mapStyle.ToString());
+        }
         
         return this;
     }
@@ -570,17 +504,22 @@ public class StaticMapsUrlBuilder
     {
         if (string.IsNullOrEmpty(key) || string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(nameof(key), "Key cannot be null or empty");
         
-        _requestParameters.Add(StaticMapRequestParameters.Key, $"key={key}");
+        _requestParameters.Add(StaticMapRequestParameters.Key, [key]);
         return this;
     }
 
     /// <summary>
     /// Use the HTTP protocol instead of HTTPS.
     /// </summary>
+    /// <remarks>
+    /// This method is obsolete and will be removed soon. Use <see cref="StaticMapsUrlBuilder.WithOptions"/> method and
+    /// <see cref="StaticMapBuilderOptions.UseHttp"/>.
+    /// </remarks>
     /// <returns>The builder.</returns>
+    [Obsolete($"Use {nameof(WithOptions)} method and {nameof(StaticMapBuilderOptions)}.{nameof(StaticMapBuilderOptions.UseHttp)} instead.")]
     public StaticMapsUrlBuilder UseHttp()
     {
-        _useHttp = true;
+        _options = _options with { UseHttp = true };
         return this;
     }
 
@@ -588,16 +527,16 @@ public class StaticMapsUrlBuilder
     /// Disable the url encoding. The url is, by default, url encoded.
     /// </summary>
     /// <remarks>
-    /// This method should be used before adding any parameters to the builder.
+    /// This method is obsolete and will be removed soon. Use <see cref="StaticMapsUrlBuilder.WithOptions"/> method and
+    /// <see cref="StaticMapBuilderOptions.DisableUrlEncoding"/>.
     /// <br/>
     /// See <see href="https://developers.google.com/maps/url-encoding">official documentation</see> for details.
     /// </remarks>
     /// <returns>The builder.</returns>
-    /// <exception cref="InvalidOperationException">Thrown when a parameter was added in the query before calling this method.</exception>
+    [Obsolete($"Use {nameof(WithOptions)} method and {nameof(StaticMapBuilderOptions)}.{nameof(StaticMapBuilderOptions.DisableUrlEncoding)} instead.")]
     public StaticMapsUrlBuilder DisableUrlEncoding()
     {
-        if (_requestParameters.Count > 0) throw new InvalidOperationException(DisableEncodingBeforeAddingParametersExceptionMessage);
-        _encodeToUrl = false;
+        _options = _options with { DisableUrlEncoding = true };
         return this;
     }
 
@@ -608,9 +547,10 @@ public class StaticMapsUrlBuilder
     /// Disable the api key check allowing to have a "raw" request url.
     /// </remarks>
     /// <returns>The builder.</returns>
+    [Obsolete($"Use {nameof(WithOptions)} method and {nameof(StaticMapBuilderOptions)}.{nameof(StaticMapBuilderOptions.DisableApiKeyCheck)} instead.")]
     public StaticMapsUrlBuilder DisableApiKeyCheck()
     {
-        _checkApiKey = false;
+        _options = _options with { DisableApiKeyCheck = true };
         return this;
     }
 
@@ -624,9 +564,24 @@ public class StaticMapsUrlBuilder
     /// composition of the full request URL using only the relevant parameters.
     /// </remarks>
     /// <returns>The builder.</returns>
+    [Obsolete($"Use {nameof(WithOptions)} method and {nameof(StaticMapBuilderOptions)}.{nameof(StaticMapBuilderOptions.ReturnParametersOnly)} instead.")]
     public StaticMapsUrlBuilder ReturnRelativeUrlOnly()
     {
-        _returnRelativeUrlOnly = true;
+        _options = _options with { ReturnParametersOnly = true };
+        return this;
+    }
+
+    /// <summary>
+    /// Add builder option to custom the result of the <see cref="Build"/> method.
+    /// </summary>
+    /// <param name="options">The builder options</param>
+    /// <returns>The builder.</returns>
+    public StaticMapsUrlBuilder WithOptions(StaticMapBuilderOptions options)
+    {
+        ArgumentNullException.ThrowIfNull(options);
+
+        _options = options;
+
         return this;
     }
 
@@ -654,17 +609,17 @@ public class StaticMapsUrlBuilder
     public string Build()
     {
         ValidateParameters();
-        if (_checkApiKey && !_requestParameters.ContainsKey(StaticMapRequestParameters.Key)) throw new ArgumentException(ExceptionMessages.ParametersMissingExceptionMessages.ApiKeyParameterMissingMessage);
+        if (!_options.DisableApiKeyCheck && !_requestParameters.ContainsKey(StaticMapRequestParameters.Key)) throw new ArgumentException(ExceptionMessages.ParametersMissingExceptionMessages.ApiKeyParameterMissingMessage);
         
         string url;
 
-        if (_returnRelativeUrlOnly)
+        if (_options.ReturnParametersOnly)
         {
             url = string.Empty;
         }
         else 
         {
-            if (_useHttp)
+            if (_options.UseHttp)
             {
                 url = ProjectConstants.StaticMapBaseUrlHttp + "?";
             }
@@ -674,7 +629,25 @@ public class StaticMapsUrlBuilder
             }
         }
 
-        url += string.Join("&", _requestParameters.Select(requestParameter => requestParameter.Value));
+        List<string> parts = [];
+
+        foreach ((StaticMapRequestParameters type, List<string> values) in _requestParameters)
+        {
+            var strategy = ParameterFormattingStrategySelector.Choose(type);
+
+            if (!_options.DisableUrlEncoding)
+            {
+                strategy = new UrlEncodingDecorator(strategy);
+            }
+            
+            string paramName = RequestParameterNames.Map[type];
+            
+            IReadOnlyList<string> formattedValues = strategy.FormatValues(values);
+
+            parts.AddRange(formattedValues.Select(val => $"{paramName}={val}"));
+        }
+        
+        url += string.Join("&", parts);
         
         if (url.Length > ProjectConstants.StaticMapsApiUrlMaxSize)
         {

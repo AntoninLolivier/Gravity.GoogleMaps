@@ -1,6 +1,4 @@
-﻿using Gravity.GoogleMaps.StaticMapBuilder.Options;
-
-namespace Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles;
+﻿namespace Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles;
 
 /// <summary>
 /// The feature of a <see cref="MapStyle"/>.
@@ -11,7 +9,7 @@ namespace Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles;
 /// <br/>
 /// Use the <see cref="Features"/> to get the available features.
 /// </remarks>
-public sealed class Feature
+public readonly record struct Feature
 {
     // Fields
 
