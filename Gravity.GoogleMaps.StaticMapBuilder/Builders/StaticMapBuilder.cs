@@ -74,9 +74,6 @@ public class StaticMapsUrlBuilder
     public StaticMapsUrlBuilder AddCenterWithCoordinates(double latitude, double longitude)
     {
         // TODO : Manage the "Precision beyond the 6 decimal places is ignored"
-        ArgumentNullException.ThrowIfNull(latitude);
-        ArgumentNullException.ThrowIfNull(longitude);
-        
         CheckIfParameterIsAlreadyAdded(StaticMapRequestParameters.Center);
         
         string coordinates = $"{latitude.ToString(CultureInfo.InvariantCulture)},{longitude.ToString(CultureInfo.InvariantCulture)}";
@@ -98,8 +95,6 @@ public class StaticMapsUrlBuilder
     /// <returns>The builder.</returns>
     public StaticMapsUrlBuilder AddZoom(int zoom)
     {
-        ArgumentNullException.ThrowIfNull(zoom);
-        
         CheckIfParameterIsAlreadyAdded(StaticMapRequestParameters.Zoom);
 
         if (zoom is < 0 or > 22)
@@ -130,9 +125,6 @@ public class StaticMapsUrlBuilder
     /// <exception cref="ArgumentException">Thrown when the width or height is null or less or equal than 0.</exception>
     public StaticMapsUrlBuilder AddSize(int width, int height)
     {
-        ArgumentNullException.ThrowIfNull(width);
-        ArgumentNullException.ThrowIfNull(height);
-        
         if (width <= 0) throw new ArgumentException("Width should not be less than or equal to 0");
         if (height <= 0) throw new ArgumentException("Height should not be less than or equal to 0");
         
@@ -154,8 +146,6 @@ public class StaticMapsUrlBuilder
     /// <returns>The builder.</returns>
     public StaticMapsUrlBuilder AddScale(MapScale mapScale)
     {
-        ArgumentNullException.ThrowIfNull(mapScale);
-        
         CheckIfParameterIsAlreadyAdded(StaticMapRequestParameters.Scale);
 
         int mapScaleInt = (int)mapScale;
@@ -177,8 +167,6 @@ public class StaticMapsUrlBuilder
     /// <returns>The builder</returns>
     public StaticMapsUrlBuilder AddFormat(MapFormat format)
     {
-        ArgumentNullException.ThrowIfNull(format);
-        
         CheckIfParameterIsAlreadyAdded(StaticMapRequestParameters.Format);
         
         _requestParameters.Add(StaticMapRequestParameters.Format, [format.ToString().ToLower()]);
@@ -195,8 +183,6 @@ public class StaticMapsUrlBuilder
     /// <returns>The builder.</returns>
     public StaticMapsUrlBuilder AddMapType(StaticMapType mapType)
     {
-        ArgumentNullException.ThrowIfNull(mapType);
-        
         CheckIfParameterIsAlreadyAdded(StaticMapRequestParameters.MapType);
         
         _requestParameters.Add(StaticMapRequestParameters.MapType, [mapType.ToString().ToLower()]);
