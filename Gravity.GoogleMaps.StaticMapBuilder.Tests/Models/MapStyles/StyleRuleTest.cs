@@ -1,8 +1,4 @@
-﻿using Gravity.GoogleMaps.StaticMapBuilder.Enums;
-using Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles;
-using Gravity.GoogleMaps.StaticMapBuilder.Types;
-
-namespace Gravity.GoogleMaps.StaticMapBuilder.Tests.Models.MapStyles;
+﻿namespace Gravity.GoogleMaps.StaticMapBuilder.Tests.Models.MapStyles;
 
 [TestSubject(typeof(StyleRule))]
 public class StyleRuleTest

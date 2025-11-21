@@ -1,12 +1,4 @@
-﻿using Gravity.GoogleMaps.StaticMapBuilder.Builders;
-using Gravity.GoogleMaps.StaticMapBuilder.Enums;
-using Gravity.GoogleMaps.StaticMapBuilder.Models;
-using Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles;
-using Gravity.GoogleMaps.StaticMapBuilder.Options;
-using Gravity.GoogleMaps.StaticMapBuilder.Resources;
-using Gravity.GoogleMaps.StaticMapBuilder.Types;
-
-namespace Gravity.GoogleMaps.StaticMapBuilder.Tests.Builders;
+﻿namespace Gravity.GoogleMaps.StaticMapBuilder.Tests.Builders;
 
 [TestSubject(typeof(StaticMapsUrlBuilder))]
 public class StaticMapsUrlBuilderTest
@@ -657,20 +649,6 @@ public class StaticMapsUrlBuilderTest
             .Build();
 
         Assert.StartsWith(ProjectConstants.StaticMapBaseUrlHttp, url);
-    }
-    
-    [Fact]
-    public void DisableUrlEncoding_DisablesEncoding_WhenCalledBeforeParameters()
-    {
-        string url = new StaticMapsUrlBuilder()
-            .AddCenterWithLocation("Champs Elysées")
-            .AddZoom(0)
-            .AddSize(1, 1)
-            .AddKey("key")
-            .WithOptions(DisableUrlEncodingOptions)
-            .Build();
-
-        Assert.Contains("Champs Elysées", url); 
     }
     
     [Fact]

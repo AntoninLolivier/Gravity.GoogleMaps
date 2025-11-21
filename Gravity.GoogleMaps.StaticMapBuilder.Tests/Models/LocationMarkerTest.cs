@@ -1,6 +1,4 @@
-﻿using Gravity.GoogleMaps.StaticMapBuilder.Models;
-
-namespace Gravity.GoogleMaps.StaticMapBuilder.Tests.Models;
+﻿namespace Gravity.GoogleMaps.StaticMapBuilder.Tests.Models;
 
 [TestSubject(typeof(LocationMarker))]
 public class LocationMarkerTest

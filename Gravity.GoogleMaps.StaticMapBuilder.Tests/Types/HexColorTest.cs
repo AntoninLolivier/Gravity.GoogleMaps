@@ -1,6 +1,4 @@
-﻿using Gravity.GoogleMaps.StaticMapBuilder.Types;
-
-namespace Gravity.GoogleMaps.StaticMapBuilder.Tests.Types;
+﻿namespace Gravity.GoogleMaps.StaticMapBuilder.Tests.Types;
 
 [TestSubject(typeof(HexColor))]
 public class HexColorTest
