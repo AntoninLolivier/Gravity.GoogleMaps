@@ -9,7 +9,7 @@
         
         <!-- Infos NuGet -->
         <PackageId>Gravity.GoogleMaps.StaticMapBuilder</PackageId>
-        <Version>2.2.0</Version>
+        <Version>2.2.1</Version>
         <Authors>GravityApps</Authors>
         <Company>GravityApps</Company>
         <Description>Fluent, type-safe URL builder for the Google Static Maps API with full support for markers, styles, paths, and more.</Description>
@@ -35,6 +35,10 @@
 
     <ItemGroup>
         <None Include="README.md" Pack="true" PackagePath="\"/>
+        <None Update="Gravity.GoogleMaps.png">
+          <Pack>True</Pack>
+          <PackagePath></PackagePath>
+        </None>
     </ItemGroup>
 
 </Project>
