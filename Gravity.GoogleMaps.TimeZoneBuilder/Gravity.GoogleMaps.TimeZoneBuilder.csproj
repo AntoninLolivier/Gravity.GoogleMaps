@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net10.0</TargetFramework>
+        <TargetFrameworks>net10.0;net9.0;net8.0</TargetFrameworks>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -10,7 +10,7 @@
         
         <!-- Nuget infos -->
         <PackageId>Gravity.GoogleMaps.TimeZoneBuilder</PackageId>
-        <Version>1.0.1</Version>
+        <Version>1.0.2</Version>
         <Authors>GravityApps</Authors>
         <Company>GravityApps</Company>
         <Description>Fluent, type-safe URL builder for the Google Time Zone API, providing a clean and extensible way to generate fully-validated Time Zone API requests.</Description>
@@ -30,17 +30,10 @@
             <_Parameter1>Gravity.GoogleMaps.TimeZoneBuilder.Tests</_Parameter1>
         </AssemblyAttribute>
     </ItemGroup>
-
-    
-    <ItemGroup>
-      <None Update="Gravity.GoogleMaps.png">
-        <Pack>True</Pack>
-        <PackagePath></PackagePath>
-      </None>
-    </ItemGroup>
     
     <ItemGroup>
         <None Include="README.md" Pack="true" PackagePath="\"/>
+        <None Include="Gravity.GoogleMaps.png" Pack="true" PackagePath="\"/>
     </ItemGroup>
 
 </Project>
