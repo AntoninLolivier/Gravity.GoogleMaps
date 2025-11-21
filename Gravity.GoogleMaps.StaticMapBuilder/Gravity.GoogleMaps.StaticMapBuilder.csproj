@@ -4,22 +4,23 @@
         <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <DocumentationFile>./docs/Gravity.GoogleMaps.StaticMapBuilder.Documentation.xml</DocumentationFile>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <DocumentationFile>.\docs\Gravity.GoogleMaps.StaticMapBuilder.Documentation.XML</DocumentationFile>
         
         <!-- Infos NuGet -->
-        <PackageIconFullPath>../Gravity.GoogleMaps.png</PackageIconFullPath>
         <PackageId>Gravity.GoogleMaps.StaticMapBuilder</PackageId>
         <Version>2.2.0</Version>
         <Authors>GravityApps</Authors>
         <Company>GravityApps</Company>
         <Description>Fluent, type-safe URL builder for the Google Static Maps API with full support for markers, styles, paths, and more.</Description>
-        <PackageTags>google;maps;static;builder;url;gravityapps</PackageTags>
+        <PackageTags>google;maps;static;builder;url;gravity</PackageTags>
         <RepositoryUrl>https://github.com/AntoninLolivier/Gravity.GoogleMaps/tree/master/Gravity.GoogleMaps.StaticMapBuilder</RepositoryUrl>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageProjectUrl>https://github.com/AntoninLolivier/Gravity.GoogleMaps</PackageProjectUrl>
         <IncludeSymbols>true</IncludeSymbols>
         <LangVersion>default</LangVersion>
+        <PackageIcon>Gravity.GoogleMaps.png</PackageIcon>
     </PropertyGroup>
 
     <ItemGroup>

@@ -4,12 +4,42 @@
         <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <DocumentationFile>.\docs\Gravity.GoogleMaps.TimeZoneBuilder.documentation.XML</DocumentationFile>
+        
+        <!-- Nuget infos -->
+        <PackageId>Gravity.GoogleMaps.TimeZonoeBuilder</PackageId>
+        <Version>1.0.0</Version>
+        <Authors>GravityApps</Authors>
+        <Company>GravityApps</Company>
+        <Description>Fluent, type-safe URL builder for the Google Time Zone API, providing a clean and extensible way to generate fully-validated Time Zone API requests.</Description>
+        <PackageTags>google;maps;timezone;builder;url;gravity</PackageTags>
+        <RepositoryUrl>https://github.com/AntoninLolivier/Gravity.GoogleMaps/tree/master/Gravity.GoogleMaps.TimeZoneBuilder</RepositoryUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageProjectUrl>https://github.com/AntoninLolivier/Gravity.GoogleMaps</PackageProjectUrl>
+        <IncludeSymbols>true</IncludeSymbols>
+        <LangVersion>default</LangVersion>
     </PropertyGroup>
+
     
     <ItemGroup>
         <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
             <_Parameter1>Gravity.GoogleMaps.TimeZoneBuilder.Tests</_Parameter1>
         </AssemblyAttribute>
+    </ItemGroup>
+
+    
+    <ItemGroup>
+      <None Update="Gravity.GoogleMaps.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+      </None>
+    </ItemGroup>
+    
+    <ItemGroup>
+        <None Include="README.md" Pack="true" PackagePath="\"/>
     </ItemGroup>
 
 </Project>

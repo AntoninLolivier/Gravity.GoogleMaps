@@ -163,7 +163,7 @@ public class StaticMapsUrlBuilder // TODO Rename to StaticMapUrlBuilder (without
     /// <remarks>
     /// See <see href="https://developers.google.com/maps/documentation/maps-static/start#ImageFormats">official documentation</see> for details.
     /// </remarks>
-    /// <param name="format"></param>
+    /// <param name="format">The map format.</param>
     /// <returns>The builder</returns>
     public StaticMapsUrlBuilder AddFormat(MapFormat format)
     {
@@ -577,12 +577,12 @@ public class StaticMapsUrlBuilder // TODO Rename to StaticMapUrlBuilder (without
     /// <remarks>
     /// This method validates the parameters and builds the url.
     /// <br/>
-    /// The url is, by default, url encoded. Use <see cref="DisableUrlEncoding"/> to disable the url encoding.
+    /// The url is, by default, url encoded. Use <see cref="WithOptions"/> to disable the url encoding.
     /// <br/>
     /// The url is, by default, built using the HTTPS protocol. Use <see cref="UseHttp"/> to use the HTTP protocol.
     /// </remarks>
-    /// <returns></returns>
-    /// <exception cref="ArgumentException">Thrown when the API Key is missing.</exception>
+    /// <returns>The static map url generated according to added parameters and build options.</returns>
+    /// <exception cref="ArgumentException">Thrown when the API Key is missing and the <see cref="StaticMapBuilderOptions.DisableApiKeyCheck"/> is false.</exception>
     /// <exception cref="ArgumentException">Thrown when no parameter was added to the builder.</exception>
     /// <exception cref="InvalidOperationException">Thrown when the url exceeds the maximum length.</exception>
     /// <exception cref="InvalidOperationException">Thrown when a "positioning argument" is missing.</exception>

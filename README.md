@@ -9,11 +9,16 @@ It provides high-level builders and utilities to generate valid requests, with a
 
 ## 📦 Available Packages
 
-| Package                                                                                                     | Description                                            |
-| ----------------------------------------------------------------------------------------------------------- |--------------------------------------------------------|
+| Package                                                                                                     | Description                                                                                                           |
+|-------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------|
 | [`Gravity.GoogleMaps.StaticMapBuilder`](https://www.nuget.org/packages/Gravity.GoogleMaps.StaticMapBuilder) | Fluent URL builder for the **Google Static Maps API**, with full support for styling, markers, paths, and validation. |
-| *(Coming soon)* `Gravity.GoogleMaps.TimeZone`                                                               | Fluent SDK **Google Time Zone API**                    |
-
+| [`Gravity.GoogleMaps.TimeZoneBuilder`](https://www.nuget.org/packages/Gravity.GoogleMaps.TimeZoneBuilder)   | Fluent URL builder for the **Google Time Zone API**                                                                   |
+| *(Coming soon)* `Gravity.GoogleMaps.ElevationBuilder`                                                       | Fluent SDK **Google Elevation API**                                                                                   |
+| *(Coming soon)* `Gravity.GoogleMaps.MapTilesBuilder`                                                        | Fluent SDK **Google Map Tiles API**                                                                                   |
+| *(Coming soon)* `Gravity.GoogleMaps.RoutesBuilder`                                                          | Fluent SDK **Google Routes API**                                                                                                |
+| *(Coming soon)* `Gravity.GoogleMaps.RoadsBuilder`                                                           | Fluent SDK **Google Roads API**                                                                                       |
+| *(Coming soon)* `Gravity.GoogleMaps.GeolocationBuilder`                                                     | Fluent SDK **Google Geolocation API**                                                                                                |
+| *(Coming soon)* `Gravity.GoogleMaps.WeatherBuilder`                                                         | Fluent SDK **Google Weather API**                                                                                   |
 ---
 
 ## ✅ Why Gravity.GoogleMaps?
