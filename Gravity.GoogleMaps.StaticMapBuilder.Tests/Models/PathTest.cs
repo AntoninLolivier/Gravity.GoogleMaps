@@ -1,7 +1,4 @@
 ﻿using System.Globalization;
-using Gravity.GoogleMaps.StaticMapBuilder.Enums;
-using Gravity.GoogleMaps.StaticMapBuilder.Models;
-using Gravity.GoogleMaps.StaticMapBuilder.Types;
 using OneOf;
 
 namespace Gravity.GoogleMaps.StaticMapBuilder.Tests.Models;

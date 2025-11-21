@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Gravity.GoogleMaps.TimeZoneBuilder</name>
+    </assembly>
+    <members>
+        <member name="T:Gravity.GoogleMaps.TimeZoneBuilder.Builders.TimeZoneBuilderOptions">
+            <summary>
+            Represents configuration options that control how the <see cref="T:Gravity.GoogleMaps.TimeZoneBuilder.Builders.TimeZoneUrlBuilder"/>
+            generates a Google TimeZone request URL.
+            </summary>
+        </member>
+        <member name="P:Gravity.GoogleMaps.TimeZoneBuilder.Builders.TimeZoneBuilderOptions.DisableApiKeyCheck">
+            <value>
+            When set to <c>true</c>, disables enforcement of the API key requirement.
+            </value>
+            <remarks>
+            Normally, the builder validates that an API key is provided before generating the final URL.
+            Enable this option only when you explicitly need to bypass this validation, such as when
+            generating a mock or placeholder URL for testing purposes.
+            </remarks>
+        </member>
+        <member name="P:Gravity.GoogleMaps.TimeZoneBuilder.Builders.TimeZoneBuilderOptions.ReturnParametersOnly">
+            <summary>
+            Instructs the builder to return only the query parameters,
+            without including the full base address
+            (e.g. <c>"center=Paris&amp;zoom=10&amp;size=1x1&amp;key=YOUR_API_KEY"</c>).
+            </summary>
+            <remarks>
+            This is useful when working with a preconfigured <see cref="T:System.Net.Http.HttpClient"/> that already contains
+            the Google Static Maps endpoint as its <see cref="P:System.Net.Http.HttpClient.BaseAddress"/>, or when composing
+            the final URL externally.  
+            It ensures that the builder does not prepend the protocol and base path.
+            </remarks>
+        </member>
+        <member name="P:Gravity.GoogleMaps.TimeZoneBuilder.Builders.TimeZoneBuilderOptions.DisableUrlEncoding">
+            <value>
+            When set to <c>true</c>, disables URL encoding of parameter values.
+            </value>
+            <remarks>
+            URL encoding is enabled by default and recommended in accordance with 
+            the <see href="https://developers.google.com/maps/url-encoding">official Google Maps encoding guidelines</see>.  
+            Disabling encoding should be done with caution and only when you are certain
+            that the values are already safely encoded or when constructing URLs for debugging.
+            </remarks>
+        </member>
+        <member name="T:Gravity.GoogleMaps.TimeZoneBuilder.Builders.TimeZoneUrlBuilder">
+            <summary>
+            The main class used to build the TimeZone url.
+            </summary>
+            <example>
+            <code>
+            string url = new TimeZoneUrlBuilder()
+                   .AddLocation(47.3943556, 0.6123703)
+                   .AddTimeStamp(DateTimeOffset.UtcNow)
+                   .AddLanguage("fr")
+                   .AddKey("YOUR_API_KEY")
+                   .Build();
+            </code>
+            </example>
+        </member>
+        <member name="M:Gravity.GoogleMaps.TimeZoneBuilder.Builders.TimeZoneUrlBuilder.AddLocation(System.Double,System.Double)">
+            <summary>
+            Add the location parameter to the query using latitude/longitude.
+            </summary>
+            <param name="latitude">The latitude used to retrieve timezone</param>
+            <param name="longitude">The longitude used to retrieve timezone.</param>
+            <returns>The builder instance.</returns>
+            <exception cref="T:System.InvalidOperationException">Thrown when latitude is not between -90 and 90</exception>
+            <exception cref="T:System.InvalidOperationException">Thrown when longitude is not between -180 and 180</exception>
+            <exception cref="T:System.InvalidOperationException">Thrown when you call this method twice on the same builder.</exception>
+        </member>
+        <member name="M:Gravity.GoogleMaps.TimeZoneBuilder.Builders.TimeZoneUrlBuilder.AddTimeStamp(System.DateTimeOffset)">
+            <summary>
+            Add the timestamp parameter to the query using the provided <see cref="T:System.DateTimeOffset"/>.
+            </summary>
+            <param name="dateTime">The value used to compute and add the timestamp parameter.</param>
+            <returns>The builder instance.</returns>
+            <exception cref="T:System.InvalidOperationException">Thrown when you call this method twice on the same builder.</exception>
+        </member>
+        <member name="M:Gravity.GoogleMaps.TimeZoneBuilder.Builders.TimeZoneUrlBuilder.AddLanguage(System.String)">
+            <summary>
+            Add the language parameter to the query using the provided string (Must be two letter long)
+            </summary>
+            <remarks>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/start#map-parameters">official documentation</see> for details.
+            </remarks>
+            <param name="language">The language to add as 2 letter representation (i.e "fr", "en", etc.)</param>
+            <returns>The builder instance.</returns>
+            <exception cref="T:System.ArgumentNullException">Throw if <paramref name="language"/> is null or empty.</exception>
+            <exception cref="T:System.InvalidOperationException">Thrown when you call this method twice on the same builder.</exception>
+        </member>
+        <member name="M:Gravity.GoogleMaps.TimeZoneBuilder.Builders.TimeZoneUrlBuilder.AddKey(System.String)">
+            <summary>
+            Add the API key to the query.
+            </summary>
+            <param name="apiKey">You API Key.</param>
+            <returns>The builder.</returns>
+        </member>
+        <member name="M:Gravity.GoogleMaps.TimeZoneBuilder.Builders.TimeZoneUrlBuilder.WithOptions(Gravity.GoogleMaps.TimeZoneBuilder.Builders.TimeZoneBuilderOptions)">
+            <summary>
+            Add builder option to custom the result of the <see cref="M:Gravity.GoogleMaps.TimeZoneBuilder.Builders.TimeZoneUrlBuilder.Build"/> method.
+            </summary>
+            <param name="options">The builder options</param>
+            <returns>The builder.</returns>
+        </member>
+        <member name="M:Gravity.GoogleMaps.TimeZoneBuilder.Builders.TimeZoneUrlBuilder.Build">
+            <summary>
+            Build the TimeZone url.
+            </summary>
+            <remarks>
+            This method validates the parameters and builds the url.
+            <br/>
+            The url is, by default, url encoded. Use <see cref="M:Gravity.GoogleMaps.TimeZoneBuilder.Builders.TimeZoneUrlBuilder.WithOptions(Gravity.GoogleMaps.TimeZoneBuilder.Builders.TimeZoneBuilderOptions)"/> to disable the url encoding.
+            </remarks>
+            <returns>The TimeZone url generated according to added parameters and build options.</returns>
+            <exception cref="T:System.InvalidOperationException">Thrown when the API Key is missing and the <see cref="P:Gravity.GoogleMaps.TimeZoneBuilder.Builders.TimeZoneBuilderOptions.DisableApiKeyCheck"/> is false.</exception>
+            <exception cref="T:System.InvalidOperationException">Thrown when no parameter was added to the builder.</exception>
+            <exception cref="T:System.InvalidOperationException">Thrown when the location parameter is missing.</exception>
+            <exception cref="T:System.InvalidOperationException">Thrown when the timestamp parameter is missing.</exception>
+        </member>
+    </members>
+</doc>

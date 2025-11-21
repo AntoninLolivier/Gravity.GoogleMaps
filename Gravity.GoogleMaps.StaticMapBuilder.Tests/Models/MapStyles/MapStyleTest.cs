@@ -1,7 +1,4 @@
-﻿using Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles;
-using Gravity.GoogleMaps.StaticMapBuilder.Types;
-
-namespace Gravity.GoogleMaps.StaticMapBuilder.Tests.Models.MapStyles;
+﻿namespace Gravity.GoogleMaps.StaticMapBuilder.Tests.Models.MapStyles;
 
 [TestSubject(typeof(MapStyle))]
 public class MapStyleTest

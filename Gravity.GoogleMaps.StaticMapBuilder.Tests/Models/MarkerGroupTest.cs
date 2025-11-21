@@ -1,7 +1,4 @@
-﻿using Gravity.GoogleMaps.StaticMapBuilder.Enums;
-using Gravity.GoogleMaps.StaticMapBuilder.Models;
-
-namespace Gravity.GoogleMaps.StaticMapBuilder.Tests.Models;
+﻿namespace Gravity.GoogleMaps.StaticMapBuilder.Tests.Models;
 
 [TestSubject(typeof(MarkerGroup))]
 public class MarkerGroupTest
