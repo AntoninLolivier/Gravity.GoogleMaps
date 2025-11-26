@@ -342,7 +342,7 @@ public class StaticMapsUrlBuilderTest
     {
         StaticMapsUrlBuilder builder = new();
 
-        for (int i = 0; i < ProjectConstants.LocationMarkersCountLimit + 1; i++)
+        for (int i = 0; i < ApiLimits.LocationMarkersCountLimit + 1; i++)
         {
             LocationMarker m = new($"City{i}");
             builder.AddMarkers(m);
@@ -491,7 +491,7 @@ public class StaticMapsUrlBuilderTest
     {
         StaticMapsUrlBuilder builder = new();
 
-        for (int i = 0; i < ProjectConstants.LocationsCountLimit + 1; i++) 
+        for (int i = 0; i < ApiLimits.LocationsCountLimit + 1; i++) 
         {
             builder.AddViewportWithLocation($"City{i}");
         }
@@ -648,7 +648,7 @@ public class StaticMapsUrlBuilderTest
             })
             .Build();
 
-        Assert.StartsWith(ProjectConstants.StaticMapBaseUrlHttp, url);
+        Assert.StartsWith(ApiEndpoints.StaticMapBaseUrlHttp, url);
     }
     
     [Fact]
@@ -697,7 +697,7 @@ public class StaticMapsUrlBuilderTest
             .AddSize(1, 1)
             .AddKey("key");
 
-        for (int i = 0; i < ProjectConstants.LocationMarkersCountLimit + 1; i++)
+        for (int i = 0; i < ApiLimits.LocationMarkersCountLimit + 1; i++)
         {
             builder.AddMarkers(new LocationMarker($"City{i}"));
         }
@@ -712,9 +712,9 @@ public class StaticMapsUrlBuilderTest
             .AddSize(1, 1)
             .AddKey("key");
         
-        Path[] paths = new Path[ProjectConstants.LocationPointsForPathCountLimit/2 + 1];
+        Path[] paths = new Path[ApiLimits.LocationPointsForPathCountLimit/2 + 1];
 
-        for (int i = 0; i < ProjectConstants.LocationPointsForPathCountLimit/2 + 1; i++) 
+        for (int i = 0; i < ApiLimits.LocationPointsForPathCountLimit/2 + 1; i++) 
         {
             Path path = new();
             path.AddPoint("A");
@@ -734,7 +734,7 @@ public class StaticMapsUrlBuilderTest
             .AddSize(1, 1)
             .AddKey("key");
 
-        for (int i = 0; i < ProjectConstants.LocationsCountLimit + 1; i++)
+        for (int i = 0; i < ApiLimits.LocationsCountLimit + 1; i++)
         {
             builder.AddViewportWithLocation($"City{i}");
         }
@@ -750,7 +750,7 @@ public class StaticMapsUrlBuilderTest
             .AddCenterWithLocation("Paris")
             .AddKey("key");
 
-        for (int i = 0; i < ProjectConstants.LocationsCountLimit; i++)
+        for (int i = 0; i < ApiLimits.LocationsCountLimit; i++)
         {
             builder.AddViewportWithLocation($"City{i}");
         }
@@ -806,8 +806,8 @@ public class StaticMapsUrlBuilderTest
             })
             .Build();
         
-        Assert.DoesNotContain(ProjectConstants.StaticMapBaseUrlHttps, url);
-        Assert.DoesNotContain(ProjectConstants.StaticMapBaseUrlHttp, url);
+        Assert.DoesNotContain(ApiEndpoints.StaticMapBaseUrlHttps, url);
+        Assert.DoesNotContain(ApiEndpoints.StaticMapBaseUrlHttp, url);
         Assert.StartsWith("center", url);
         Assert.Contains("center=Paris", url);
         Assert.Contains("zoom=10", url);
@@ -825,7 +825,7 @@ public class StaticMapsUrlBuilderTest
             .AddKey("key")
             .Build();
 
-        Assert.StartsWith(ProjectConstants.StaticMapBaseUrlHttps, url);
+        Assert.StartsWith(ApiEndpoints.StaticMapBaseUrlHttps, url);
         Assert.Contains("center=Paris", url);
     }
     
@@ -836,7 +836,7 @@ public class StaticMapsUrlBuilderTest
             .AddCenterWithLocation("Paris")
             .AddZoom(0)
             .AddSize(1, 1)
-            .AddKey(new string('A', ProjectConstants.StaticMapsApiUrlMaxSize));
+            .AddKey(new string('A', ApiLimits.StaticMapsApiUrlMaxSize));
 
         Assert.Throws<InvalidOperationException>(() => builder.Build());
     }

@@ -1,24 +1,14 @@
-﻿namespace Gravity.GoogleMaps.StaticMapBuilder.Resources;
+﻿namespace Gravity.GoogleMaps.StaticMapBuilder.ApiSpecs;
 
-internal static class ProjectConstants
+internal static class DocumentationLinks
 {
-    internal const string StaticMapBaseUrlHttps = "https://maps.googleapis.com/maps/api/staticmap";
-    internal const string StaticMapBaseUrlHttp = "http://maps.googleapis.com/maps/api/staticmap";
-
-    internal const int StaticMapsApiUrlMaxSize = 16_384;
-    internal const int LocationsCountLimit = 3;
-    internal const int LocationMarkersCountLimit = 15;
-    internal const int LocationPointsForPathCountLimit = 15;
-    internal const int MapIdMaxLength = 16;
-    internal const int CustomMakerIconsCountLimit = 5;
-
-    internal static class StaticMapDocumentationLinks
+    internal static class StaticMap
     {
-        internal const string OverviewLink = "https://developers.google.com/maps/documentation/maps-static/overview";
-        internal const string StartLink = "https://developers.google.com/maps/documentation/maps-static/start";
-        internal const string UrlSizeRestrictionLink = "https://developers.google.com/maps/documentation/maps-static/start#url-size-restriction";
+        internal const string Overview = "https://developers.google.com/maps/documentation/maps-static/overview";
+        internal const string Start = "https://developers.google.com/maps/documentation/maps-static/start";
+        internal const string UrlSizeRestriction = "https://developers.google.com/maps/documentation/maps-static/start#url-size-restriction";
 
-        internal static class SectionLinks
+        internal static class Sections
         {
             internal const string LocationParameters = "https://developers.google.com/maps/documentation/maps-static/start#location";
             internal const string MapParameters = "https://developers.google.com/maps/documentation/maps-static/start#map-parameters";
@@ -32,15 +22,15 @@ internal static class ProjectConstants
             internal const string EncodedPolylines = "https://developers.google.com/maps/documentation/maps-static/start#EncodedPolylines";
             internal const string CustomIcons = "https://developers.google.com/maps/documentation/maps-static/start#CustomIcons";
         }
-
-        internal static class MapStylingDocumentationLinks
-        {
-            internal const string MapStyling = "https://developers.google.com/maps/documentation/maps-static/styling";
-            internal const string StyleRules = "https://developers.google.com/maps/documentation/maps-static/styling#style-rules";
-        }
     }
 
-    internal static class OtherLinks
+    internal static class Styling
+    {
+        internal const string MapStyling = "https://developers.google.com/maps/documentation/maps-static/styling";
+        internal const string StyleRules = "https://developers.google.com/maps/documentation/maps-static/styling#style-rules";
+    }
+
+    public static class Other
     {
         internal const string RegionCodesList = "https://developers.google.com/maps/coverage#countryregion-coverage-for-core-mapping-features";
     }

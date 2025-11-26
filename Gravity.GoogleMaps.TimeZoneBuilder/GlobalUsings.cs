@@ -1,5 +1,6 @@
 ﻿// Global using directives
 
+global using Gravity.GoogleMaps.TimeZoneBuilder.ApiSpecs;
+global using Gravity.GoogleMaps.TimeZoneBuilder.Builders;
 global using Gravity.GoogleMaps.TimeZoneBuilder.Enums;
-global using Gravity.GoogleMaps.TimeZoneBuilder.Internal.Metadata;
-global using Gravity.GoogleMaps.TimeZoneBuilder.Values;
+global using Gravity.GoogleMaps.TimeZoneBuilder.Errors;

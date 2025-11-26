@@ -1,6 +1,6 @@
-﻿namespace Gravity.GoogleMaps.StaticMapBuilder.Internal.Metadata;
+﻿namespace Gravity.GoogleMaps.StaticMapBuilder.ApiSpecs;
 
-internal static class RequestParameterNames
+internal static class StaticMapParameterNames
 {
     internal static readonly IReadOnlyDictionary<StaticMapRequestParameters, string> Map =
         new Dictionary<StaticMapRequestParameters, string>

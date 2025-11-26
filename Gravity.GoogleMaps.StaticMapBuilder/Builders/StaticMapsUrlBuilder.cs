@@ -101,7 +101,7 @@ public class StaticMapsUrlBuilder // TODO Rename to StaticMapUrlBuilder (without
         {
             Debug.WriteLine($"Warning: Warning The zoom parameter must be between 0 and 22. The resulting static map will " +
                             $"use either zoom 0 if their is no markers or a scale-based zoom if there are markers." +
-                            $" See : {ProjectConstants.StaticMapDocumentationLinks.SectionLinks.ZoomLevels} for more information.");
+                            $" See : {DocumentationLinks.StaticMap.Sections.ZoomLevels} for more information.");
         }
         
         string zoomString = zoom.ToString();
@@ -246,7 +246,7 @@ public class StaticMapsUrlBuilder // TODO Rename to StaticMapUrlBuilder (without
         
         CheckIfParameterIsAlreadyAdded(StaticMapRequestParameters.MapId);
         
-        if (mapId.Length > ProjectConstants.MapIdMaxLength) throw new ArgumentException(ExceptionMessages.MalformedParametersExceptionMessages.MapIdMustBeSixteenCharactersMax);
+        if (mapId.Length > ApiLimits.MapIdMaxLength) throw new ArgumentException(ExceptionMessages.MalformedParametersExceptionMessages.MapIdMustBeSixteenCharactersMax);
         
         _requestParameters.Add(StaticMapRequestParameters.MapId, [mapId]);
         return this;
@@ -607,11 +607,11 @@ public class StaticMapsUrlBuilder // TODO Rename to StaticMapUrlBuilder (without
         {
             if (_options.UseHttp)
             {
-                url = ProjectConstants.StaticMapBaseUrlHttp + "?";
+                url = ApiEndpoints.StaticMapBaseUrlHttp + "?";
             }
             else
             {
-                url = ProjectConstants.StaticMapBaseUrlHttps + "?";
+                url = ApiEndpoints.StaticMapBaseUrlHttps + "?";
             }
         }
 
@@ -626,7 +626,7 @@ public class StaticMapsUrlBuilder // TODO Rename to StaticMapUrlBuilder (without
                 strategy = new UrlEncodingDecorator(strategy);
             }
             
-            string paramName = RequestParameterNames.Map[type];
+            string paramName = StaticMapParameterNames.Map[type];
             
             IReadOnlyList<string> formattedValues = strategy.FormatValues(values);
 
@@ -635,7 +635,7 @@ public class StaticMapsUrlBuilder // TODO Rename to StaticMapUrlBuilder (without
         
         url += string.Join("&", parts);
         
-        if (url.Length > ProjectConstants.StaticMapsApiUrlMaxSize)
+        if (url.Length > ApiLimits.StaticMapsApiUrlMaxSize)
         {
             throw new InvalidOperationException(ExceptionMessages.StaticMapUrlExceededLengthExceptionMessage);
         }
@@ -670,12 +670,12 @@ public class StaticMapsUrlBuilder // TODO Rename to StaticMapUrlBuilder (without
 
     private void ValidateMarkers()
     {
-        if (_locationMarkersCount > ProjectConstants.LocationMarkersCountLimit)
+        if (_locationMarkersCount > ApiLimits.LocationMarkersCountLimit)
         {
             throw new InvalidOperationException(ExceptionMessages.UrlParametersExceptionMessages.TooMuchLocationMarkersExceptionMessage);
         }
 
-        if (_markerIconUrls.Distinct().Count() > ProjectConstants.CustomMakerIconsCountLimit)
+        if (_markerIconUrls.Distinct().Count() > ApiLimits.CustomMakerIconsCountLimit)
         {
             throw new InvalidOperationException(ExceptionMessages.UrlParametersExceptionMessages.TooMuchDistinctCustomMarkerIcons);
         }
@@ -683,7 +683,7 @@ public class StaticMapsUrlBuilder // TODO Rename to StaticMapUrlBuilder (without
 
     private void ValidatePaths()
     {
-        if (_locationPointsForPathsCount > ProjectConstants.LocationPointsForPathCountLimit)
+        if (_locationPointsForPathsCount > ApiLimits.LocationPointsForPathCountLimit)
         {
             throw new InvalidOperationException(ExceptionMessages.UrlParametersExceptionMessages.TooMuchLocationPointsForPathsExceptionMessage);
         }
@@ -700,7 +700,7 @@ public class StaticMapsUrlBuilder // TODO Rename to StaticMapUrlBuilder (without
 
     private void ValidateViewports()
     {
-        if (_locationsCount > ProjectConstants.LocationsCountLimit)
+        if (_locationsCount > ApiLimits.LocationsCountLimit)
         {
             throw new InvalidOperationException(ExceptionMessages.UrlParametersExceptionMessages.TooMuchLocationsExceptionMessage);       
         }

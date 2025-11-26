@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using Gravity.GoogleMaps.TimeZoneBuilder.ApiSpecs;
 using JetBrains.Annotations;
 using Xunit;
 
@@ -127,7 +128,7 @@ public class TimeZoneUrlBuilderTest
             })
             .Build();
         
-        Assert.DoesNotContain(ProjectConstants.TimeZoneBaseUrl, url);
+        Assert.DoesNotContain(ApiEndpoints.TimeZoneBaseUrl, url);
         Assert.Contains($"timestamp={timestamp}", url);
         Assert.Contains("location=0%2C0", url);
         Assert.Contains("key=key", url);
@@ -143,7 +144,7 @@ public class TimeZoneUrlBuilderTest
             .AddKey("key")
             .Build();
 
-        Assert.StartsWith(ProjectConstants.TimeZoneBaseUrl, url);
+        Assert.StartsWith(ApiEndpoints.TimeZoneBaseUrl, url);
         Assert.Contains($"timestamp={timestamp}", url);
     }
 
@@ -162,7 +163,7 @@ public class TimeZoneUrlBuilderTest
                 .AddKey("key")
                 .Build();
         
-        Assert.StartsWith(ProjectConstants.TimeZoneBaseUrl + '?', url);
+        Assert.StartsWith(ApiEndpoints.TimeZoneBaseUrl + '?', url);
         Assert.Contains($"timestamp={timestamp}", url);
         Assert.Contains($"location={latitude.ToString(CultureInfo.InvariantCulture)}%2C{longitude.ToString(CultureInfo.InvariantCulture)}", url);
         Assert.Contains($"language={language}", url);

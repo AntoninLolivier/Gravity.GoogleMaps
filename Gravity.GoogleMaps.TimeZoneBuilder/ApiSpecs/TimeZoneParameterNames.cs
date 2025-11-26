@@ -1,6 +1,6 @@
-﻿namespace Gravity.GoogleMaps.TimeZoneBuilder.Internal.Metadata;
+﻿namespace Gravity.GoogleMaps.TimeZoneBuilder.ApiSpecs;
 
-internal class RequestParameterNames
+internal class TimeZoneParameterNames
 {
     internal static readonly IReadOnlyDictionary<TimeZoneQueryParameter, string> Map =
         new Dictionary<TimeZoneQueryParameter, string>
