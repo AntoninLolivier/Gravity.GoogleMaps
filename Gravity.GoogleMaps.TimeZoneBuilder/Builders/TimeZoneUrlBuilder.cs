@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-
-namespace Gravity.GoogleMaps.TimeZoneBuilder.Builders;
+﻿namespace Gravity.GoogleMaps.TimeZoneBuilder.Builders;
 
 /// <summary>
 /// The main class used to build the TimeZone url.
@@ -15,13 +13,8 @@ namespace Gravity.GoogleMaps.TimeZoneBuilder.Builders;
 ///        .Build();
 /// </code>
 /// </example>
-public class TimeZoneUrlBuilder
+public class TimeZoneUrlBuilder() : GoogleMapsBuilder<TimeZoneUrlBuilder, TimeZoneQueryParameters, TimeZoneBuilderOptions>(new TimeZoneBuilderOptions())
 {
-    // Fields
-
-    private readonly Dictionary<TimeZoneQueryParameter, string> _requestParameters = new();
-    private TimeZoneBuilderOptions _options = new();
-    
     // Methods
 
     /// <summary>
@@ -35,12 +28,10 @@ public class TimeZoneUrlBuilder
     /// <exception cref="InvalidOperationException">Thrown when you call this method twice on the same builder.</exception>
     public TimeZoneUrlBuilder AddLocation(double latitude, double longitude)
     {
-        if (longitude is < -180 or > 180) throw new InvalidOperationException(ExceptionMessages.MalformedParametersExceptionMessages.LatitudeOutOfRangeMessage);
-        if (latitude is < -90 or > 90) throw new InvalidOperationException(ExceptionMessages.MalformedParametersExceptionMessages.LongitudeOutOfRangeMessage);
+        if (latitude is < -90 or > 90) throw new ArgumentOutOfRangeException(nameof(latitude));
+        if (longitude is < -180 or > 180) throw new ArgumentOutOfRangeException(nameof(longitude));
         
-        string location = $"{latitude.ToString(CultureInfo.InvariantCulture)},{longitude.ToString(CultureInfo.InvariantCulture)}";
-
-        if (!_requestParameters.TryAdd(TimeZoneQueryParameter.Location, location)) throw new InvalidOperationException(string.Format(ExceptionMessages.ParameterCanOnlyBeAddedOnceExceptionMessage, TimeZoneParameterNames.Map[TimeZoneQueryParameter.Location]));
+        Parameters.Add(new LocationQueryParameter(latitude, longitude));
             
         return this;
     }
@@ -50,12 +41,9 @@ public class TimeZoneUrlBuilder
     /// </summary>
     /// <param name="dateTime">The value used to compute and add the timestamp parameter.</param>
     /// <returns>The builder instance.</returns>
-    /// <exception cref="InvalidOperationException">Thrown when you call this method twice on the same builder.</exception>
     public TimeZoneUrlBuilder AddTimeStamp(DateTimeOffset dateTime)
     {
-        var timestamp = dateTime.ToUnixTimeSeconds().ToString(CultureInfo.InvariantCulture);
-        
-        if (!_requestParameters.TryAdd(TimeZoneQueryParameter.Timestamp, timestamp)) throw new InvalidOperationException(string.Format(ExceptionMessages.ParameterCanOnlyBeAddedOnceExceptionMessage, TimeZoneParameterNames.Map[TimeZoneQueryParameter.Timestamp]));
+        Parameters.Add(new TimestampQueryParameter(dateTime));
 
         return this;
     }
@@ -72,100 +60,16 @@ public class TimeZoneUrlBuilder
     /// <exception cref="InvalidOperationException">Thrown when you call this method twice on the same builder.</exception>
     public TimeZoneUrlBuilder AddLanguage(string language)
     {
-        if (string.IsNullOrEmpty(language)) throw new ArgumentNullException(language);
-
-        if (language.Length > 2) throw new InvalidOperationException("Language must be in two letters");
+        if (string.IsNullOrEmpty(language) || string.IsNullOrWhiteSpace(language)) throw new ArgumentNullException(nameof(language));
+        if (language.Length != 2) throw new ArgumentOutOfRangeException(nameof(language), "Language must be in two letters");
         
-        if (!_requestParameters.TryAdd(TimeZoneQueryParameter.Language, language)) throw new InvalidOperationException(string.Format(ExceptionMessages.ParameterCanOnlyBeAddedOnceExceptionMessage, TimeZoneParameterNames.Map[TimeZoneQueryParameter.Language]));
+        Parameters.Add(new LanguageQueryParameter(language));
 
         return this;
     }
 
-    /// <summary>
-    /// Add the API key to the query.
-    /// </summary>
-    /// <param name="apiKey">You API Key.</param>
-    /// <returns>The builder.</returns>
-    public TimeZoneUrlBuilder AddKey(string apiKey)
-    {
-        if (string.IsNullOrEmpty(apiKey)) throw new ArgumentNullException(apiKey);
-        
-        if (!_requestParameters.TryAdd(TimeZoneQueryParameter.ApiKey, apiKey)) throw new InvalidOperationException(string.Format(ExceptionMessages.ParameterCanOnlyBeAddedOnceExceptionMessage, TimeZoneParameterNames.Map[TimeZoneQueryParameter.ApiKey]));
+    /// <inheritdoc />
+    protected override string GetBaseUrl() => ApiEndpoints.TimeZoneBaseUrl;
 
-        return this;
-    }
-
-    /// <summary>
-    /// Add builder option to custom the result of the <see cref="Build"/> method.
-    /// </summary>
-    /// <param name="options">The builder options</param>
-    /// <returns>The builder.</returns>
-    public TimeZoneUrlBuilder WithOptions(TimeZoneBuilderOptions options)
-    {
-        ArgumentNullException.ThrowIfNull(options);
-        
-        _options = options;
-
-        return this;
-    }
-
-    /// <summary>
-    /// Build the TimeZone url.
-    /// </summary>
-    /// <remarks>
-    /// This method validates the parameters and builds the url.
-    /// <br/>
-    /// The url is, by default, url encoded. Use <see cref="WithOptions"/> to disable the url encoding.
-    /// </remarks>
-    /// <returns>The TimeZone url generated according to added parameters and build options.</returns>
-    /// <exception cref="InvalidOperationException">Thrown when the API Key is missing and the <see cref="TimeZoneBuilderOptions.DisableApiKeyCheck"/> is false.</exception>
-    /// <exception cref="InvalidOperationException">Thrown when no parameter was added to the builder.</exception>
-    /// <exception cref="InvalidOperationException">Thrown when the location parameter is missing.</exception>
-    /// <exception cref="InvalidOperationException">Thrown when the timestamp parameter is missing.</exception>
-    public string Build()
-    {
-        ValidateParameters();
-        
-        string url;
-
-        if (_options.ReturnParametersOnly)
-        {
-            url = string.Empty;
-        }
-        else
-        {
-            url = ApiEndpoints.TimeZoneBaseUrl + '?';
-        }
-
-        List<string> parts = [];
-
-        foreach ((TimeZoneQueryParameter type, string value) in _requestParameters)
-        {
-            string parameter = value;
-            
-            if (!_options.DisableUrlEncoding)
-            {
-                parameter = Uri.EscapeDataString(parameter);
-            }
-            
-            string paramName = TimeZoneParameterNames.Map[type];
-
-            parts.Add($"{paramName}={parameter}");
-        }
-        
-        url += string.Join("&", parts);
-        
-        return url;
-    }
-
-    private void ValidateParameters()
-    {
-        if (_requestParameters.Count == 0) throw new InvalidOperationException(ExceptionMessages.NoParametersAddedExceptionMessage);
-        if (!_requestParameters.ContainsKey(TimeZoneQueryParameter.Location)) throw new InvalidOperationException(ExceptionMessages.ParametersMissingExceptionMessages.LocationParameterMissingMessage);
-        if (!_requestParameters.ContainsKey(TimeZoneQueryParameter.Timestamp))  throw new InvalidOperationException(ExceptionMessages.ParametersMissingExceptionMessages.TimestampParameterMissingMessage);
-
-        if (_options.DisableApiKeyCheck) return;
-        
-        if (!_requestParameters.ContainsKey(TimeZoneQueryParameter.ApiKey))  throw new InvalidOperationException(ExceptionMessages.ParametersMissingExceptionMessages.ApiKeyParameterMissingMessage);
-    }
+    protected override TimeZoneQueryParameters Parameters { get; set; } = new();
 }

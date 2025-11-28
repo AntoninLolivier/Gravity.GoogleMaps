@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using Gravity.GoogleMaps.TimeZoneBuilder.ApiSpecs;
 using JetBrains.Annotations;
 using Xunit;
 
@@ -38,7 +37,7 @@ public class TimeZoneUrlBuilderTest
     public void AddLocation_InvalidLocation_ShouldThrowArgumentException(double latitude, double longitude)
     {
         TimeZoneUrlBuilder builder = new();
-        Assert.Throws<InvalidOperationException>(() => builder.AddLocation(latitude, longitude).Build());
+        Assert.Throws<ArgumentOutOfRangeException>(() => builder.AddLocation(latitude, longitude).Build());
     }
 
     [Fact]
@@ -76,7 +75,7 @@ public class TimeZoneUrlBuilderTest
     public void AddLanguage_InvalidLanguage_ShouldThrowArgumentException()
     {
         TimeZoneUrlBuilder builder = new();
-        Assert.Throws<InvalidOperationException>(() => builder.AddLanguage("english").Build());
+        Assert.Throws<ArgumentOutOfRangeException>(() => builder.AddLanguage("english").Build());
     }
     
     [Fact]
