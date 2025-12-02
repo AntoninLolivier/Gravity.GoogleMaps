@@ -1,6 +1,4 @@
-﻿using Gravity.GoogleMaps.StaticMapBuilder.Strategies.ParameterFormatting;
-
-namespace Gravity.GoogleMaps.StaticMapBuilder.Strategies.Selectors;
+﻿namespace Gravity.GoogleMaps.StaticMapBuilder.Strategies.Selectors;
 
 internal static class ParameterFormattingStrategySelector
 {

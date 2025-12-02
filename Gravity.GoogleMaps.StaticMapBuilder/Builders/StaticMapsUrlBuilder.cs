@@ -18,7 +18,8 @@ namespace Gravity.GoogleMaps.StaticMapBuilder.Builders;
 ///     .Build();
 /// </code>
 /// </example>
-public class StaticMapsUrlBuilder // TODO Rename to StaticMapUrlBuilder (without s)
+[Obsolete($"Use {nameof(StaticMapUrlBuilder)} instead")]
+public class StaticMapsUrlBuilder
 {
     // Exception messages
 

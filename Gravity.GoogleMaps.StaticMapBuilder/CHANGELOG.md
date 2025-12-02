@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## **[]
+
+- Zoom outside 0-22 now throw (before warning)
+- AddSize, AddRegion, AddMapId, AddLanguage, AddLocation(TZ), AddLanguage(TZ) from ArgumentException to ArgumentOutOfRangeException
+- AddVisiblePortWithCoordinates -> AddViewports
+- AddViewportsWithLocation -> AddViewports
+- No parameters -> InvalidOperation ((befor Argument))
+- No key -> Same
+
 ## **[2.2.0] – 2025-11-19**
 
 ### ✨ Added
@@ -22,7 +31,6 @@ They are fully replaced by the corresponding properties in `StaticMapBuilderOpti
 * `UseHttp()` → replaced by `StaticMapBuilderOptions.UseHttp`
 * `DisableUrlEncoding()` → replaced by `StaticMapBuilderOptions.DisableUrlEncoding`
 * `ReturnRelativeUrlOnly()` → replaced by `StaticMapBuilderOptions.ReturnParametersOnly`
-* (**Note:** You had a duplicated line in your version—corrected here)
 
 ### 🔧 Changed
 

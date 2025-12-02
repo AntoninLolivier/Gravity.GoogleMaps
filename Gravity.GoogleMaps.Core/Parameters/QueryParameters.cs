@@ -19,17 +19,11 @@ public abstract class QueryParameters
 
     public virtual ValidationResult Validate(bool disableApiKeyCheck)
     {
-        List<ValidationResult> results = [];
-        
-        results.AddRange(Parameters.Select(queryParameter =>
-        {
-            if (queryParameter is ApiKeyQueryParameter && disableApiKeyCheck) return new ValidationResult();
-            
-            return queryParameter.Validate();
-        }));
-        
-        results.Add(new QueryParameterValidator().Validate(this));
-        
+        List<ValidationResult> results =
+        [
+            new QueryParameterValidator().Validate(this)
+        ];
+
         return new ValidationResult(results);
     }
 

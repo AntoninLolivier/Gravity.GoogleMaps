@@ -10,40 +10,6 @@
             generates a Google Static Maps request URL.
             </summary>
         </member>
-        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapBuilderOptions.DisableApiKeyCheck">
-            <value>
-            When set to <c>true</c>, disables enforcement of the API key requirement.
-            </value>
-            <remarks>
-            Normally, the builder validates that an API key is provided before generating the final URL.
-            Enable this option only when you explicitly need to bypass this validation, such as when
-            generating a mock or placeholder URL for testing purposes.
-            </remarks>
-        </member>
-        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapBuilderOptions.ReturnParametersOnly">
-            <summary>
-            Instructs the builder to return only the query parameters,
-            without including the full base address
-            (e.g. <c>"center=Paris&amp;zoom=10&amp;size=1x1&amp;key=YOUR_API_KEY"</c>).
-            </summary>
-            <remarks>
-            This is useful when working with a preconfigured <see cref="T:System.Net.Http.HttpClient"/> that already contains
-            the Google Static Maps endpoint as its <see cref="P:System.Net.Http.HttpClient.BaseAddress"/>, or when composing
-            the final URL externally.  
-            It ensures that the builder does not prepend the protocol and base path.
-            </remarks>
-        </member>
-        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapBuilderOptions.DisableUrlEncoding">
-            <value>
-            When set to <c>true</c>, disables URL encoding of parameter values.
-            </value>
-            <remarks>
-            URL encoding is enabled by default and recommended in accordance with 
-            the <see href="https://developers.google.com/maps/url-encoding">official Google Maps encoding guidelines</see>.  
-            Disabling encoding should be done with caution and only when you are certain
-            that the values are already safely encoded or when constructing URLs for debugging.
-            </remarks>
-        </member>
         <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapBuilderOptions.UseHttp">
             <value>
             When set to <c>true</c>, instructs the builder to generate URLs using the HTTP protocol
@@ -321,7 +287,7 @@
             </summary>
             <remarks>
             This method is obsolete and will be removed soon. Use <see cref="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.WithOptions(Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapBuilderOptions)"/> method and
-            <see cref="P:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapBuilderOptions.DisableUrlEncoding"/>.
+            <see cref="!:StaticMapBuilderOptions.DisableUrlEncoding"/>.
             <br/>
             See <see href="https://developers.google.com/maps/url-encoding">official documentation</see> for details.
             </remarks>
@@ -367,7 +333,7 @@
             The url is, by default, built using the HTTPS protocol. Use <see cref="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.UseHttp"/> to use the HTTP protocol.
             </remarks>
             <returns>The static map url generated according to added parameters and build options.</returns>
-            <exception cref="T:System.ArgumentException">Thrown when the API Key is missing and the <see cref="P:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapBuilderOptions.DisableApiKeyCheck"/> is false.</exception>
+            <exception cref="T:System.ArgumentException">Thrown when the API Key is missing and the <see cref="!:StaticMapBuilderOptions.DisableApiKeyCheck"/> is false.</exception>
             <exception cref="T:System.ArgumentException">Thrown when no parameter was added to the builder.</exception>
             <exception cref="T:System.InvalidOperationException">Thrown when the url exceeds the maximum length.</exception>
             <exception cref="T:System.InvalidOperationException">Thrown when a "positioning argument" is missing.</exception>
@@ -377,6 +343,235 @@
             <exception cref="T:System.InvalidOperationException">Thrown when the number of paths with a location path exceeds the limit. (15 in total)</exception>
             <exception cref="T:System.InvalidOperationException">Thrown when the map id parameter is combined with a map style parameter.</exception>
             <exception cref="T:System.InvalidOperationException">Thrown when the number of location paths exceeds the limit (excluding paths and markers, it's 3)</exception>
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapUrlBuilder.Parameters">
+            <inheritdoc />
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapUrlBuilder.GetBaseUrl">
+            <inheritdoc />
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapUrlBuilder.AddCenterWithLocation(System.String)">
+            <summary>
+            Add the center parameter to the query using a location string.
+            </summary>
+            <remarks>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/start?#Locations">official documentation</see> for details.
+            </remarks>
+            <example>
+            The location string can be any location human-readable string, like "1 Rue de la Paix, Paris, France"
+            </example>
+            <param name="location">The location string.</param>
+            <returns>The builder.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when the <paramref name="location"/> is null, empty or white space</exception>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapUrlBuilder.AddCenterWithCoordinates(System.Double,System.Double)">
+            <summary>
+            Add the center parameter to the query using a latitude and longitude.
+            </summary>
+            <remarks>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/start?#Locations">official documentation</see> for details.
+            </remarks>
+            <param name="latitude">The latitude of the center.</param>
+            <param name="longitude">The longitude of the center</param>
+            <returns>The builder</returns>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapUrlBuilder.AddZoom(System.Int32)">
+            <summary>
+            Add the zoom parameter to the query.
+            </summary>
+            <remarks>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/start#Zoomlevels">official documentation</see> for details.
+            </remarks>
+            <param name="zoom">An integer between 0 and 22.</param>
+            <returns>The builder.</returns>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapUrlBuilder.AddSize(System.Int32,System.Int32)">
+            <summary>
+            Add the size parameter to the query.
+            </summary>
+            <remarks>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/start#Imagesizes">official documentation</see> for details.
+            </remarks>
+            <param name="width">The width of the resulting image.</param>
+            <param name="height">The height of the resulting image.</param>
+            <returns>The builder.</returns>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapUrlBuilder.AddScale(Gravity.GoogleMaps.StaticMapBuilder.Enums.MapScale)">
+            <summary>
+            Add the scale parameter to the query.
+            </summary>
+            <remarks>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/start#scale_values">official documentation</see> for details.
+            </remarks>
+            <param name="mapScale">The scale as an enum value.</param>
+            <returns>The builder.</returns>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapUrlBuilder.AddFormat(Gravity.GoogleMaps.StaticMapBuilder.Models.MapFormat)">
+            <summary>
+            Add the format parameter to the query.
+            </summary>
+            <example>
+            Use the <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Options.MapFormats"/> class to specify the format.
+            </example>
+            <remarks>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/start#ImageFormats">official documentation</see> for details.
+            </remarks>
+            <param name="format">The map format.</param>
+            <returns>The builder</returns>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapUrlBuilder.AddMapType(Gravity.GoogleMaps.StaticMapBuilder.Enums.StaticMapType)">
+            <summary>
+            Add the maptype parameter to the query.
+            </summary>
+            <remarks>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/start?#MapTypes">official documentation</see> for details.
+            </remarks>
+            <param name="mapType">The map type as an enum value.</param>
+            <returns>The builder.</returns>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapUrlBuilder.AddLanguage(System.String)">
+            <summary>
+            Add the language parameter to the query.
+            </summary>
+            <param name="language">The language as a 2-letter string.</param>
+            <remarks>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/start#map-parameters">official documentation</see> for details.
+            </remarks>
+            <returns>The builder.</returns>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapUrlBuilder.AddRegion(System.String)">
+            <summary>
+            Add the region parameter to the query.
+            </summary>
+            <remarks>
+            See <see href="https://developers.google.com/maps/coverage">official documentation</see> for details.
+            </remarks>
+            <param name="region">The region as a 2-letter string. See available regions on <see href="https://developers.google.com/maps/coverage">google documentation</see></param>
+            <returns>The builder</returns>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapUrlBuilder.AddMapId(System.String)">
+            <summary>
+            Add the mapid parameter to the query.
+            </summary>
+            <remarks>
+            See <see href="https://developers.google.com/maps/documentation/javascript/map-ids/mapid-over">official documentation</see> for details.
+            </remarks>
+            <param name="mapId">The 16 characters long map id.</param>
+            <returns>The builder.</returns>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapUrlBuilder.AddMarkerGroups(Gravity.GoogleMaps.StaticMapBuilder.Models.MarkerGroup[])">
+            <summary>
+            Add markers with the same style to the query.
+            </summary>
+            <remarks>
+            Use the <see cref="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapUrlBuilder.AddMarkers(Gravity.GoogleMaps.StaticMapBuilder.Models.Marker[])"/> method to add markers with unique style.
+            <br/>
+            This method allows adding multiple <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Models.MarkerGroup"/>.
+            <br/>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/start?#Markers">official documentation</see> for details.
+            </remarks>
+            <example>
+            If you want to add multiple <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Models.MarkerGroup"/> do not call the method multiple times. Do this instead:
+            <code>
+            var _ = new StaticMapUrlBuilder().AddMarkerGroups(markerGroup1, markerGroup2, markerGroup3);
+            </code>
+            </example>
+            <param name="markerGroups">The groups of markers to add.</param>
+            <returns>The builder</returns>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapUrlBuilder.AddMarkers(Gravity.GoogleMaps.StaticMapBuilder.Models.Marker[])">
+            <summary>
+            Add markers with unique styles.
+            </summary>
+            <remarks>
+            Use the <see cref="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapUrlBuilder.AddMarkerGroups(Gravity.GoogleMaps.StaticMapBuilder.Models.MarkerGroup[])"/> method to add multiple markers with the same style.
+            <br/>
+            This method allows adding multiple <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Models.Marker"/>. 
+            <br/>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/start?#Markers">official documentation</see> for details.
+            </remarks>
+            <example>
+            If you want to add multiple <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Models.Marker"/> do not call the method multiple times. Do this instead:
+            <code>
+            var _ = new StaticMapUrlBuilder().AddMarkers(marker1, marker2, marker3);
+            </code>
+            </example>
+            <param name="markers">The markers to add.</param>
+            <returns>The builder</returns>
+            <exception cref="T:System.InvalidOperationException">Thrown when one or more of the given <paramref name="markers"/> is a <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Models.MarkerGroup"/></exception>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapUrlBuilder.AddPaths(Gravity.GoogleMaps.StaticMapBuilder.Models.Path[])">
+            <summary>
+            Add paths to the query.
+            </summary>
+            <remarks>
+            This method allows adding multiple <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Models.Path"/>.
+            <br/>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/start#Paths">official documentation</see> for details.
+            </remarks>
+            <example>
+            If you want to add multiple <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Models.Path"/> do not call the method multiple times. Do this instead:
+            <code>
+            var _ = new StaticMapUrlBuilder().AddPaths(path1, path2, path3);
+            </code>
+            </example>
+            <param name="paths">The paths to add.</param>
+            <returns>The builder.</returns>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapUrlBuilder.AddViewports(System.String[])">
+            <summary>
+            Add viewports to the map
+            </summary>
+            <remarks>
+            This method allows adding multiple viewports with location strings.
+            <br/>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/start#Viewports">official documentation</see> for details.
+            </remarks>
+            <example>
+            If you want to add multiple view ports, do not call the method multiples times. Do this instead:
+            <code>
+            var _ = new StaticMapUrlBuilder().AddViewportWithLocation(location1, location2, location3);
+            </code>
+            </example>
+            <param name="locations">The location of the viewport as a human-readable location.</param>
+            <returns>The builder.</returns>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapUrlBuilder.AddViewports(System.ValueTuple{System.Double,System.Double}[])">
+            <summary>
+            Add viewports to the map
+            </summary>
+            <remarks>
+            This method allows adding multiple viewports with coordinates.
+            <br/>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/start#Viewports">official documentation</see> for details.
+            </remarks>
+            <example>
+            If you want to add multiple viewports, do not call the method multiples times. Do this instead:
+            <code>
+            var _ = new StaticMapUrlBuilder().AddVisiblePortWithCoordinates(coordinates1, coordinates2, coordinates3);
+            </code>
+            </example>
+            <param name="coordinates">The coordinates of the viewport.</param>
+            <returns>The builder.</returns>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapUrlBuilder.AddMapStyle(Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.MapStyle[])">
+            <summary>
+            Add map styles to the query.
+            </summary>
+            <remarks>
+            See <see href="https://developers.google.com/maps/documentation/maps-static/styling">official documentation</see> for details.
+            </remarks>
+            <example>
+            If you want to add multiple <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.MapStyle"/> do not call the method multiple times. Do this instead:
+            <code>
+            var _ = new StaticMapUrlBuilder().AddMapStyle(mapStyle1, mapStyle2, mapStyle3);
+            </code>
+            </example>
+            <param name="mapStyles">The map style.</param>
+            <returns>The builder.</returns>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapUrlBuilder.Build">
+            <inheritdoc />
         </member>
         <member name="T:Gravity.GoogleMaps.StaticMapBuilder.Enums.MapScale">
             <summary>

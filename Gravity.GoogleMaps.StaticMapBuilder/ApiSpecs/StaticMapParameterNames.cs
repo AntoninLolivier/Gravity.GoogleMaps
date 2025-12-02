@@ -1,6 +1,7 @@
 ﻿namespace Gravity.GoogleMaps.StaticMapBuilder.ApiSpecs;
 
-internal static class StaticMapParameterNames
+[Obsolete] 
+internal static class StaticMapParameterNames // DELETE : On next major
 {
     internal static readonly IReadOnlyDictionary<StaticMapRequestParameters, string> Map =
         new Dictionary<StaticMapRequestParameters, string>

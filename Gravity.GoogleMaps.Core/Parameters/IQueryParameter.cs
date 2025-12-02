@@ -1,6 +1,4 @@
-﻿using ValidationResult = FluentValidation.Results.ValidationResult;
-
-namespace Gravity.GoogleMaps.Core.Parameters;
+﻿namespace Gravity.GoogleMaps.Core.Parameters;
 
 public interface IQueryParameter
 {
@@ -9,6 +7,4 @@ public interface IQueryParameter
     bool IsUnique { get; }
     
     ParameterValue Value { get; }
-
-    ValidationResult Validate();
 }

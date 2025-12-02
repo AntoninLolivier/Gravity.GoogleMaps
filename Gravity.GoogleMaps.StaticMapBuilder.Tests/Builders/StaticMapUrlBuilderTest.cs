@@ -1,7 +1,7 @@
 ﻿namespace Gravity.GoogleMaps.StaticMapBuilder.Tests.Builders;
 
-[TestSubject(typeof(StaticMapsUrlBuilder))]
-public class StaticMapsUrlBuilderTest
+[TestSubject(typeof(StaticMapUrlBuilder))]
+public class StaticMapUrlBuilderTest
 {
     // Options
     
@@ -15,7 +15,7 @@ public class StaticMapsUrlBuilderTest
     [Fact]
     public void AddCenterWithLocation_ValidLocation_ShouldAddParameter()
     {
-        StaticMapsUrlBuilder builder = new();
+        StaticMapUrlBuilder builder = new();
 
         builder.AddCenterWithLocation("New York")
             .AddZoom(0)
@@ -30,14 +30,14 @@ public class StaticMapsUrlBuilderTest
     [InlineData("")]
     public void AddCenterWithLocation_InvalidLocation_ShouldThrowArgumentException(string location)
     {
-        StaticMapsUrlBuilder builder = new();
+        StaticMapUrlBuilder builder = new();
         Assert.Throws<ArgumentNullException>(() => builder.AddCenterWithLocation(location));
     }
 
     [Fact]
     public void AddCenterWithCoordinates_ValidCoordinates_ShouldAddParameter()
     {
-        StaticMapsUrlBuilder builder = new();
+        StaticMapUrlBuilder builder = new();
 
         builder.AddCenterWithCoordinates(40.712, -74.0060)
             .AddZoom(0)
@@ -54,7 +54,7 @@ public class StaticMapsUrlBuilderTest
     [InlineData(22)]
     public void AddZoom_ValidZoomLevel_ShouldAddParameter(int zoom)
     {
-        StaticMapsUrlBuilder builder = new();
+        StaticMapUrlBuilder builder = new();
 
         builder.AddZoom(zoom)
             .AddSize(1, 1)
@@ -67,22 +67,17 @@ public class StaticMapsUrlBuilderTest
     [Theory]
     [InlineData(-1)]
     [InlineData(23)]
-    public void AddZoom_InvalidZoomLevel_ShouldTriggerWarning(int zoom)
+    public void AddZoom_InvalidZoomLevel_ShouldThrow(int zoom)
     {
-        StaticMapsUrlBuilder builder = new();
-        builder.AddZoom(zoom)
-            .AddSize(1, 1)
-            .AddKey("key");
+        StaticMapUrlBuilder builder = new();
 
-        // No exception for now, but the log should be triggered (ensure fail gracefully)
-        string result = builder.Build();
-        Assert.Contains($"zoom={Uri.EscapeDataString(zoom.ToString())}", result);
+        Assert.Throws<ArgumentOutOfRangeException>(() => builder.AddZoom(zoom));
     }
 
     [Fact]
     public void AddSize_ValidSize_ShouldAddParameter()
     {
-        StaticMapsUrlBuilder builder = new();
+        StaticMapUrlBuilder builder = new();
 
         builder.AddSize(600, 1)
             .AddCenterWithLocation("Paris")
@@ -97,8 +92,8 @@ public class StaticMapsUrlBuilderTest
     [InlineData(600, 0)]
     public void AddSize_InvalidSize_ShouldThrowArgumentException(int width, int height)
     {
-        StaticMapsUrlBuilder builder = new();
-        Assert.Throws<ArgumentException>(() => builder.AddSize(width, height));
+        StaticMapUrlBuilder builder = new();
+        Assert.Throws<ArgumentOutOfRangeException>(() => builder.AddSize(width, height));
     }
 
     [Theory]
@@ -106,7 +101,7 @@ public class StaticMapsUrlBuilderTest
     [InlineData(MapScale.Two)]
     public void AddScale_ValidMapScale_ShouldAddParameter(MapScale scale)
     {
-        StaticMapsUrlBuilder builder = new();
+        StaticMapUrlBuilder builder = new();
 
         builder.AddScale(scale)
             .AddCenterWithLocation("Paris")
@@ -120,7 +115,7 @@ public class StaticMapsUrlBuilderTest
     [Fact]
     public void AddFormat_ValidFormat_ShouldAddParameter()
     {
-        StaticMapsUrlBuilder builder = new();
+        StaticMapUrlBuilder builder = new();
         MapFormat format = MapFormats.Jpg;
 
         builder.AddFormat(format)
@@ -139,7 +134,7 @@ public class StaticMapsUrlBuilderTest
     [InlineData(StaticMapType.Hybrid)]
     public void AddMapType_ValidMapType_ShouldAddParameter(StaticMapType mapType)
     {
-        StaticMapsUrlBuilder builder = new();
+        StaticMapUrlBuilder builder = new();
 
         builder.AddMapType(mapType)
             .AddCenterWithLocation("Paris")
@@ -155,7 +150,7 @@ public class StaticMapsUrlBuilderTest
     [InlineData("fr")]
     public void AddLanguage_ValidLanguage_ShouldAddParameter(string language)
     {
-        StaticMapsUrlBuilder builder = new();
+        StaticMapUrlBuilder builder = new();
 
         builder.AddLanguage(language)
             .AddCenterWithLocation("Paris")
@@ -169,8 +164,8 @@ public class StaticMapsUrlBuilderTest
     [Fact]
     public void AddLanguage_InvalidLanguage_ShouldThrowArgumentException()
     {
-        StaticMapsUrlBuilder builder = new();
-        Assert.Throws<ArgumentException>(() => builder.AddLanguage("english")); // More than 2 letters
+        StaticMapUrlBuilder builder = new();
+        Assert.Throws<ArgumentOutOfRangeException>(() => builder.AddLanguage("english")); // More than 2 letters
     }
     
     [Theory]
@@ -178,7 +173,7 @@ public class StaticMapsUrlBuilderTest
     [InlineData("CA")]
     public void AddRegion_ValidRegion_ShouldAddParameter(string region)
     {
-        StaticMapsUrlBuilder builder = new();
+        StaticMapUrlBuilder builder = new();
 
         builder.AddRegion(region)
             .AddCenterWithLocation("Paris")
@@ -192,14 +187,14 @@ public class StaticMapsUrlBuilderTest
     [Fact]
     public void AddRegion_InvalidRegion_ShouldThrowArgumentException()
     {
-        StaticMapsUrlBuilder builder = new();
-        Assert.Throws<ArgumentException>(() => builder.AddRegion("USA")); // More than 2 letters
+        StaticMapUrlBuilder builder = new();
+        Assert.Throws<ArgumentOutOfRangeException>(() => builder.AddRegion("USA")); // More than 2 letters
     }
 
     [Fact]
     public void AddMapId_ValidId_ShouldAddParameter()
     {
-        StaticMapsUrlBuilder builder = new();
+        StaticMapUrlBuilder builder = new();
         
         builder.AddMapId("mapId")
             .AddCenterWithLocation("Paris")
@@ -213,14 +208,14 @@ public class StaticMapsUrlBuilderTest
     [Fact]
     public void AddMapId_InvalidId_ShouldThrowArgumentException()
     {
-        StaticMapsUrlBuilder builder = new();
-        Assert.Throws<ArgumentException>(() => builder.AddMapId(new string('x', 17))); // More than 12 characters
+        StaticMapUrlBuilder builder = new();
+        Assert.Throws<ArgumentOutOfRangeException>(() => builder.AddMapId(new string('x', 17))); // More than 12 characters
     }
     
     [Fact]
     public void AddMarkerGroups_AddsMarkersCorrectly()
     {
-        StaticMapsUrlBuilder builder = new();
+        StaticMapUrlBuilder builder = new();
         MarkerGroup group = new(MarkerSize.Mid);
         group.AddLocation("Paris");
 
@@ -237,7 +232,7 @@ public class StaticMapsUrlBuilderTest
     [Fact]
     public void AddMarkerGroups_AccumulatesMarkersIfAlreadyPresent()
     {
-        StaticMapsUrlBuilder builder = new();
+        StaticMapUrlBuilder builder = new();
         MarkerGroup group1 = new(MarkerSize.Small);
         group1.AddLocation("Lyon");
     
@@ -260,7 +255,7 @@ public class StaticMapsUrlBuilderTest
     [Fact]
     public void AddMarkerGroups_IncrementsLocationMarkerCount()
     {
-        StaticMapsUrlBuilder builder = new();
+        StaticMapUrlBuilder builder = new();
         MarkerGroup group = new(MarkerSize.Mid);
         group.AddLocation("Nice");
         group.AddLocation("Toulouse");
@@ -286,7 +281,7 @@ public class StaticMapsUrlBuilderTest
         MarkerGroup group = new(MarkerSize.Mid, iconUrl: "http://example.com/icon.png");
         group.AddLocation("Tours");
 
-        string url = new StaticMapsUrlBuilder()
+        string url = new StaticMapUrlBuilder()
             .AddMarkerGroups(group)
             .AddSize(1, 1)
             .AddKey("key")
@@ -298,19 +293,18 @@ public class StaticMapsUrlBuilderTest
     [Fact]
     public void AddMarkers_WithMarkerGroup_Throws()
     {
-        StaticMapsUrlBuilder builder = new();
+        StaticMapUrlBuilder builder = new();
         MarkerGroup group = new(MarkerSize.Mid);
         group.AddLocation("Paris");
 
-        Assert.Throws<InvalidOperationException>(() =>
-            builder.AddMarkers(group));
+        Assert.Throws<InvalidOperationException>(() => builder.AddMarkers(group));
     }
     
     [Fact]
     public void AddMarkers_AddsMarkerCorrectly()
     {
         LocationMarker marker = new("Lyon");
-        string url = new StaticMapsUrlBuilder()
+        string url = new StaticMapUrlBuilder()
             .AddMarkers(marker)
             .AddSize(1, 1)
             .AddKey("key")
@@ -326,7 +320,7 @@ public class StaticMapsUrlBuilderTest
         LocationMarker m1 = new("Paris");
         LocationMarker m2 = new("Berlin");
 
-        string url = new StaticMapsUrlBuilder()
+        string url = new StaticMapUrlBuilder()
             .AddMarkers(m1)
             .AddMarkers(m2)
             .AddSize(1, 1)
@@ -340,7 +334,7 @@ public class StaticMapsUrlBuilderTest
     [Fact]
     public void AddMarkers_LocationMarkersCountValidated()
     {
-        StaticMapsUrlBuilder builder = new();
+        StaticMapUrlBuilder builder = new();
 
         for (int i = 0; i < ApiLimits.LocationMarkersCountLimit + 1; i++)
         {
@@ -358,7 +352,7 @@ public class StaticMapsUrlBuilderTest
     {
         LocationMarker marker = new("Toulouse", iconUrl: "http://example.com/icon.png");
 
-        string url = new StaticMapsUrlBuilder()
+        string url = new StaticMapUrlBuilder()
             .AddMarkers(marker)
             .AddSize(1, 1)
             .AddKey("key")
@@ -374,7 +368,7 @@ public class StaticMapsUrlBuilderTest
         path.AddPoint("8th Avenue & 34th St,New York,NY");
         path.AddPoint("8th Avenue & 42nd St,New York,NY");
 
-        string url = new StaticMapsUrlBuilder()
+        string url = new StaticMapUrlBuilder()
             .AddPaths(path)
             .AddSize(1, 1)
             .AddKey("key")
@@ -398,7 +392,7 @@ public class StaticMapsUrlBuilderTest
         path2.AddPoint("Nice");
         path2.AddPoint("Toulouse");
 
-        string url = new StaticMapsUrlBuilder()
+        string url = new StaticMapUrlBuilder()
             .AddPaths(path1, path2)
             .AddSize(1, 1)
             .AddKey("key")
@@ -415,7 +409,7 @@ public class StaticMapsUrlBuilderTest
         Path path = new();
         path.AddPolyline("_fisIp~u|U}|a@pytA_~b@hhCyhS~hResU||x@oig@rwg@amUfbjA}f[roaAynd@|vXxiAt{ZwdUfbjAewYrqGchH~vXkqnAria@c_o@inc@k{g@i`]o|F}vXaj\\h`]ovs@?yi_@rcAgtO|j_AyaJren@nzQrst@zuYh`]v|GbldEuzd@||x@spD|trAzwP|d_@yiB~vXmlWhdPez\\_{Km_`@~re@ew^rcAeu_@zhyByjPrst@ttGren@aeNhoFemKrvdAuvVidPwbVr~j@or@f_z@ftHr{ZlwBrvdAmtHrmT{rOt{Zz}E|c|@o|Lpn~AgfRpxqBfoVz_iAocAhrVjr@rh~@jzKhjp@``NrfQpcHrb^k|Dh_z@nwB|kb@a{R|yh@uyZ|llByuZpzw@wbd@rh~@||Fhqs@teTztrAupHhyY}t]huf@e|Fria@o}GfezAkdW|}[ocMt_Neq@ren@e~Ika@pgE|i|AfiQ|`l@uoJrvdAgq@fppAsjGhg`@|hQpg{Ai_V||x@mkHhyYsdP|xeA~gF|}[mv`@t_NitSfjp@c}Mhg`@sbChyYq}e@rwg@atFff}@ghN~zKybk@fl}A}cPftcAite@tmT__Lha@u~DrfQi}MhkSqyWivIumCria@ciO_tHifm@fl}A{rc@fbjAqvg@rrqAcjCf|i@mqJtb^s|@fbjA{wDfs`BmvEfqs@umWt_Nwn^pen@qiBr`xAcvMr{Zidg@dtjDkbM|d_@");
 
-        string url = new StaticMapsUrlBuilder()
+        string url = new StaticMapUrlBuilder()
             .AddPaths(path)
             .AddSize(1, 1)
             .AddKey("key")
@@ -433,7 +427,7 @@ public class StaticMapsUrlBuilderTest
         path.AddPoint("Champs Elysées");
         path.AddPoint("Place de la République");
 
-        string url = new StaticMapsUrlBuilder()
+        string url = new StaticMapUrlBuilder()
             .AddPaths(path)
             .AddSize(1, 1)
             .AddKey("key")
@@ -447,9 +441,9 @@ public class StaticMapsUrlBuilderTest
     [Fact]
     public void AddVisiblePlaceWithLocation_AddsVisibleParameter()
     {
-        StaticMapsUrlBuilder builder = new();
+        StaticMapUrlBuilder builder = new();
         string url = builder
-            .AddViewportWithLocation("Paris")
+            .AddViewports("Paris")
             .AddSize(1, 1)
             .AddKey("key")
             .Build();
@@ -460,9 +454,9 @@ public class StaticMapsUrlBuilderTest
     [Fact]
     public void AddVisiblePlaceWithLocation_AddsMultiplePlaces()
     {
-        StaticMapsUrlBuilder builder = new();
+        StaticMapUrlBuilder builder = new();
         string url = builder
-            .AddViewportWithLocation("Paris", "Lyon", "Marseille")
+            .AddViewports("Paris", "Lyon", "Marseille")
             .AddSize(1, 1)
             .AddKey("key")
             .Build();
@@ -474,10 +468,10 @@ public class StaticMapsUrlBuilderTest
     [Fact]
     public void AddVisiblePlaceWithLocation_AppendsIfAlreadyPresent()
     {
-        StaticMapsUrlBuilder builder = new();
+        StaticMapUrlBuilder builder = new();
         string url = builder
-            .AddViewportWithLocation("Paris")
-            .AddViewportWithLocation("Nice")
+            .AddViewports("Paris")
+            .AddViewports("Nice")
             .AddSize(1, 1)
             .AddKey("key")
             .Build();
@@ -489,11 +483,11 @@ public class StaticMapsUrlBuilderTest
     [Fact]
     public void AddVisiblePlaceWithLocation_ExceedLimit_Throws()
     {
-        StaticMapsUrlBuilder builder = new();
+        StaticMapUrlBuilder builder = new();
 
         for (int i = 0; i < ApiLimits.LocationsCountLimit + 1; i++) 
         {
-            builder.AddViewportWithLocation($"City{i}");
+            builder.AddViewports($"City{i}");
         }
 
         builder.AddSize(1, 1)
@@ -505,9 +499,9 @@ public class StaticMapsUrlBuilderTest
     [Fact]
     public void AddVisiblePlaceWithLocation_DisabledEncoding_UsesRaw()
     {
-        StaticMapsUrlBuilder builder = new();
+        StaticMapUrlBuilder builder = new();
         string url = builder
-            .AddViewportWithLocation("Champs Elysées")
+            .AddViewports("Champs Elysées")
             .AddSize(1, 1)
             .AddKey("key")
             .WithOptions(DisableUrlEncodingOptions)
@@ -519,10 +513,10 @@ public class StaticMapsUrlBuilderTest
     [Fact]
     public void AddVisiblePlaceWithCoordinates_AddsVisibleParameter()
     {
-        StaticMapsUrlBuilder builder = new();
+        StaticMapUrlBuilder builder = new();
 
         string url = builder
-            .AddVisiblePortWithCoordinates((48.85, 2.35))
+            .AddViewports((48.85, 2.35))
             .AddSize(1, 1)
             .AddKey("key")
             .Build();
@@ -534,10 +528,10 @@ public class StaticMapsUrlBuilderTest
     [Fact]
     public void AddVisiblePlaceWithCoordinates_AddsMultipleCoordinates()
     {
-        StaticMapsUrlBuilder builder = new();
+        StaticMapUrlBuilder builder = new();
 
         string url = builder
-            .AddVisiblePortWithCoordinates((48.85, 2.35), (45.75, 4.85))
+            .AddViewports((48.85, 2.35), (45.75, 4.85))
             .AddSize(1, 1)
             .AddKey("key")
             .Build();
@@ -549,10 +543,10 @@ public class StaticMapsUrlBuilderTest
     [Fact]
     public void AddVisiblePlaceWithCoordinates_AppendsIfAlreadyPresent()
     {
-        StaticMapsUrlBuilder builder = new();
+        StaticMapUrlBuilder builder = new();
 
-        builder.AddVisiblePortWithCoordinates((48.85, 2.35));
-        builder.AddVisiblePortWithCoordinates((43.6, 1.43));
+        builder.AddViewports((48.85, 2.35));
+        builder.AddViewports((43.6, 1.43));
 
         string url = builder.AddSize(1, 1)
             .AddKey("key")
@@ -565,10 +559,10 @@ public class StaticMapsUrlBuilderTest
     [Fact]
     public void AddVisiblePlaceWithCoordinates_DisabledEncoding_UsesRaw()
     {
-        StaticMapsUrlBuilder builder = new();
+        StaticMapUrlBuilder builder = new();
 
         string url = builder
-            .AddVisiblePortWithCoordinates((48.85, 2.35), (45.75, 4.85))
+            .AddViewports((48.85, 2.35), (45.75, 4.85))
             .AddSize(1, 1)
             .AddKey("key")
             .WithOptions(DisableUrlEncodingOptions)
@@ -586,7 +580,7 @@ public class StaticMapsUrlBuilderTest
             Elements.Geometry.Fill
         );
 
-        string url = new StaticMapsUrlBuilder()
+        string url = new StaticMapUrlBuilder()
             .AddMapStyle(style)
             .AddCenterWithLocation("Paris")
             .AddZoom(0)
@@ -604,7 +598,7 @@ public class StaticMapsUrlBuilderTest
         MapStyle style1 = new(new StyleRule(Visibility: Visibility.Simplified), new Feature("road.local"));
         MapStyle style2 = new(new StyleRule(Color: new HexColor("0x00FF00")), null, new Element("geometry"));
 
-        string url = new StaticMapsUrlBuilder()
+        string url = new StaticMapUrlBuilder()
             .AddMapStyle(style1, style2)
             .AddCenterWithLocation("Paris")
             .AddZoom(0)
@@ -622,7 +616,7 @@ public class StaticMapsUrlBuilderTest
     {
         MapStyle style = new(new StyleRule(Color: new HexColor("0x00FF00")));
 
-        string url = new StaticMapsUrlBuilder()
+        string url = new StaticMapUrlBuilder()
             .AddMapStyle(style)
             .AddCenterWithLocation("Paris")
             .AddZoom(10)
@@ -637,7 +631,7 @@ public class StaticMapsUrlBuilderTest
     [Fact]
     public void UseHttp_SetsHttpSchemeInUrl()
     {
-        string url = new StaticMapsUrlBuilder()
+        string url = new StaticMapUrlBuilder()
             .AddCenterWithLocation("Paris")
             .AddZoom(0)
             .AddSize(1, 1)
@@ -654,14 +648,14 @@ public class StaticMapsUrlBuilderTest
     [Fact]
     public void Build_WithNoParameters_Throws()
     {
-        StaticMapsUrlBuilder builder = new();
-        Assert.Throws<ArgumentException>(() => builder.Build());
+        StaticMapUrlBuilder builder = new();
+        Assert.Throws<InvalidOperationException>(() => builder.Build());
     }
     
     [Fact]
     public void Build_WithoutCenterOrZoom_Throws()
     {
-        StaticMapsUrlBuilder builder = new StaticMapsUrlBuilder()
+        StaticMapUrlBuilder builder = new StaticMapUrlBuilder()
             .AddSize(1, 1)
             .AddKey("key");
 
@@ -671,18 +665,18 @@ public class StaticMapsUrlBuilderTest
     [Fact]
     public void Build_WithoutKey_Throws()
     {
-        StaticMapsUrlBuilder builder = new StaticMapsUrlBuilder()
+        StaticMapUrlBuilder builder = new StaticMapUrlBuilder()
             .AddCenterWithLocation("Paris")
             .AddZoom(10)
             .AddSize(1, 1);
 
-        Assert.Throws<ArgumentException>(() => builder.Build());
+        Assert.Throws<InvalidOperationException>(() => builder.Build());
     }
 
     [Fact]
     public void Build_WithoutSize_Throws()
     {
-        StaticMapsUrlBuilder builder = new StaticMapsUrlBuilder()
+        var builder = new StaticMapUrlBuilder()
             .AddCenterWithLocation("Paris")
             .AddZoom(10)
             .AddKey("key");
@@ -693,7 +687,7 @@ public class StaticMapsUrlBuilderTest
     [Fact]
     public void Build_WithTooManyMarkers_Throws()
     {
-        StaticMapsUrlBuilder builder = new StaticMapsUrlBuilder()
+        var builder = new StaticMapUrlBuilder()
             .AddSize(1, 1)
             .AddKey("key");
 
@@ -708,7 +702,7 @@ public class StaticMapsUrlBuilderTest
     [Fact]
     public void Build_WithTooManyPathPoints_Throws()
     {
-        StaticMapsUrlBuilder builder = new StaticMapsUrlBuilder()
+        var builder = new StaticMapUrlBuilder()
             .AddSize(1, 1)
             .AddKey("key");
         
@@ -730,13 +724,13 @@ public class StaticMapsUrlBuilderTest
     [Fact]
     public void Build_WithTooManyVisiblePlaces_Throws()
     {
-        StaticMapsUrlBuilder builder = new StaticMapsUrlBuilder()
+        StaticMapUrlBuilder builder = new StaticMapUrlBuilder()
             .AddSize(1, 1)
             .AddKey("key");
 
         for (int i = 0; i < ApiLimits.LocationsCountLimit + 1; i++)
         {
-            builder.AddViewportWithLocation($"City{i}");
+            builder.AddViewports($"City{i}");
         }
 
         Assert.Throws<InvalidOperationException>(() => builder.Build());
@@ -745,14 +739,14 @@ public class StaticMapsUrlBuilderTest
     [Fact]
     public void Build_WithTooManyVisiblePlacesAndCenterAsLocation_Throws()
     {
-        StaticMapsUrlBuilder builder = new StaticMapsUrlBuilder()
+        StaticMapUrlBuilder builder = new StaticMapUrlBuilder()
             .AddSize(1, 1)
             .AddCenterWithLocation("Paris")
             .AddKey("key");
 
         for (int i = 0; i < ApiLimits.LocationsCountLimit; i++)
         {
-            builder.AddViewportWithLocation($"City{i}");
+            builder.AddViewports($"City{i}");
         }
 
         Assert.Throws<InvalidOperationException>(() => builder.Build());
@@ -763,7 +757,7 @@ public class StaticMapsUrlBuilderTest
     {
         MapStyle style = new(new StyleRule(Color: new HexColor("0xFF0000")));
 
-        StaticMapsUrlBuilder builder = new StaticMapsUrlBuilder()
+        StaticMapUrlBuilder builder = new StaticMapUrlBuilder()
             .AddMapId("1234567890123456")
             .AddMapStyle(style)
             .AddSize(1, 1)
@@ -776,7 +770,7 @@ public class StaticMapsUrlBuilderTest
     [Fact]
     public void Build_WithoutKeyDisabledChecking_Success()
     {
-        string url = new StaticMapsUrlBuilder()
+        string url = new StaticMapUrlBuilder()
             .AddCenterWithLocation("Paris")
             .AddZoom(10)
             .AddSize(1, 1)
@@ -795,7 +789,7 @@ public class StaticMapsUrlBuilderTest
     [Fact]
     public void Build_RelativeUrlOnly_DoesNotContainHost()
     {
-        string url = new StaticMapsUrlBuilder()
+        string url = new StaticMapUrlBuilder()
             .AddCenterWithLocation("Paris")
             .AddZoom(10)
             .AddSize(1, 1)
@@ -818,7 +812,7 @@ public class StaticMapsUrlBuilderTest
     [Fact]
     public void Build_WithValidParameters_ReturnsUrl()
     {
-        string url = new StaticMapsUrlBuilder()
+        string url = new StaticMapUrlBuilder()
             .AddCenterWithLocation("Paris")
             .AddZoom(0)
             .AddSize(1, 1)
@@ -832,7 +826,7 @@ public class StaticMapsUrlBuilderTest
     [Fact]
     public void Build_WithTooLongUrl_Throws()
     {
-        StaticMapsUrlBuilder builder = new StaticMapsUrlBuilder()
+        StaticMapUrlBuilder builder = new StaticMapUrlBuilder()
             .AddCenterWithLocation("Paris")
             .AddZoom(0)
             .AddSize(1, 1)
@@ -844,7 +838,7 @@ public class StaticMapsUrlBuilderTest
     [Fact]
     public void Build_WithMinimalValidConfiguration_ReturnsCorrectUrl()
     {
-        string url = new StaticMapsUrlBuilder()
+        string url = new StaticMapUrlBuilder()
             .AddCenterWithCoordinates(48.8566, 2.3522)
             .AddZoom(12)
             .AddSize(600, 400)
@@ -874,7 +868,7 @@ public class StaticMapsUrlBuilderTest
         path.AddPoint(48.85, 2.35);
         path.AddPoint(48.86, 2.36);
 
-        string url = new StaticMapsUrlBuilder()
+        string url = new StaticMapUrlBuilder()
             .AddCenterWithCoordinates(48.8566, 2.3522)
             .AddZoom(13)
             .AddSize(640, 480)

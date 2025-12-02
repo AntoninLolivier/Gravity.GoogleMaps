@@ -38,4 +38,8 @@
         <None Include="Gravity.GoogleMaps.png" Pack="true" PackagePath="\"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Gravity.GoogleMaps.Core\Gravity.GoogleMaps.Core.csproj" />
+    </ItemGroup>
+
 </Project>
