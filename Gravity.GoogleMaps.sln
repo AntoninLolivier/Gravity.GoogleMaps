@@ -4,14 +4,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gravity.GoogleMaps.StaticMa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gravity.GoogleMaps.StaticMapBuilder.Tests", "Gravity.GoogleMaps.StaticMapBuilder.Tests\Gravity.GoogleMaps.StaticMapBuilder.Tests.csproj", "{AB12B2CE-80B3-485B-B2CA-65342D6D1AAE}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assets", "assets", "{0B38E617-0317-4123-8E7A-2D6F102C592D}"
-	ProjectSection(SolutionItems) = preProject
-		Gravity.GoogleMaps.png = Gravity.GoogleMaps.png
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gravity.GoogleMaps.TimeZoneBuilder", "Gravity.GoogleMaps.TimeZoneBuilder\Gravity.GoogleMaps.TimeZoneBuilder.csproj", "{C0D8F263-17DB-4ED7-950B-D6195067211C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gravity.GoogleMaps.TimeZoneBuilder.Tests", "Gravity.GoogleMaps.TimeZoneBuilder.Tests\Gravity.GoogleMaps.TimeZoneBuilder.Tests.csproj", "{BAEDC258-6B1E-45CC-B27A-EB3E1AB2DA81}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gravity.GoogleMaps.Core", "Gravity.GoogleMaps.Core\Gravity.GoogleMaps.Core.csproj", "{B38E1387-8DDC-4879-BE2B-49C007E1B148}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +32,10 @@ Global
 		{BAEDC258-6B1E-45CC-B27A-EB3E1AB2DA81}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BAEDC258-6B1E-45CC-B27A-EB3E1AB2DA81}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BAEDC258-6B1E-45CC-B27A-EB3E1AB2DA81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B38E1387-8DDC-4879-BE2B-49C007E1B148}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B38E1387-8DDC-4879-BE2B-49C007E1B148}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B38E1387-8DDC-4879-BE2B-49C007E1B148}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B38E1387-8DDC-4879-BE2B-49C007E1B148}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection

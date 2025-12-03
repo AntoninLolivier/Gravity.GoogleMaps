@@ -8,13 +8,6 @@ namespace Gravity.GoogleMaps.TimeZoneBuilder.Tests.Builders;
 [TestSubject(typeof(TimeZoneUrlBuilder))]
 public class TimeZoneUrlBuilderTest
 {
-    // Options
-    
-    private static readonly TimeZoneBuilderOptions DisableUrlEncodingOptions = new()
-    {
-        DisableUrlEncoding = true
-    };
-    
     // Tests
     
     [Fact]
@@ -37,7 +30,7 @@ public class TimeZoneUrlBuilderTest
     public void AddLocation_InvalidLocation_ShouldThrowArgumentException(double latitude, double longitude)
     {
         TimeZoneUrlBuilder builder = new();
-        Assert.Throws<InvalidOperationException>(() => builder.AddLocation(latitude, longitude).Build());
+        Assert.Throws<ArgumentOutOfRangeException>(() => builder.AddLocation(latitude, longitude).Build());
     }
 
     [Fact]
@@ -75,7 +68,7 @@ public class TimeZoneUrlBuilderTest
     public void AddLanguage_InvalidLanguage_ShouldThrowArgumentException()
     {
         TimeZoneUrlBuilder builder = new();
-        Assert.Throws<InvalidOperationException>(() => builder.AddLanguage("english").Build());
+        Assert.Throws<ArgumentException>(() => builder.AddLanguage("english").Build());
     }
     
     [Fact]
@@ -127,7 +120,7 @@ public class TimeZoneUrlBuilderTest
             })
             .Build();
         
-        Assert.DoesNotContain(ProjectConstants.TimeZoneBaseUrl, url);
+        Assert.DoesNotContain(ApiEndpoints.TimeZoneBaseUrl, url);
         Assert.Contains($"timestamp={timestamp}", url);
         Assert.Contains("location=0%2C0", url);
         Assert.Contains("key=key", url);
@@ -143,7 +136,7 @@ public class TimeZoneUrlBuilderTest
             .AddKey("key")
             .Build();
 
-        Assert.StartsWith(ProjectConstants.TimeZoneBaseUrl, url);
+        Assert.StartsWith(ApiEndpoints.TimeZoneBaseUrl, url);
         Assert.Contains($"timestamp={timestamp}", url);
     }
 
@@ -151,9 +144,9 @@ public class TimeZoneUrlBuilderTest
     public void Build_WithAllValidParameters_ReturnsUrl()
     {
         long timestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-        double latitude = 47.3943556;
-        double longitude = 0.6123703;
-        string language = "fr";
+        const double latitude = 47.3943556;
+        const double longitude = 0.6123703;
+        const string language = "fr";
 
         string url = new TimeZoneUrlBuilder()
                 .AddLocation(latitude, longitude)
@@ -162,7 +155,7 @@ public class TimeZoneUrlBuilderTest
                 .AddKey("key")
                 .Build();
         
-        Assert.StartsWith(ProjectConstants.TimeZoneBaseUrl + '?', url);
+        Assert.StartsWith(ApiEndpoints.TimeZoneBaseUrl + '?', url);
         Assert.Contains($"timestamp={timestamp}", url);
         Assert.Contains($"location={latitude.ToString(CultureInfo.InvariantCulture)}%2C{longitude.ToString(CultureInfo.InvariantCulture)}", url);
         Assert.Contains($"language={language}", url);

@@ -1,0 +1,242 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Gravity.GoogleMaps.Core</name>
+    </assembly>
+    <members>
+        <member name="T:Gravity.GoogleMaps.Core.Builders.GoogleMapsBuilder`3">
+            <summary>
+            The base class for all the Google Maps api builders.
+            </summary>
+            <param name="options">The options that manage the building process.</param>
+            <typeparam name="TBuilder">The type of the builder</typeparam>
+            <typeparam name="TParameters">The type of the parameters of the builder.</typeparam>
+            <typeparam name="TOption">The type of the builder options.</typeparam>
+        </member>
+        <member name="M:Gravity.GoogleMaps.Core.Builders.GoogleMapsBuilder`3.#ctor(`2)">
+            <summary>
+            The base class for all the Google Maps api builders.
+            </summary>
+            <param name="options">The options that manage the building process.</param>
+            <typeparam name="TBuilder">The type of the builder</typeparam>
+            <typeparam name="TParameters">The type of the parameters of the builder.</typeparam>
+            <typeparam name="TOption">The type of the builder options.</typeparam>
+        </member>
+        <member name="F:Gravity.GoogleMaps.Core.Builders.GoogleMapsBuilder`3.Options">
+            <summary>
+            The builder options that manage the building process.
+            </summary>
+        </member>
+        <member name="P:Gravity.GoogleMaps.Core.Builders.GoogleMapsBuilder`3.Parameters">
+            <summary>
+            The object that contain the parameters of the query
+            </summary>
+        </member>
+        <member name="M:Gravity.GoogleMaps.Core.Builders.GoogleMapsBuilder`3.GetBaseUrl">
+            <summary>
+            Retrieve the base url of the query (static map, timezone, weather etc...)
+            </summary>
+            <returns>The base url of the query.</returns>
+        </member>
+        <member name="M:Gravity.GoogleMaps.Core.Builders.GoogleMapsBuilder`3.WithOptions(`2)">
+            <summary>
+            Manage options to customize the builder.
+            </summary>
+            <param name="options">The options that will change the building process.</param>
+            <returns>The builder.</returns>
+        </member>
+        <member name="M:Gravity.GoogleMaps.Core.Builders.GoogleMapsBuilder`3.AddKey(System.String)">
+            <summary>
+            Add the api key to the query.
+            </summary>
+            <param name="apiKey">Your api key.</param>
+            <returns>The builder.</returns>
+        </member>
+        <member name="M:Gravity.GoogleMaps.Core.Builders.GoogleMapsBuilder`3.Build">
+            <summary>
+            Validate and build the final query according to the added parameters.
+            </summary>
+            <returns>The query string.</returns>
+            <exception cref="T:System.InvalidOperationException">Thrown when a validation error occurs.</exception>
+        </member>
+        <member name="T:Gravity.GoogleMaps.Core.Options.BuilderOptions">
+            <summary>
+            The base class for the option that customize the builder.
+            </summary>
+        </member>
+        <member name="P:Gravity.GoogleMaps.Core.Options.BuilderOptions.DisableApiKeyCheck">
+            <value>
+            When set to <c>true</c>, disables enforcement of the API key requirement.
+            </value>
+            <remarks>
+            Normally, the builder validates that an API key is provided before generating the final URL.
+            Enable this option only when you explicitly need to bypass this validation, such as when
+            generating a mock or placeholder URL for testing purposes.
+            </remarks>
+        </member>
+        <member name="P:Gravity.GoogleMaps.Core.Options.BuilderOptions.ReturnParametersOnly">
+            <summary>
+            Instructs the builder to return only the query parameters,
+            without including the full base address
+            (e.g. <c>"center=Paris&amp;zoom=10&amp;size=1x1&amp;key=YOUR_API_KEY"</c>).
+            </summary>
+            <remarks>
+            This is useful when working with a preconfigured <see cref="T:System.Net.Http.HttpClient"/> that already contains
+            the Google Static Maps endpoint as its <see cref="P:System.Net.Http.HttpClient.BaseAddress"/>, or when composing
+            the final URL externally.  
+            It ensures that the builder does not prepend the protocol and base path.
+            </remarks>
+        </member>
+        <member name="P:Gravity.GoogleMaps.Core.Options.BuilderOptions.DisableUrlEncoding">
+            <value>
+            When set to <c>true</c>, disables URL encoding of parameter values.
+            </value>
+            <remarks>
+            URL encoding is enabled by default and recommended in accordance with 
+            the <see href="https://developers.google.com/maps/url-encoding">official Google Maps encoding guidelines</see>.  
+            Disabling encoding should be done with caution and only when you are certain
+            that the values are already safely encoded or when constructing URLs for debugging.
+            </remarks>
+        </member>
+        <member name="T:Gravity.GoogleMaps.Core.Parameters.Common.ApiKeyQueryParameter">
+            <summary>
+            
+            </summary>
+            <param name="rawValue"></param>
+        </member>
+        <member name="M:Gravity.GoogleMaps.Core.Parameters.Common.ApiKeyQueryParameter.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="rawValue"></param>
+        </member>
+        <member name="P:Gravity.GoogleMaps.Core.Parameters.Common.ApiKeyQueryParameter.Key">
+            <inheritdoc />
+        </member>
+        <member name="P:Gravity.GoogleMaps.Core.Parameters.Common.ApiKeyQueryParameter.IsUnique">
+            <inheritdoc />
+        </member>
+        <member name="P:Gravity.GoogleMaps.Core.Parameters.Common.ApiKeyQueryParameter.Value">
+            <inheritdoc />
+        </member>
+        <member name="T:Gravity.GoogleMaps.Core.Parameters.Common.LanguageQueryParameter">
+            <summary>
+            The language parameter of the query.
+            </summary>
+            <param name="value">The value of the language query parameter.</param>
+        </member>
+        <member name="M:Gravity.GoogleMaps.Core.Parameters.Common.LanguageQueryParameter.#ctor(System.String)">
+            <summary>
+            The language parameter of the query.
+            </summary>
+            <param name="value">The value of the language query parameter.</param>
+        </member>
+        <member name="P:Gravity.GoogleMaps.Core.Parameters.Common.LanguageQueryParameter.Key">
+            <inheritdoc />
+        </member>
+        <member name="P:Gravity.GoogleMaps.Core.Parameters.Common.LanguageQueryParameter.IsUnique">
+            <inheritdoc />
+        </member>
+        <member name="P:Gravity.GoogleMaps.Core.Parameters.Common.LanguageQueryParameter.Value">
+            <inheritdoc />
+        </member>
+        <member name="T:Gravity.GoogleMaps.Core.Parameters.IQueryParameter">
+            <summary>
+            An interface to define a query parameter of a query builder.
+            </summary>
+        </member>
+        <member name="P:Gravity.GoogleMaps.Core.Parameters.IQueryParameter.Key">
+            <value>
+            The key of the query parameter, for exemple "key" for api key etc
+            </value>
+        </member>
+        <member name="P:Gravity.GoogleMaps.Core.Parameters.IQueryParameter.IsUnique">
+            <value>
+            A flag indicating if the parameter should appear only once per request.
+            </value>
+        </member>
+        <member name="P:Gravity.GoogleMaps.Core.Parameters.IQueryParameter.Value">
+            <summary>
+            The value of the parameter, as a strong typed object.
+            </summary>
+        </member>
+        <member name="T:Gravity.GoogleMaps.Core.Parameters.ListParameterValue">
+            <summary>
+            A type of parameter that contain a list of values separated by the <paramref name="Separator"/>
+            </summary>
+            <param name="Values">The values of the query parameter.</param>
+            <param name="Separator">The character that split the values in <paramref name="Values"/>.</param>
+        </member>
+        <member name="M:Gravity.GoogleMaps.Core.Parameters.ListParameterValue.#ctor(System.Collections.Generic.IEnumerable{System.String},System.Char)">
+            <summary>
+            A type of parameter that contain a list of values separated by the <paramref name="Separator"/>
+            </summary>
+            <param name="Values">The values of the query parameter.</param>
+            <param name="Separator">The character that split the values in <paramref name="Values"/>.</param>
+        </member>
+        <member name="P:Gravity.GoogleMaps.Core.Parameters.ListParameterValue.Values">
+            <summary>The values of the query parameter.</summary>
+        </member>
+        <member name="P:Gravity.GoogleMaps.Core.Parameters.ListParameterValue.Separator">
+            <summary>The character that split the values in <paramref name="Values"/>.</summary>
+        </member>
+        <member name="P:Gravity.GoogleMaps.Core.Parameters.ListParameterValue.Value">
+            <inheritdoc />
+        </member>
+        <member name="T:Gravity.GoogleMaps.Core.Parameters.ParameterValue">
+            <summary>
+            Base class to represent a query parameter value.
+            </summary>
+        </member>
+        <member name="P:Gravity.GoogleMaps.Core.Parameters.ParameterValue.Value">
+            <value>
+            The query parameters value as string.
+            </value>
+        </member>
+        <member name="T:Gravity.GoogleMaps.Core.Parameters.QueryParameters">
+            <summary>
+            Base class for api-specific parameters.
+            </summary>
+        </member>
+        <member name="F:Gravity.GoogleMaps.Core.Parameters.QueryParameters.Parameters">
+            <value>
+            The parameters of the api.
+            </value>
+        </member>
+        <member name="M:Gravity.GoogleMaps.Core.Parameters.QueryParameters.GetQueryValues(System.Boolean)">
+            <summary>
+            Retrieve the formatted query parameters, ready to be added in the query (key=value)
+            </summary>
+            <param name="disableUrlEncoding">A flag indicating if the parameters values should be Url encoded.</param>
+            <returns>The ready to be added query parameters values (key=value)</returns>
+        </member>
+        <member name="M:Gravity.GoogleMaps.Core.Parameters.QueryParameters.Add(Gravity.GoogleMaps.Core.Parameters.IQueryParameter)">
+            <summary>
+            Add a parameters to the query.
+            </summary>
+            <param name="parameter">The parameter to add.</param>
+        </member>
+        <member name="M:Gravity.GoogleMaps.Core.Parameters.QueryParameters.Validate(System.Boolean)">
+            <summary>
+            Validate globally the parameters (with dependency validation)
+            </summary>
+            <param name="disableApiKeyCheck">A flag indicating if the api key validation should be performed.</param>
+            <returns>The result of the validation.</returns>
+        </member>
+        <member name="T:Gravity.GoogleMaps.Core.Parameters.SimpleParameterValue">
+            <summary>
+            A type of parameter that contain a simple value.
+            </summary>
+            <param name="Value">The value of the query parameter.</param>
+        </member>
+        <member name="M:Gravity.GoogleMaps.Core.Parameters.SimpleParameterValue.#ctor(System.String)">
+            <summary>
+            A type of parameter that contain a simple value.
+            </summary>
+            <param name="Value">The value of the query parameter.</param>
+        </member>
+        <member name="P:Gravity.GoogleMaps.Core.Parameters.SimpleParameterValue.Value">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>

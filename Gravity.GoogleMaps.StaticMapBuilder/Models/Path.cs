@@ -80,7 +80,7 @@ public record Path
         {
             Debug.WriteLine($"Warning: Warning The weight path style descriptor must be between 0 and 500. The resulting static map will " +
                             $"use weight 5 if the weight is outside of this range." +
-                            $" See : {ProjectConstants.StaticMapDocumentationLinks.SectionLinks.PathStyles} for more information." +
+                            $" See : {DocumentationLinks.StaticMap.Sections.PathStyles} for more information." +
                             $"Note that this range is not explicitly stated in the documentation, but was inferred from dev testing.");
         }
         

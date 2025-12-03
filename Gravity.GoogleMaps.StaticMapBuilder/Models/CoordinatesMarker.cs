@@ -7,27 +7,21 @@ namespace Gravity.GoogleMaps.StaticMapBuilder.Models;
 /// </summary>
 public class CoordinatesMarker : Marker
 {
-    // Backing Fields
-    
-    private readonly double _latitude;
-    private readonly double _longitude;
-    
-
     // Properties
-    
+
     /// <value>
     /// The latitude of the marker location, ranging from -90 to 90 degrees.
     /// </value>
     /// <exception cref="ArgumentOutOfRangeException">Thrown when the latitude is out of range. Should be between (-90 and 90)</exception>
     public double Latitude
     {
-        get => _latitude;
+        get;
         init
         {
             // TODO : Manage the "Precision beyond the 6 decimal places is ignored"
             if (value is < -90 or > 90) throw new ArgumentOutOfRangeException(nameof(Latitude), ExceptionMessages.MalformedParametersExceptionMessages.LatitudeOutOfRangeMessage);
-            
-            _latitude = value;
+
+            field = value;
         }
     }
 
@@ -37,16 +31,16 @@ public class CoordinatesMarker : Marker
     /// <exception cref="ArgumentOutOfRangeException">Thrown when the longitude is out of range. Should be between (-180 and 180).</exception>
     public double Longitude
     {
-        get => _longitude;
+        get;
         init
         {
             // TODO : Manage the "Precision beyond the 6 decimal places is ignored"
             if (value is < -180 or > 180) throw new ArgumentOutOfRangeException(nameof(Longitude), ExceptionMessages.MalformedParametersExceptionMessages.LongitudeOutOfRangeMessage);
-            
-            _longitude = value;
+
+            field = value;
         }
     }
-    
+
     // Constructor
 
     /// <summary>

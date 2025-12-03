@@ -18,7 +18,8 @@ namespace Gravity.GoogleMaps.StaticMapBuilder.Builders;
 ///     .Build();
 /// </code>
 /// </example>
-public class StaticMapsUrlBuilder // TODO Rename to StaticMapUrlBuilder (without s)
+[Obsolete($"Use {nameof(StaticMapUrlBuilder)} instead")]
+public class StaticMapsUrlBuilder
 {
     // Exception messages
 
@@ -101,7 +102,7 @@ public class StaticMapsUrlBuilder // TODO Rename to StaticMapUrlBuilder (without
         {
             Debug.WriteLine($"Warning: Warning The zoom parameter must be between 0 and 22. The resulting static map will " +
                             $"use either zoom 0 if their is no markers or a scale-based zoom if there are markers." +
-                            $" See : {ProjectConstants.StaticMapDocumentationLinks.SectionLinks.ZoomLevels} for more information.");
+                            $" See : {DocumentationLinks.StaticMap.Sections.ZoomLevels} for more information.");
         }
         
         string zoomString = zoom.ToString();
@@ -246,7 +247,7 @@ public class StaticMapsUrlBuilder // TODO Rename to StaticMapUrlBuilder (without
         
         CheckIfParameterIsAlreadyAdded(StaticMapRequestParameters.MapId);
         
-        if (mapId.Length > ProjectConstants.MapIdMaxLength) throw new ArgumentException(ExceptionMessages.MalformedParametersExceptionMessages.MapIdMustBeSixteenCharactersMax);
+        if (mapId.Length > ApiLimits.MapIdMaxLength) throw new ArgumentException(ExceptionMessages.MalformedParametersExceptionMessages.MapIdMustBeSixteenCharactersMax);
         
         _requestParameters.Add(StaticMapRequestParameters.MapId, [mapId]);
         return this;
@@ -495,69 +496,6 @@ public class StaticMapsUrlBuilder // TODO Rename to StaticMapUrlBuilder (without
     }
 
     /// <summary>
-    /// Use the HTTP protocol instead of HTTPS.
-    /// </summary>
-    /// <remarks>
-    /// This method is obsolete and will be removed soon. Use <see cref="StaticMapsUrlBuilder.WithOptions"/> method and
-    /// <see cref="StaticMapBuilderOptions.UseHttp"/>.
-    /// </remarks>
-    /// <returns>The builder.</returns>
-    [Obsolete($"Use {nameof(WithOptions)} method and {nameof(StaticMapBuilderOptions)}.{nameof(StaticMapBuilderOptions.UseHttp)} instead.")]
-    public StaticMapsUrlBuilder UseHttp()
-    {
-        _options = _options with { UseHttp = true };
-        return this;
-    }
-
-    /// <summary>
-    /// Disable the url encoding. The url is, by default, url encoded.
-    /// </summary>
-    /// <remarks>
-    /// This method is obsolete and will be removed soon. Use <see cref="StaticMapsUrlBuilder.WithOptions"/> method and
-    /// <see cref="StaticMapBuilderOptions.DisableUrlEncoding"/>.
-    /// <br/>
-    /// See <see href="https://developers.google.com/maps/url-encoding">official documentation</see> for details.
-    /// </remarks>
-    /// <returns>The builder.</returns>
-    [Obsolete($"Use {nameof(WithOptions)} method and {nameof(StaticMapBuilderOptions)}.{nameof(StaticMapBuilderOptions.DisableUrlEncoding)} instead.")]
-    public StaticMapsUrlBuilder DisableUrlEncoding()
-    {
-        _options = _options with { DisableUrlEncoding = true };
-        return this;
-    }
-
-    /// <summary>
-    /// Disable the api key check.
-    /// </summary>
-    /// <remarks>
-    /// Disable the api key check allowing to have a "raw" request url.
-    /// </remarks>
-    /// <returns>The builder.</returns>
-    [Obsolete($"Use {nameof(WithOptions)} method and {nameof(StaticMapBuilderOptions)}.{nameof(StaticMapBuilderOptions.DisableApiKeyCheck)} instead.")]
-    public StaticMapsUrlBuilder DisableApiKeyCheck()
-    {
-        _options = _options with { DisableApiKeyCheck = true };
-        return this;
-    }
-
-    /// <summary>
-    /// Instructs the builder to return only the relative URL (query parameters),
-    /// without including the full base address.
-    /// </summary>
-    /// <remarks>
-    /// This is useful when using a preconfigured <see cref="HttpClient"/> that already includes
-    /// the Google Static Maps base address. It prevents overriding the base URI and allows clean 
-    /// composition of the full request URL using only the relevant parameters.
-    /// </remarks>
-    /// <returns>The builder.</returns>
-    [Obsolete($"Use {nameof(WithOptions)} method and {nameof(StaticMapBuilderOptions)}.{nameof(StaticMapBuilderOptions.ReturnParametersOnly)} instead.")]
-    public StaticMapsUrlBuilder ReturnRelativeUrlOnly()
-    {
-        _options = _options with { ReturnParametersOnly = true };
-        return this;
-    }
-
-    /// <summary>
     /// Add builder option to custom the result of the <see cref="Build"/> method.
     /// </summary>
     /// <param name="options">The builder options</param>
@@ -579,10 +517,10 @@ public class StaticMapsUrlBuilder // TODO Rename to StaticMapUrlBuilder (without
     /// <br/>
     /// The url is, by default, url encoded. Use <see cref="WithOptions"/> to disable the url encoding.
     /// <br/>
-    /// The url is, by default, built using the HTTPS protocol. Use <see cref="UseHttp"/> to use the HTTP protocol.
+    /// The url is, by default, built using the HTTPS protocol. Use <see cref="StaticMapBuilderOptions.UseHttp"/> to use the HTTP protocol.
     /// </remarks>
     /// <returns>The static map url generated according to added parameters and build options.</returns>
-    /// <exception cref="ArgumentException">Thrown when the API Key is missing and the <see cref="StaticMapBuilderOptions.DisableApiKeyCheck"/> is false.</exception>
+    /// <exception cref="ArgumentException">Thrown when the API Key is missing and the <see cref="BuilderOptions.DisableApiKeyCheck"/> is false.</exception>
     /// <exception cref="ArgumentException">Thrown when no parameter was added to the builder.</exception>
     /// <exception cref="InvalidOperationException">Thrown when the url exceeds the maximum length.</exception>
     /// <exception cref="InvalidOperationException">Thrown when a "positioning argument" is missing.</exception>
@@ -607,11 +545,11 @@ public class StaticMapsUrlBuilder // TODO Rename to StaticMapUrlBuilder (without
         {
             if (_options.UseHttp)
             {
-                url = ProjectConstants.StaticMapBaseUrlHttp + "?";
+                url = ApiEndpoints.StaticMapBaseUrlHttp + "?";
             }
             else
             {
-                url = ProjectConstants.StaticMapBaseUrlHttps + "?";
+                url = ApiEndpoints.StaticMapBaseUrlHttps + "?";
             }
         }
 
@@ -626,7 +564,7 @@ public class StaticMapsUrlBuilder // TODO Rename to StaticMapUrlBuilder (without
                 strategy = new UrlEncodingDecorator(strategy);
             }
             
-            string paramName = RequestParameterNames.Map[type];
+            string paramName = StaticMapParameterNames.Map[type];
             
             IReadOnlyList<string> formattedValues = strategy.FormatValues(values);
 
@@ -635,7 +573,7 @@ public class StaticMapsUrlBuilder // TODO Rename to StaticMapUrlBuilder (without
         
         url += string.Join("&", parts);
         
-        if (url.Length > ProjectConstants.StaticMapsApiUrlMaxSize)
+        if (url.Length > ApiLimits.StaticMapsApiUrlMaxSize)
         {
             throw new InvalidOperationException(ExceptionMessages.StaticMapUrlExceededLengthExceptionMessage);
         }
@@ -670,12 +608,12 @@ public class StaticMapsUrlBuilder // TODO Rename to StaticMapUrlBuilder (without
 
     private void ValidateMarkers()
     {
-        if (_locationMarkersCount > ProjectConstants.LocationMarkersCountLimit)
+        if (_locationMarkersCount > ApiLimits.LocationMarkersCountLimit)
         {
             throw new InvalidOperationException(ExceptionMessages.UrlParametersExceptionMessages.TooMuchLocationMarkersExceptionMessage);
         }
 
-        if (_markerIconUrls.Distinct().Count() > ProjectConstants.CustomMakerIconsCountLimit)
+        if (_markerIconUrls.Distinct().Count() > ApiLimits.CustomMakerIconsCountLimit)
         {
             throw new InvalidOperationException(ExceptionMessages.UrlParametersExceptionMessages.TooMuchDistinctCustomMarkerIcons);
         }
@@ -683,7 +621,7 @@ public class StaticMapsUrlBuilder // TODO Rename to StaticMapUrlBuilder (without
 
     private void ValidatePaths()
     {
-        if (_locationPointsForPathsCount > ProjectConstants.LocationPointsForPathCountLimit)
+        if (_locationPointsForPathsCount > ApiLimits.LocationPointsForPathCountLimit)
         {
             throw new InvalidOperationException(ExceptionMessages.UrlParametersExceptionMessages.TooMuchLocationPointsForPathsExceptionMessage);
         }
@@ -700,7 +638,7 @@ public class StaticMapsUrlBuilder // TODO Rename to StaticMapUrlBuilder (without
 
     private void ValidateViewports()
     {
-        if (_locationsCount > ProjectConstants.LocationsCountLimit)
+        if (_locationsCount > ApiLimits.LocationsCountLimit)
         {
             throw new InvalidOperationException(ExceptionMessages.UrlParametersExceptionMessages.TooMuchLocationsExceptionMessage);       
         }

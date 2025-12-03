@@ -11,12 +11,6 @@ namespace Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles;
 /// </remarks>
 public record StyleRule
 {
-    // Backing Fields
-    
-    private readonly double _lightness;
-    private readonly double _saturation;
-    private readonly double _gamma;
-    
     // Properties
 
     /// <summary>
@@ -27,12 +21,12 @@ public record StyleRule
     /// </exception>
     public double Lightness
     {
-        get => _lightness;
+        get;
         init
         {
             if (value is < -100 or > 100) throw new ArgumentOutOfRangeException(nameof(Lightness), ExceptionMessages.MalformedParametersExceptionMessages.LightnessOutOfRangeExceptionMessage);
-            
-            _lightness = value;
+
+            field = value;
         }
     }
 
@@ -44,12 +38,12 @@ public record StyleRule
     /// </exception>
     public double Saturation
     {
-        get => _saturation;
+        get;
         init
         {
             if (value is < -100 or > 100) throw new ArgumentOutOfRangeException(nameof(Saturation), ExceptionMessages.MalformedParametersExceptionMessages.SaturationOutOfRangeExceptionMessage);
-            
-            _saturation = value;
+
+            field = value;
         }
     }
 
@@ -61,11 +55,12 @@ public record StyleRule
     /// </exception>
     public double Gamma
     {
-        get => _gamma;
+        get;
         init
         {
             if (value is < 0.01 or > 10.0) throw new ArgumentOutOfRangeException(nameof(Gamma), ExceptionMessages.MalformedParametersExceptionMessages.GammaOutOfRangeExceptionMessage);
-            _gamma = value;
+            
+            field = value;
         }
     }
 
