@@ -7,14 +7,49 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## **[]
+## [3.0.0] - 2025-12-03
 
-- Zoom outside 0-22 now throw (before warning)
-- AddSize, AddRegion, AddMapId, AddLanguage, AddLocation(TZ), AddLanguage(TZ) from ArgumentException to ArgumentOutOfRangeException
-- AddVisiblePortWithCoordinates -> AddViewports
-- AddViewportsWithLocation -> AddViewports
-- No parameters -> InvalidOperation ((befor Argument))
-- No key -> Same
+### Summary
+This release focuses on consistent exception handling, clearer builder APIs,
+and internal refactoring to support upcoming Google Maps API integrations.
+
+---
+
+### ⚠️ Breaking Changes
+
+- **BREAKING:** `AddZoom()` now throws `ArgumentOutOfRangeException` when the zoom
+  value is outside the range 0–22 (inclusive).
+- **BREAKING:** `AddSize()` now throws `ArgumentOutOfRangeException` (instead of `ArgumentException`)
+  when `width` or `height` is less than or equal to 0.
+- **BREAKING:** `Build()` now throws `InvalidOperationException` when no parameters have been added
+  (previously threw `ArgumentException`).
+- **BREAKING:** `Build()` now throws `InvalidOperationException` when no API key is provided
+  while `DisableApiKeyCheck` is set to `false` (previously threw `ArgumentException`).
+
+---
+
+### 🚧 Deprecated
+
+- `StaticMapsUrlBuilder` is now marked as `Obsolete` and will be removed in **4.0.0**.
+  Use `StaticMapUrlBuilder` instead.
+- `AddVisiblePortWithCoordinates` and `AddViewportsWithLocation` are marked as `Obsolete`
+  and replaced by the two new overloads of `AddViewports()`.
+
+---
+
+### ❌ Removed
+
+- `UseHttp()`, `DisableUrlEncoding()`, and `ReturnRelativeUrlOnly()` were removed
+  as previously announced.  
+  Use `WithOptions()` instead.
+
+---
+
+### 🧪 Internal Changes
+
+- Major refactoring with the introduction of the `Gravity.GoogleMaps.Core` project
+  to reduce duplication and improve validation and builder flow.
+  This will simplify the addition of new API features.
 
 ## **[2.2.0] – 2025-11-19**
 
@@ -23,7 +58,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Introduced the new method `WithOptions(StaticMapBuilderOptions options)` to centralize and simplify builder configuration.
 * Added the new type [`StaticMapBuilderOptions`](Builders/StaticMapBuilderOptions.cs), which replaces several individual configuration methods.
 
-### ⚠️ Deprecated
+### ⛔ Deprecated
 
 The following methods are now obsolete and will be removed in a future release.
 They are fully replaced by the corresponding properties in `StaticMapBuilderOptions`:
