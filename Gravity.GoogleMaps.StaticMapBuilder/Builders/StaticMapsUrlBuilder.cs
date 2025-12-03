@@ -496,69 +496,6 @@ public class StaticMapsUrlBuilder
     }
 
     /// <summary>
-    /// Use the HTTP protocol instead of HTTPS.
-    /// </summary>
-    /// <remarks>
-    /// This method is obsolete and will be removed soon. Use <see cref="StaticMapsUrlBuilder.WithOptions"/> method and
-    /// <see cref="StaticMapBuilderOptions.UseHttp"/>.
-    /// </remarks>
-    /// <returns>The builder.</returns>
-    [Obsolete($"Use {nameof(WithOptions)} method and {nameof(StaticMapBuilderOptions)}.{nameof(StaticMapBuilderOptions.UseHttp)} instead.")]
-    public StaticMapsUrlBuilder UseHttp()
-    {
-        _options = _options with { UseHttp = true };
-        return this;
-    }
-
-    /// <summary>
-    /// Disable the url encoding. The url is, by default, url encoded.
-    /// </summary>
-    /// <remarks>
-    /// This method is obsolete and will be removed soon. Use <see cref="StaticMapsUrlBuilder.WithOptions"/> method and
-    /// <see cref="StaticMapBuilderOptions.DisableUrlEncoding"/>.
-    /// <br/>
-    /// See <see href="https://developers.google.com/maps/url-encoding">official documentation</see> for details.
-    /// </remarks>
-    /// <returns>The builder.</returns>
-    [Obsolete($"Use {nameof(WithOptions)} method and {nameof(StaticMapBuilderOptions)}.{nameof(StaticMapBuilderOptions.DisableUrlEncoding)} instead.")]
-    public StaticMapsUrlBuilder DisableUrlEncoding()
-    {
-        _options = _options with { DisableUrlEncoding = true };
-        return this;
-    }
-
-    /// <summary>
-    /// Disable the api key check.
-    /// </summary>
-    /// <remarks>
-    /// Disable the api key check allowing to have a "raw" request url.
-    /// </remarks>
-    /// <returns>The builder.</returns>
-    [Obsolete($"Use {nameof(WithOptions)} method and {nameof(StaticMapBuilderOptions)}.{nameof(StaticMapBuilderOptions.DisableApiKeyCheck)} instead.")]
-    public StaticMapsUrlBuilder DisableApiKeyCheck()
-    {
-        _options = _options with { DisableApiKeyCheck = true };
-        return this;
-    }
-
-    /// <summary>
-    /// Instructs the builder to return only the relative URL (query parameters),
-    /// without including the full base address.
-    /// </summary>
-    /// <remarks>
-    /// This is useful when using a preconfigured <see cref="HttpClient"/> that already includes
-    /// the Google Static Maps base address. It prevents overriding the base URI and allows clean 
-    /// composition of the full request URL using only the relevant parameters.
-    /// </remarks>
-    /// <returns>The builder.</returns>
-    [Obsolete($"Use {nameof(WithOptions)} method and {nameof(StaticMapBuilderOptions)}.{nameof(StaticMapBuilderOptions.ReturnParametersOnly)} instead.")]
-    public StaticMapsUrlBuilder ReturnRelativeUrlOnly()
-    {
-        _options = _options with { ReturnParametersOnly = true };
-        return this;
-    }
-
-    /// <summary>
     /// Add builder option to custom the result of the <see cref="Build"/> method.
     /// </summary>
     /// <param name="options">The builder options</param>
@@ -580,10 +517,10 @@ public class StaticMapsUrlBuilder
     /// <br/>
     /// The url is, by default, url encoded. Use <see cref="WithOptions"/> to disable the url encoding.
     /// <br/>
-    /// The url is, by default, built using the HTTPS protocol. Use <see cref="UseHttp"/> to use the HTTP protocol.
+    /// The url is, by default, built using the HTTPS protocol. Use <see cref="StaticMapBuilderOptions.UseHttp"/> to use the HTTP protocol.
     /// </remarks>
     /// <returns>The static map url generated according to added parameters and build options.</returns>
-    /// <exception cref="ArgumentException">Thrown when the API Key is missing and the <see cref="StaticMapBuilderOptions.DisableApiKeyCheck"/> is false.</exception>
+    /// <exception cref="ArgumentException">Thrown when the API Key is missing and the <see cref="BuilderOptions.DisableApiKeyCheck"/> is false.</exception>
     /// <exception cref="ArgumentException">Thrown when no parameter was added to the builder.</exception>
     /// <exception cref="InvalidOperationException">Thrown when the url exceeds the maximum length.</exception>
     /// <exception cref="InvalidOperationException">Thrown when a "positioning argument" is missing.</exception>

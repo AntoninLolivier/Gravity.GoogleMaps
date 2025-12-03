@@ -1,6 +1,6 @@
 ﻿namespace Gravity.GoogleMaps.StaticMapBuilder.Strategies.Selectors;
 
-internal static class ParameterFormattingStrategySelector
+internal static class ParameterFormattingStrategySelector // DELETE : On next Major
 {
     internal static IParameterFormattingStrategy Choose(StaticMapRequestParameters parameterType)
     {

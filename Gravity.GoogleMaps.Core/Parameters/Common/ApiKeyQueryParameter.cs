@@ -1,19 +1,18 @@
-﻿using FluentValidation.Results;
-using Gravity.GoogleMaps.Core.Validators;
+﻿namespace Gravity.GoogleMaps.Core.Parameters.Common;
 
-namespace Gravity.GoogleMaps.Core.Parameters.Common;
-
+/// <summary>
+/// 
+/// </summary>
+/// <param name="rawValue"></param>
 public class ApiKeyQueryParameter(string rawValue) : IQueryParameter
 {
+    /// <inheritdoc />
     public string Key => "key";
-    
-    public bool IsUnique => true;
-    
-    public ParameterValue Value { get; } = new SimpleParameterValue(rawValue);
 
-    public ValidationResult Validate()
-    {
-        return new ApiKeyValidator().Validate(Key);
-    }
+    /// <inheritdoc />
+    public bool IsUnique => true;
+
+    /// <inheritdoc />
+    public ParameterValue Value { get; } = new SimpleParameterValue(rawValue);
 }
 

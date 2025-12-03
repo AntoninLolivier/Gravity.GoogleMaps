@@ -40,6 +40,12 @@
             </code>
             </example>
         </member>
+        <member name="P:Gravity.GoogleMaps.TimeZoneBuilder.Builders.TimeZoneUrlBuilder.Parameters">
+            <inheritdoc />
+        </member>
+        <member name="M:Gravity.GoogleMaps.TimeZoneBuilder.Builders.TimeZoneUrlBuilder.GetBaseUrl">
+            <inheritdoc />
+        </member>
         <member name="M:Gravity.GoogleMaps.TimeZoneBuilder.Builders.TimeZoneUrlBuilder.AddLocation(System.Double,System.Double)">
             <summary>
             Add the location parameter to the query using latitude/longitude.
@@ -47,9 +53,8 @@
             <param name="latitude">The latitude used to retrieve timezone</param>
             <param name="longitude">The longitude used to retrieve timezone.</param>
             <returns>The builder instance.</returns>
-            <exception cref="T:System.InvalidOperationException">Thrown when latitude is not between -90 and 90</exception>
-            <exception cref="T:System.InvalidOperationException">Thrown when longitude is not between -180 and 180</exception>
-            <exception cref="T:System.InvalidOperationException">Thrown when you call this method twice on the same builder.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown when latitude is not between -90 and 90</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown when longitude is not between -180 and 180</exception>
         </member>
         <member name="M:Gravity.GoogleMaps.TimeZoneBuilder.Builders.TimeZoneUrlBuilder.AddTimeStamp(System.DateTimeOffset)">
             <summary>
@@ -68,10 +73,42 @@
             <param name="language">The language to add as 2 letter representation (i.e "fr", "en", etc.)</param>
             <returns>The builder instance.</returns>
             <exception cref="T:System.ArgumentNullException">Throw if <paramref name="language"/> is null or empty.</exception>
-            <exception cref="T:System.InvalidOperationException">Thrown when you call this method twice on the same builder.</exception>
+            <exception cref="T:System.ArgumentException">Thrown when <paramref name="language"/> is not 2 letters long.</exception>
         </member>
-        <member name="M:Gravity.GoogleMaps.TimeZoneBuilder.Builders.TimeZoneUrlBuilder.GetBaseUrl">
+        <member name="T:Gravity.GoogleMaps.TimeZoneBuilder.Parameters.LocationQueryParameter">
+            <summary>
+            The location query parameter of the TimeZone API query
+            </summary>
+            <param name="latitude">The latitude of the point to get timezone</param>
+            <param name="longitude">The longitude of the point to get timezone</param>
+        </member>
+        <member name="M:Gravity.GoogleMaps.TimeZoneBuilder.Parameters.LocationQueryParameter.#ctor(System.Double,System.Double)">
+            <summary>
+            The location query parameter of the TimeZone API query
+            </summary>
+            <param name="latitude">The latitude of the point to get timezone</param>
+            <param name="longitude">The longitude of the point to get timezone</param>
+        </member>
+        <member name="P:Gravity.GoogleMaps.TimeZoneBuilder.Parameters.LocationQueryParameter.Key">
             <inheritdoc />
+        </member>
+        <member name="P:Gravity.GoogleMaps.TimeZoneBuilder.Parameters.LocationQueryParameter.IsUnique">
+            <inheritdoc />
+        </member>
+        <member name="P:Gravity.GoogleMaps.TimeZoneBuilder.Parameters.LocationQueryParameter.Value">
+            <inheritdoc />
+        </member>
+        <member name="T:Gravity.GoogleMaps.TimeZoneBuilder.Parameters.TimestampQueryParameter">
+            <summary>
+            The timestamp query parameter of the TimeZone API query
+            </summary>
+            <param name="timestamp">The timestamp from when to get the timezone.</param>
+        </member>
+        <member name="M:Gravity.GoogleMaps.TimeZoneBuilder.Parameters.TimestampQueryParameter.#ctor(System.DateTimeOffset)">
+            <summary>
+            The timestamp query parameter of the TimeZone API query
+            </summary>
+            <param name="timestamp">The timestamp from when to get the timezone.</param>
         </member>
         <member name="P:Gravity.GoogleMaps.TimeZoneBuilder.Parameters.TimestampQueryParameter.Key">
             <inheritdoc />
@@ -82,7 +119,12 @@
         <member name="P:Gravity.GoogleMaps.TimeZoneBuilder.Parameters.TimestampQueryParameter.Value">
             <inheritdoc />
         </member>
-        <member name="M:Gravity.GoogleMaps.TimeZoneBuilder.Parameters.TimestampQueryParameter.Validate">
+        <member name="T:Gravity.GoogleMaps.TimeZoneBuilder.Parameters.TimeZoneQueryParameters">
+            <summary>
+            The object that wrap all the TimeZone API query parameters.
+            </summary>
+        </member>
+        <member name="M:Gravity.GoogleMaps.TimeZoneBuilder.Parameters.TimeZoneQueryParameters.Validate(System.Boolean)">
             <inheritdoc />
         </member>
     </members>

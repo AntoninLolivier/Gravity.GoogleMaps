@@ -2,6 +2,9 @@
 
 namespace Gravity.GoogleMaps.StaticMapBuilder.Builders;
 
+/// <summary>
+/// Builder that allow you to build your Google Maps Static Map API query.
+/// </summary>
 public class StaticMapUrlBuilder() : GoogleMapsBuilder<StaticMapUrlBuilder, StaticMapQueryParameters, StaticMapBuilderOptions>(new StaticMapBuilderOptions())
 {
     // Exception messages
@@ -11,7 +14,7 @@ public class StaticMapUrlBuilder() : GoogleMapsBuilder<StaticMapUrlBuilder, Stat
     // Properties
     
     /// <inheritdoc />
-    protected override StaticMapQueryParameters Parameters { get; set; } = new();
+    protected override StaticMapQueryParameters Parameters { get; } = new();
     
     // Methods
 
@@ -353,12 +356,14 @@ public class StaticMapUrlBuilder() : GoogleMapsBuilder<StaticMapUrlBuilder, Stat
         return this;
     }
 
+    /// <inheritdoc cref="AddViewports(System.ValueTuple{System.Double,System.Double}[])"/>
     [Obsolete($"Use {nameof(AddViewports)} instead")]
     public StaticMapUrlBuilder AddVisiblePortWithCoordinates(params (double, double)[] coordinates)
     {
         return AddViewports(coordinates);
     }
     
+    /// <inheritdoc cref="AddViewports(System.String[])"/>
     [Obsolete($"Use {nameof(AddViewports)} instead")]
     public StaticMapUrlBuilder AddViewportsWithLocation(params string[] locations)
     {

@@ -3,20 +3,36 @@ using FluentValidation.Results;
 
 namespace Gravity.GoogleMaps.StaticMapBuilder.Parameters;
 
+/// <summary>
+/// The object that wrap all the static map API query parameters.
+/// </summary>
 public class StaticMapQueryParameters : QueryParameters
 {
     // Properties
 
-    public int LocationsCount { get; set; } = 0;
+    /// <value>
+    /// The count of human-readable locations in the query
+    /// </value>
+    public int LocationsCount { get; set; }
     
-    public int LocationMarkersCount { get; set; } = 0;
+    /// <value>
+    /// The count of markers placed with human-readable locations.
+    /// </value>>
+    public int LocationMarkersCount { get; set; }
     
-    public int LocationPointForPathCount { get; set; } = 0;
+    /// <value>
+    /// The count of path points placed with human-readable locations.
+    /// </value>>
+    public int LocationPointForPathCount { get; set; }
     
+    /// <value>
+    /// The count of custom markers icons.
+    /// </value>
     public List<string> MarkerIconUrls { get; } = [];
     
     // Methods
-    
+
+    /// <inheritdoc />
     public override ValidationResult Validate(bool disableApiKeyCheck)
     {
         var globalValidationsResult = new StaticMapQueryParametersValidator(disableApiKeyCheck).Validate(this);

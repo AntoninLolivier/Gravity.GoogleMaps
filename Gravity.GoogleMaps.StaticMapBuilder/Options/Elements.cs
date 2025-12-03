@@ -1,4 +1,7 @@
 ﻿#pragma warning disable CS1591 
+// ReSharper disable UnusedType.Global
+// ReSharper disable UnusedMember.Global
+
 namespace Gravity.GoogleMaps.StaticMapBuilder.Options;
 
 /// <summary>

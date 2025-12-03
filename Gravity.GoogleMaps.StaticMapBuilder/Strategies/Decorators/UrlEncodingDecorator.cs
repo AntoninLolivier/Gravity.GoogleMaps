@@ -1,6 +1,6 @@
 ﻿namespace Gravity.GoogleMaps.StaticMapBuilder.Strategies.Decorators;
 
-internal class UrlEncodingDecorator(IParameterFormattingStrategy innerStrategy) : IParameterFormattingStrategy
+internal class UrlEncodingDecorator(IParameterFormattingStrategy innerStrategy) : IParameterFormattingStrategy // DELETE : ON next major
 {
     IReadOnlyList<string> IParameterFormattingStrategy.FormatValues(List<string> values)
     {

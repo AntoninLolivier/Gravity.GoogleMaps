@@ -3,8 +3,12 @@ using FluentValidation.Results;
 
 namespace Gravity.GoogleMaps.TimeZoneBuilder.Parameters;
 
+/// <summary>
+/// The object that wrap all the TimeZone API query parameters.
+/// </summary>
 public class TimeZoneQueryParameters : QueryParameters
 {
+    /// <inheritdoc />
     public override ValidationResult Validate(bool disableApiKeyCheck)
     {
         var globalValidationsResult = new TimeZoneQueryParametersValidator(disableApiKeyCheck).Validate(this);

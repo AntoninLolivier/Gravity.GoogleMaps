@@ -3,13 +3,12 @@
 internal static class ExceptionMessages
 {
     internal const string NoParametersAddedExceptionMessage = "No parameters have been added";
-    internal const string ParameterCanOnlyBeAddedOnceExceptionMessage = "The {0} parameter can only be added once";
-    
+
     internal static class ParametersMissingExceptionMessages
     {
-        internal const string LocationParameterMissingMessage = $"{nameof(TimeZoneQueryParameter.Location)} parameter is missing, use {nameof(TimeZoneUrlBuilder.AddLocation)} method.";
-        internal const string TimestampParameterMissingMessage = $"{nameof(TimeZoneQueryParameter.Timestamp)} parameter is missing, use {nameof(TimeZoneUrlBuilder.AddTimeStamp)} method.";
-        internal const string ApiKeyParameterMissingMessage = $"{nameof(TimeZoneQueryParameter.ApiKey)} parameter is missing, use {nameof(TimeZoneUrlBuilder.AddKey)} method or disbable this error using the {nameof(TimeZoneUrlBuilder.WithOptions)} method to configure builder.";
+        internal const string LocationParameterMissingMessage = $"Location parameter is missing, use {nameof(TimeZoneUrlBuilder.AddLocation)} method.";
+        internal const string TimestampParameterMissingMessage = $"Timestamp parameter is missing, use {nameof(TimeZoneUrlBuilder.AddTimeStamp)} method.";
+        internal const string ApiKeyParameterMissingMessage = $"Key parameter is missing, use {nameof(TimeZoneUrlBuilder.AddKey)} method or disbable this error using the {nameof(TimeZoneUrlBuilder.WithOptions)} method to configure builder.";
     }
     
     internal static class MalformedParametersExceptionMessages

@@ -2,22 +2,43 @@
 
 namespace Gravity.GoogleMaps.Core.Builders;
 
-public abstract class GoogleMapsBuilder<TBuilder, TParameters, TOption>
+/// <summary>
+/// The base class for all the Google Maps api builders.
+/// </summary>
+/// <param name="options">The options that manage the building process.</param>
+/// <typeparam name="TBuilder">The type of the builder</typeparam>
+/// <typeparam name="TParameters">The type of the parameters of the builder.</typeparam>
+/// <typeparam name="TOption">The type of the builder options.</typeparam>
+public abstract class GoogleMapsBuilder<TBuilder, TParameters, TOption>(TOption options)
     where TBuilder : GoogleMapsBuilder<TBuilder, TParameters, TOption>
     where TParameters : QueryParameters
     where TOption : BuilderOptions
 {
-    protected TOption Options;
+    // Properties
+    
+    /// <summary>
+    /// The builder options that manage the building process.
+    /// </summary>
+    protected TOption Options = options;
+    
+    /// <summary>
+    /// The object that contain the parameters of the query
+    /// </summary>
+    protected abstract TParameters Parameters { get; }
+    
+    // Methods
 
-    protected GoogleMapsBuilder(TOption options)
-    {
-        Options = options;
-    }
-
+    /// <summary>
+    /// Retrieve the base url of the query (static map, timezone, weather etc...)
+    /// </summary>
+    /// <returns>The base url of the query.</returns>
     protected abstract string GetBaseUrl();
 
-    protected abstract TParameters Parameters { get; set; }
-
+    /// <summary>
+    /// Manage options to customize the builder.
+    /// </summary>
+    /// <param name="options">The options that will change the building process.</param>
+    /// <returns>The builder.</returns>
     public TBuilder WithOptions(TOption options)
     {
         ArgumentNullException.ThrowIfNull(options);
@@ -27,6 +48,11 @@ public abstract class GoogleMapsBuilder<TBuilder, TParameters, TOption>
         return (TBuilder)this;
     }
 
+    /// <summary>
+    /// Add the api key to the query.
+    /// </summary>
+    /// <param name="apiKey">Your api key.</param>
+    /// <returns>The builder.</returns>
     public TBuilder AddKey(string apiKey)
     {
         Parameters.Add(new ApiKeyQueryParameter(apiKey));
@@ -34,6 +60,11 @@ public abstract class GoogleMapsBuilder<TBuilder, TParameters, TOption>
         return (TBuilder)this;
     }
 
+    /// <summary>
+    /// Validate and build the final query according to the added parameters.
+    /// </summary>
+    /// <returns>The query string.</returns>
+    /// <exception cref="InvalidOperationException">Thrown when a validation error occurs.</exception>
     public virtual string Build()
     {
         ValidationResult result = Parameters.Validate(Options.DisableApiKeyCheck);

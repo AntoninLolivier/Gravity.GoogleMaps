@@ -8,13 +8,6 @@ namespace Gravity.GoogleMaps.TimeZoneBuilder.Tests.Builders;
 [TestSubject(typeof(TimeZoneUrlBuilder))]
 public class TimeZoneUrlBuilderTest
 {
-    // Options
-    
-    private static readonly TimeZoneBuilderOptions DisableUrlEncodingOptions = new()
-    {
-        DisableUrlEncoding = true
-    };
-    
     // Tests
     
     [Fact]
@@ -75,7 +68,7 @@ public class TimeZoneUrlBuilderTest
     public void AddLanguage_InvalidLanguage_ShouldThrowArgumentException()
     {
         TimeZoneUrlBuilder builder = new();
-        Assert.Throws<ArgumentOutOfRangeException>(() => builder.AddLanguage("english").Build());
+        Assert.Throws<ArgumentException>(() => builder.AddLanguage("english").Build());
     }
     
     [Fact]
@@ -151,9 +144,9 @@ public class TimeZoneUrlBuilderTest
     public void Build_WithAllValidParameters_ReturnsUrl()
     {
         long timestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-        double latitude = 47.3943556;
-        double longitude = 0.6123703;
-        string language = "fr";
+        const double latitude = 47.3943556;
+        const double longitude = 0.6123703;
+        const string language = "fr";
 
         string url = new TimeZoneUrlBuilder()
                 .AddLocation(latitude, longitude)

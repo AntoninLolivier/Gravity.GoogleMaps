@@ -271,49 +271,6 @@
             <param name="key">You API Key.</param>
             <returns>The builder.</returns>
         </member>
-        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.UseHttp">
-            <summary>
-            Use the HTTP protocol instead of HTTPS.
-            </summary>
-            <remarks>
-            This method is obsolete and will be removed soon. Use <see cref="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.WithOptions(Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapBuilderOptions)"/> method and
-            <see cref="P:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapBuilderOptions.UseHttp"/>.
-            </remarks>
-            <returns>The builder.</returns>
-        </member>
-        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.DisableUrlEncoding">
-            <summary>
-            Disable the url encoding. The url is, by default, url encoded.
-            </summary>
-            <remarks>
-            This method is obsolete and will be removed soon. Use <see cref="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.WithOptions(Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapBuilderOptions)"/> method and
-            <see cref="!:StaticMapBuilderOptions.DisableUrlEncoding"/>.
-            <br/>
-            See <see href="https://developers.google.com/maps/url-encoding">official documentation</see> for details.
-            </remarks>
-            <returns>The builder.</returns>
-        </member>
-        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.DisableApiKeyCheck">
-            <summary>
-            Disable the api key check.
-            </summary>
-            <remarks>
-            Disable the api key check allowing to have a "raw" request url.
-            </remarks>
-            <returns>The builder.</returns>
-        </member>
-        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.ReturnRelativeUrlOnly">
-            <summary>
-            Instructs the builder to return only the relative URL (query parameters),
-            without including the full base address.
-            </summary>
-            <remarks>
-            This is useful when using a preconfigured <see cref="T:System.Net.Http.HttpClient"/> that already includes
-            the Google Static Maps base address. It prevents overriding the base URI and allows clean 
-            composition of the full request URL using only the relevant parameters.
-            </remarks>
-            <returns>The builder.</returns>
-        </member>
         <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.WithOptions(Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapBuilderOptions)">
             <summary>
             Add builder option to custom the result of the <see cref="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.Build"/> method.
@@ -330,10 +287,10 @@
             <br/>
             The url is, by default, url encoded. Use <see cref="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.WithOptions(Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapBuilderOptions)"/> to disable the url encoding.
             <br/>
-            The url is, by default, built using the HTTPS protocol. Use <see cref="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapsUrlBuilder.UseHttp"/> to use the HTTP protocol.
+            The url is, by default, built using the HTTPS protocol. Use <see cref="P:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapBuilderOptions.UseHttp"/> to use the HTTP protocol.
             </remarks>
             <returns>The static map url generated according to added parameters and build options.</returns>
-            <exception cref="T:System.ArgumentException">Thrown when the API Key is missing and the <see cref="!:StaticMapBuilderOptions.DisableApiKeyCheck"/> is false.</exception>
+            <exception cref="T:System.ArgumentException">Thrown when the API Key is missing and the <see cref="P:Gravity.GoogleMaps.Core.Options.BuilderOptions.DisableApiKeyCheck"/> is false.</exception>
             <exception cref="T:System.ArgumentException">Thrown when no parameter was added to the builder.</exception>
             <exception cref="T:System.InvalidOperationException">Thrown when the url exceeds the maximum length.</exception>
             <exception cref="T:System.InvalidOperationException">Thrown when a "positioning argument" is missing.</exception>
@@ -343,6 +300,16 @@
             <exception cref="T:System.InvalidOperationException">Thrown when the number of paths with a location path exceeds the limit. (15 in total)</exception>
             <exception cref="T:System.InvalidOperationException">Thrown when the map id parameter is combined with a map style parameter.</exception>
             <exception cref="T:System.InvalidOperationException">Thrown when the number of location paths exceeds the limit (excluding paths and markers, it's 3)</exception>
+        </member>
+        <member name="T:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapUrlBuilder">
+            <summary>
+            Builder that allow you to build your Google Maps Static Map API query.
+            </summary>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapUrlBuilder.#ctor">
+            <summary>
+            Builder that allow you to build your Google Maps Static Map API query.
+            </summary>
         </member>
         <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapUrlBuilder.Parameters">
             <inheritdoc />
@@ -553,6 +520,12 @@
             </example>
             <param name="coordinates">The coordinates of the viewport.</param>
             <returns>The builder.</returns>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapUrlBuilder.AddVisiblePortWithCoordinates(System.ValueTuple{System.Double,System.Double}[])">
+            <inheritdoc cref="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapUrlBuilder.AddViewports(System.ValueTuple{System.Double,System.Double}[])"/>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapUrlBuilder.AddViewportsWithLocation(System.String[])">
+            <inheritdoc cref="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapUrlBuilder.AddViewports(System.String[])"/>
         </member>
         <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Builders.StaticMapUrlBuilder.AddMapStyle(Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.MapStyle[])">
             <summary>
@@ -1343,6 +1316,299 @@
             <summary>
             Collection of available map formats.
             </summary>
+        </member>
+        <member name="T:Gravity.GoogleMaps.StaticMapBuilder.Parameters.CenterQueryParameter">
+            <summary>
+            The center parameter of the Static Map query parameter
+            </summary>
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Parameters.CenterQueryParameter.Key">
+            <inheritdoc />
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Parameters.CenterQueryParameter.IsUnique">
+            <inheritdoc />
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Parameters.CenterQueryParameter.Value">
+            <inheritdoc />
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Parameters.CenterQueryParameter.#ctor(System.String)">
+            <summary>
+            Initialize a new instance of the <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Parameters.CenterQueryParameter"/> with a human-readable location.
+            </summary>
+            <param name="locationCenter">The center as a location string (e.i. Paris)</param>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Parameters.CenterQueryParameter.#ctor(System.Double,System.Double)">
+            <summary>
+            Initialize a new instance of the <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Parameters.CenterQueryParameter"/> with coordinates.
+            </summary>
+            <param name="latitude">The center latitude.</param>
+            <param name="longitude">The center longitude.</param>
+        </member>
+        <member name="T:Gravity.GoogleMaps.StaticMapBuilder.Parameters.FormatQueryParameter">
+            <summary>
+            The format parameter of the Static Map query parameter
+            </summary>
+            <param name="format">The format of the static map.</param>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Parameters.FormatQueryParameter.#ctor(Gravity.GoogleMaps.StaticMapBuilder.Models.MapFormat)">
+            <summary>
+            The format parameter of the Static Map query parameter
+            </summary>
+            <param name="format">The format of the static map.</param>
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Parameters.FormatQueryParameter.Key">
+            <inheritdoc />
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Parameters.FormatQueryParameter.IsUnique">
+            <inheritdoc />
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Parameters.FormatQueryParameter.Value">
+            <inheritdoc />
+        </member>
+        <member name="T:Gravity.GoogleMaps.StaticMapBuilder.Parameters.MapIdQueryParameter">
+            <summary>
+            The map id parameter of the Static Map API query
+            </summary>
+            <param name="mapId">The identifier of the map to customize static map appearance.</param>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Parameters.MapIdQueryParameter.#ctor(System.String)">
+            <summary>
+            The map id parameter of the Static Map API query
+            </summary>
+            <param name="mapId">The identifier of the map to customize static map appearance.</param>
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Parameters.MapIdQueryParameter.Key">
+            <inheritdoc />
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Parameters.MapIdQueryParameter.IsUnique">
+            <inheritdoc />
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Parameters.MapIdQueryParameter.Value">
+            <inheritdoc />
+        </member>
+        <member name="T:Gravity.GoogleMaps.StaticMapBuilder.Parameters.MapStyleQueryParameter">
+            <summary>
+            A map style query parameter of the Static Map API query
+            </summary>
+            <param name="style">The style to apply to the map to customize the map appearance.</param>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Parameters.MapStyleQueryParameter.#ctor(Gravity.GoogleMaps.StaticMapBuilder.Models.MapStyles.MapStyle)">
+            <summary>
+            A map style query parameter of the Static Map API query
+            </summary>
+            <param name="style">The style to apply to the map to customize the map appearance.</param>
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Parameters.MapStyleQueryParameter.Key">
+            <inheritdoc />
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Parameters.MapStyleQueryParameter.IsUnique">
+            <inheritdoc />
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Parameters.MapStyleQueryParameter.Value">
+            <inheritdoc />
+        </member>
+        <member name="T:Gravity.GoogleMaps.StaticMapBuilder.Parameters.MapTypeQueryParameter">
+            <summary>
+            The map type query parameter of the Static Map API query
+            </summary>
+            <param name="mapType">The static map type.</param>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Parameters.MapTypeQueryParameter.#ctor(Gravity.GoogleMaps.StaticMapBuilder.Enums.StaticMapType)">
+            <summary>
+            The map type query parameter of the Static Map API query
+            </summary>
+            <param name="mapType">The static map type.</param>
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Parameters.MapTypeQueryParameter.Key">
+            <inheritdoc />
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Parameters.MapTypeQueryParameter.IsUnique">
+            <inheritdoc />
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Parameters.MapTypeQueryParameter.Value">
+            <inheritdoc />
+        </member>
+        <member name="T:Gravity.GoogleMaps.StaticMapBuilder.Parameters.MarkerQueryParameter">
+            <summary>
+            A marker query parameter of the Static Map API query
+            </summary>
+            <param name="marker">The marker to add to the static map.</param>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Parameters.MarkerQueryParameter.#ctor(Gravity.GoogleMaps.StaticMapBuilder.Models.Marker)">
+            <summary>
+            A marker query parameter of the Static Map API query
+            </summary>
+            <param name="marker">The marker to add to the static map.</param>
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Parameters.MarkerQueryParameter.Key">
+            <inheritdoc />
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Parameters.MarkerQueryParameter.IsUnique">
+            <inheritdoc />
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Parameters.MarkerQueryParameter.Value">
+            <inheritdoc />
+        </member>
+        <member name="T:Gravity.GoogleMaps.StaticMapBuilder.Parameters.PathQueryParameter">
+            <summary>
+            A path query parameter of the Static Map API query.
+            </summary>
+            <param name="path">The path to add to the static map.</param>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Parameters.PathQueryParameter.#ctor(Gravity.GoogleMaps.StaticMapBuilder.Models.Path)">
+            <summary>
+            A path query parameter of the Static Map API query.
+            </summary>
+            <param name="path">The path to add to the static map.</param>
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Parameters.PathQueryParameter.Key">
+            <inheritdoc />
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Parameters.PathQueryParameter.IsUnique">
+            <inheritdoc />
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Parameters.PathQueryParameter.Value">
+            <inheritdoc />
+        </member>
+        <member name="T:Gravity.GoogleMaps.StaticMapBuilder.Parameters.RegionQueryParameter">
+            <summary>
+            The region query parameter of the Static Map API query.
+            </summary>
+            <param name="region">The region of the static map.</param>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Parameters.RegionQueryParameter.#ctor(System.String)">
+            <summary>
+            The region query parameter of the Static Map API query.
+            </summary>
+            <param name="region">The region of the static map.</param>
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Parameters.RegionQueryParameter.Key">
+            <inheritdoc />
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Parameters.RegionQueryParameter.IsUnique">
+            <inheritdoc />
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Parameters.RegionQueryParameter.Value">
+            <inheritdoc />
+        </member>
+        <member name="T:Gravity.GoogleMaps.StaticMapBuilder.Parameters.ScaleQueryParameter">
+            <summary>
+            The scale parameter of the Static Map API query
+            </summary>
+            <param name="scale">The scale of the static map.</param>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Parameters.ScaleQueryParameter.#ctor(Gravity.GoogleMaps.StaticMapBuilder.Enums.MapScale)">
+            <summary>
+            The scale parameter of the Static Map API query
+            </summary>
+            <param name="scale">The scale of the static map.</param>
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Parameters.ScaleQueryParameter.Key">
+            <inheritdoc />
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Parameters.ScaleQueryParameter.IsUnique">
+            <inheritdoc />
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Parameters.ScaleQueryParameter.Value">
+            <inheritdoc />
+        </member>
+        <member name="T:Gravity.GoogleMaps.StaticMapBuilder.Parameters.SizeQueryParameter">
+            <summary>
+            The size query parameter fo the Static Map API query.
+            </summary>
+            <param name="width">The width of the static map (in pixels)</param>
+            <param name="height">The height of the static map (in pixels)</param>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Parameters.SizeQueryParameter.#ctor(System.Int32,System.Int32)">
+            <summary>
+            The size query parameter fo the Static Map API query.
+            </summary>
+            <param name="width">The width of the static map (in pixels)</param>
+            <param name="height">The height of the static map (in pixels)</param>
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Parameters.SizeQueryParameter.Key">
+            <inheritdoc />
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Parameters.SizeQueryParameter.IsUnique">
+            <inheritdoc />
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Parameters.SizeQueryParameter.Value">
+            <inheritdoc />
+        </member>
+        <member name="T:Gravity.GoogleMaps.StaticMapBuilder.Parameters.StaticMapQueryParameters">
+            <summary>
+            The object that wrap all the static map API query parameters.
+            </summary>
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Parameters.StaticMapQueryParameters.LocationsCount">
+            <value>
+            The count of human-readable locations in the query
+            </value>
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Parameters.StaticMapQueryParameters.LocationMarkersCount">
+            <value>
+            The count of markers placed with human-readable locations.
+            </value>>
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Parameters.StaticMapQueryParameters.LocationPointForPathCount">
+            <value>
+            The count of path points placed with human-readable locations.
+            </value>>
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Parameters.StaticMapQueryParameters.MarkerIconUrls">
+            <value>
+            The count of custom markers icons.
+            </value>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Parameters.StaticMapQueryParameters.Validate(System.Boolean)">
+            <inheritdoc />
+        </member>
+        <member name="T:Gravity.GoogleMaps.StaticMapBuilder.Parameters.ViewportsQueryParameter">
+            <summary>
+            The visible query parameter of the Static Map API Query.
+            </summary>
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Parameters.ViewportsQueryParameter.Key">
+            <inheritdoc />
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Parameters.ViewportsQueryParameter.IsUnique">
+            <inheritdoc />
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Parameters.ViewportsQueryParameter.Value">
+            <inheritdoc />
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Parameters.ViewportsQueryParameter.#ctor(System.String[])">
+            <summary>
+            Initialize a new instance of the <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Parameters.ViewportsQueryParameter"/> with human-readable locations.
+            </summary>
+            <param name="locations">Human-readable location that should be visible on the map.</param>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Parameters.ViewportsQueryParameter.#ctor(System.ValueTuple{System.Double,System.Double}[])">
+            <summary>
+            Initialize a new instance of the <see cref="T:Gravity.GoogleMaps.StaticMapBuilder.Parameters.ViewportsQueryParameter"/> with coordinates.
+            </summary>
+            <param name="coordinates">Coordinates of places that should be visible on the map.</param>
+        </member>
+        <member name="T:Gravity.GoogleMaps.StaticMapBuilder.Parameters.ZoomQueryParameter">
+            <summary>
+            The zoom query parameter of the Static Map API query
+            </summary>
+            <param name="zoom">The zoom.</param>
+        </member>
+        <member name="M:Gravity.GoogleMaps.StaticMapBuilder.Parameters.ZoomQueryParameter.#ctor(System.Int32)">
+            <summary>
+            The zoom query parameter of the Static Map API query
+            </summary>
+            <param name="zoom">The zoom.</param>
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Parameters.ZoomQueryParameter.Key">
+            <inheritdoc />
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Parameters.ZoomQueryParameter.IsUnique">
+            <inheritdoc />
+        </member>
+        <member name="P:Gravity.GoogleMaps.StaticMapBuilder.Parameters.ZoomQueryParameter.Value">
+            <inheritdoc />
         </member>
         <member name="T:Gravity.GoogleMaps.StaticMapBuilder.Types.HexColor">
             <summary>

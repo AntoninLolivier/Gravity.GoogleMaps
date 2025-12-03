@@ -1,5 +1,8 @@
 ﻿namespace Gravity.GoogleMaps.Core.Options;
 
+/// <summary>
+/// The base class for the option that customize the builder.
+/// </summary>
 public abstract record BuilderOptions
 {
     /// <value>

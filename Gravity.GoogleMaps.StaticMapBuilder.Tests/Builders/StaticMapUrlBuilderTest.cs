@@ -165,7 +165,7 @@ public class StaticMapUrlBuilderTest
     public void AddLanguage_InvalidLanguage_ShouldThrowArgumentException()
     {
         StaticMapUrlBuilder builder = new();
-        Assert.Throws<ArgumentOutOfRangeException>(() => builder.AddLanguage("english")); // More than 2 letters
+        Assert.Throws<ArgumentException>(() => builder.AddLanguage("english")); // More than 2 letters
     }
     
     [Theory]
@@ -188,7 +188,7 @@ public class StaticMapUrlBuilderTest
     public void AddRegion_InvalidRegion_ShouldThrowArgumentException()
     {
         StaticMapUrlBuilder builder = new();
-        Assert.Throws<ArgumentOutOfRangeException>(() => builder.AddRegion("USA")); // More than 2 letters
+        Assert.Throws<ArgumentException>(() => builder.AddRegion("USA")); // More than 2 letters
     }
 
     [Fact]
@@ -209,7 +209,7 @@ public class StaticMapUrlBuilderTest
     public void AddMapId_InvalidId_ShouldThrowArgumentException()
     {
         StaticMapUrlBuilder builder = new();
-        Assert.Throws<ArgumentOutOfRangeException>(() => builder.AddMapId(new string('x', 17))); // More than 12 characters
+        Assert.Throws<ArgumentException>(() => builder.AddMapId(new string('x', 17))); // More than 12 characters
     }
     
     [Fact]

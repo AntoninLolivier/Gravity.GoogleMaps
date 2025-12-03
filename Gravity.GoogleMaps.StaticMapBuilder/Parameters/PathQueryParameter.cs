@@ -2,11 +2,18 @@
 
 namespace Gravity.GoogleMaps.StaticMapBuilder.Parameters;
 
+/// <summary>
+/// A path query parameter of the Static Map API query.
+/// </summary>
+/// <param name="path">The path to add to the static map.</param>
 public class PathQueryParameter(Path path) : IQueryParameter
 {
-    public string Key { get; } = "path";
+    /// <inheritdoc />
+    public string Key => "path";
 
-    public bool IsUnique { get; } = false;
+    /// <inheritdoc />
+    public bool IsUnique => false;
 
+    /// <inheritdoc />
     public ParameterValue Value { get; } = new SimpleParameterValue(path.ToString());
 }

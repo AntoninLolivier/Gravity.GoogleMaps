@@ -15,7 +15,15 @@
 /// </example>
 public class TimeZoneUrlBuilder() : GoogleMapsBuilder<TimeZoneUrlBuilder, TimeZoneQueryParameters, TimeZoneBuilderOptions>(new TimeZoneBuilderOptions())
 {
+    // Properties
+    
+    /// <inheritdoc />
+    protected override TimeZoneQueryParameters Parameters { get; } = new();
+    
     // Methods
+
+    /// <inheritdoc />
+    protected override string GetBaseUrl() => ApiEndpoints.TimeZoneBaseUrl;
 
     /// <summary>
     /// Add the location parameter to the query using latitude/longitude.
@@ -23,13 +31,12 @@ public class TimeZoneUrlBuilder() : GoogleMapsBuilder<TimeZoneUrlBuilder, TimeZo
     /// <param name="latitude">The latitude used to retrieve timezone</param>
     /// <param name="longitude">The longitude used to retrieve timezone.</param>
     /// <returns>The builder instance.</returns>
-    /// <exception cref="InvalidOperationException">Thrown when latitude is not between -90 and 90</exception>
-    /// <exception cref="InvalidOperationException">Thrown when longitude is not between -180 and 180</exception>
-    /// <exception cref="InvalidOperationException">Thrown when you call this method twice on the same builder.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when latitude is not between -90 and 90</exception>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when longitude is not between -180 and 180</exception>
     public TimeZoneUrlBuilder AddLocation(double latitude, double longitude)
     {
-        if (latitude is < -90 or > 90) throw new ArgumentOutOfRangeException(nameof(latitude));
-        if (longitude is < -180 or > 180) throw new ArgumentOutOfRangeException(nameof(longitude));
+        if (latitude is < -90 or > 90) throw new ArgumentOutOfRangeException(nameof(latitude), message: ExceptionMessages.MalformedParametersExceptionMessages.LatitudeOutOfRangeMessage);
+        if (longitude is < -180 or > 180) throw new ArgumentOutOfRangeException(nameof(longitude), message: ExceptionMessages.MalformedParametersExceptionMessages.LongitudeOutOfRangeMessage);
         
         Parameters.Add(new LocationQueryParameter(latitude, longitude));
             
@@ -57,19 +64,14 @@ public class TimeZoneUrlBuilder() : GoogleMapsBuilder<TimeZoneUrlBuilder, TimeZo
     /// <param name="language">The language to add as 2 letter representation (i.e "fr", "en", etc.)</param>
     /// <returns>The builder instance.</returns>
     /// <exception cref="ArgumentNullException">Throw if <paramref name="language"/> is null or empty.</exception>
-    /// <exception cref="InvalidOperationException">Thrown when you call this method twice on the same builder.</exception>
+    /// <exception cref="ArgumentException">Thrown when <paramref name="language"/> is not 2 letters long.</exception>
     public TimeZoneUrlBuilder AddLanguage(string language)
     {
         if (string.IsNullOrEmpty(language) || string.IsNullOrWhiteSpace(language)) throw new ArgumentNullException(nameof(language));
-        if (language.Length != 2) throw new ArgumentOutOfRangeException(nameof(language), "Language must be in two letters");
+        if (language.Length != 2) throw new ArgumentException("Language must be in two letters", nameof(language));
         
         Parameters.Add(new LanguageQueryParameter(language));
 
         return this;
     }
-
-    /// <inheritdoc />
-    protected override string GetBaseUrl() => ApiEndpoints.TimeZoneBaseUrl;
-
-    protected override TimeZoneQueryParameters Parameters { get; set; } = new();
 }
